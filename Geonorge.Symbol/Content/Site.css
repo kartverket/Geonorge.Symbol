@@ -1,0 +1,6 @@
+﻿a.sorted-asc:after {
+    content: ' \25BC';
+}
+a.sorted-desc:after {
+    content: ' \25B2';
+}

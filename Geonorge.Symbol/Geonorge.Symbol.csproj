@@ -1,0 +1,395 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{455E4A0D-AE06-4458-8A15-8BC1299983A4}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Geonorge.Symbol</RootNamespace>
+    <AssemblyName>Geonorge.Symbol</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\HtmlHelperExtensions.cs" />
+    <Compile Include="Helpers\RegisterUrls.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\UI.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UI.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\chosen-sprite%402x.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\chosen-sprite.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\main.css" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\main.min.css" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\vendor.css" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\vendor.min.css" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\vendorfonts.css" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\vendorfonts.min.css" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\statusicon.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\arrow-select-blue.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\arrow-select-orange.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\chevron-down.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\chevron-up.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\gif\gif_loading-01.gif" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\gif\loading.gif" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\kvlogo_col.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\loader.gif" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\lock.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\opendata.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\png\Dot_ffffff_8px-01.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\png\geonorge.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\png\kartverket.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\png\norgeskart-marker.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\arrow-down.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\arrow-right.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\arrow-up.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\Arrow_414042_12px_mobile.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\arrow_414042_6px-01-01.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\arrow_414042_8px-01.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\Arrow_968c83_12px_mobile.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\breadcrumb-arrow.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\checkbox-checked-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\checkbox-checked.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\checkbox-unchecked-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\checkbox-unchecked.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\dekningskart.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\eksternlink-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\eksternlink-white.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\eksternlink.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\external_link_3867c8_12px-01.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\external_link_ffffff_12px-01.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\format-checked-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\format-checked.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\format-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\format.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\geonorge_devlogo.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\geonorge_logo.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\geonorge_testlogo.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\gml.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv-added.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv-disabled-added.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv-gray.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv-white-added.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv-white.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\hengelaas-aapen-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\hengelaas-aapen-green.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\hengelaas-aapen-red.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\hengelaas-aapen-white.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\hengelaas-aapen-yellow.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\hengelaas-lukket-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\hengelaas-lukket-green.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\hengelaas-lukket-red.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\hengelaas-lukket-white.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\hengelaas-lukket-yellow.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\info-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\info-white.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\info.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-needs-permission-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-needs-permission-white.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-needs-permission.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-unavailable-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-unavailable-white.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-unavailable.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-warning-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-warning-white.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-warning.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-white.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\lastned-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\lastned-white.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\lastned.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\lukk_968c83_50px-01-01.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\open_fe5000_50px-01.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\produktark.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\projection-checked-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\projection-checked.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\projection-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\projection.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\radio-checked-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\radio-checked.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\radio-unchecked-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\radio-unchecked.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\seksjonstegn.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\smile-green.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\smile-red.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\smile-yellow.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\soek.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\sosi.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\tick_fe5000_16px.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\totop_3867c8_75px-01.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\wfs.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\unlock.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\main.js" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\main.min.js" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\vendor.js" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\vendor.min.js" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_autoCompleteRow.html" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_autoCompleteRow.min.html" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.html" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.min.html" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.html" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.min.html" />
+    <Content Include="Content\select2.css" />
+    <Content Include="Content\select2.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include=".bowerrc" />
+    <Content Include="bower.json" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\.bower.json" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\702ZOKiLJc3WVjuplzInF5uFdDttMLvmWuJdhhgs.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\FontAwesome.otf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\I4k9un7TZVWzRVT-T8y3USBnSvpkopQaUR-2r7iU.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\JXh38I15wypJXxuGMBp0EAVxt0G0biEntp43Qt6E.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\KeOuBrn4kERxqtaUH3aCWcynf_cDxXwCLxiixG1c.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\lAoFXXQEzZoMSUteGWKCWcynf_cDxXwCLxiixG1c.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\MzqLaYbbbCL9X6EvaIy3USBnSvpkopQaUR-2r7iU.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\oNo9fC8O2RDydKj12by3USBnSvpkopQaUR-2r7iU.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\statusicon.eot" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\statusicon.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\statusicon.woff" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\tzj9b56b8RgXW8FAriS3USBnSvpkopQaUR-2r7iU.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\Y3_3JNqUVRAQQRNVteQ.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\_ySUJH_bn48VBG8sNSonF5uFdDttMLvmWuJdhhgs.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.cshtml" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.min.cshtml" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.cshtml" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.min.cshtml" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\bower.json" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\README.md" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\select2.js" />
+    <Content Include="Scripts\select2.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_Analytics.cshtml" />
+    <None Include="Web.Dev.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\UI.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UI.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Geonorge.Symbol.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>60561</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:60561/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
