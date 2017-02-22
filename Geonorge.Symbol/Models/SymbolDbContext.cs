@@ -12,5 +12,8 @@ namespace Geonorge.Symbol.Models
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<SymbolDbContext, Geonorge.Symbol.Migrations.Configuration>("SymbolDbContext"));
         }
+
+        public virtual DbSet<Symbol> Symbols { get; set; }
+
     }
 }

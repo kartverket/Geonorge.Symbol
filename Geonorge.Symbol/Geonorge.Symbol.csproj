@@ -146,6 +146,10 @@
     </Compile>
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Helpers\RegisterUrls.cs" />
+    <Compile Include="Migrations\201702220727020_Initial.cs" />
+    <Compile Include="Migrations\201702220727020_Initial.Designer.cs">
+      <DependentUpon>201702220727020_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Symbol.cs" />
     <Compile Include="Models\SymbolDbContext.cs" />
@@ -157,6 +161,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UI.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\CodeList.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -368,6 +373,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201702220727020_Initial.resx">
+      <DependentUpon>201702220727020_Initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UI.Designer.cs</LastGenOutput>
