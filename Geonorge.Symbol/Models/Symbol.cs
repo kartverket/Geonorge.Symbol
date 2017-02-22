@@ -8,6 +8,7 @@ namespace Geonorge.Symbol.Models
 {
     public class Symbol
     {
+        [Key]
         public Guid SystemId { get; set; }
 
         /// <summary> Beskrivende navn på symbol.</summary>
@@ -52,5 +53,7 @@ namespace Geonorge.Symbol.Models
 
         /// <summary>ulike grafiske forekomster av symbolet (ulike formater eller farger, .. )</summary>
         public List<SymbolFile> SymbolFiles { get; set; }
-    }
+
+        public SymbolPackage SymbolPackage { get; set; }
+}
 }

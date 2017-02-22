@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,7 +8,8 @@ namespace Geonorge.Symbol.Models
 {
     public class SymbolFile
     {
-        public int Id { get; set; }
+        [Key]
+        public Guid SystemId { get; set; }
 
         /// <summary>Opplasting av filen i form av gif, png, svg. Filen lagres og URL til fila lagres i registeret</summary>
         public string FileName { get; set; } //Filnavn Autogenerert fra symbolnavn + «symbolgrafikk» + «format» + «farge» + «størrelse» + «filnavn». Eks: «fisk_{n,p,u}_{eps,svg,ai,tiff,png,gif}_{ro,bl,gr,gu,sv,gr,or,fi}_{l,m,s}
