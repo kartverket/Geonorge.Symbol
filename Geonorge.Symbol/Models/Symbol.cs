@@ -11,11 +11,15 @@ namespace Geonorge.Symbol.Models
         [Key]
         public Guid SystemId { get; set; }
 
+        [Required]
         /// <summary> Beskrivende navn på symbol.</summary>
         public string Name { get; set; }
 
         /// <summary> Beskrivelse av hva bildet viser eller brukes til</summary>
         public string Description { get; set; }
+
+        /// <summary> Thumbnail of symbol</summary>
+        public string Thumbnail { get; set; }
 
         /// <summary> Ekstern ID, eks surfisk3</summary>
         public string EksternalSymbolID { get; set; }

@@ -12,8 +12,9 @@ namespace Geonorge.Symbol.Migrations
                 c => new
                     {
                         SystemId = c.Guid(nullable: false),
-                        Name = c.String(),
+                        Name = c.String(nullable: false),
                         Description = c.String(),
+                        Thumbnail = c.String(),
                         EksternalSymbolID = c.String(),
                         Owner = c.String(),
                         LastEditedBy = c.String(),

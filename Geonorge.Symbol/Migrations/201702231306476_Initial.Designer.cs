@@ -13,7 +13,7 @@ namespace Geonorge.Symbol.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201702220727020_Initial"; }
+            get { return "201702231306476_Initial"; }
         }
         
         string IMigrationMetadata.Source
