@@ -13,24 +13,28 @@ namespace Geonorge.Symbol.Models
 
         [Required]
         /// <summary> Beskrivende navn på symbol.</summary>
+        [Display(Name = "Symbolnavn")]
         public string Name { get; set; }
 
         /// <summary> Beskrivelse av hva bildet viser eller brukes til</summary>
         public string Description { get; set; }
 
         /// <summary> Thumbnail of symbol</summary>
+        [Display(Name = "Symbol")]
         public string Thumbnail { get; set; }
 
         /// <summary> Ekstern ID, eks surfisk3</summary>
         public string EksternalSymbolID { get; set; }
 
         /// <summary> Organisasjon som har sendt inn filen.</summary>
+        [Display(Name = "Organisasjon")]
         public string Owner { get; set; }
 
         /// <summary> Editor. Hentes fra pålogget bruker</summary>
         public string LastEditedBy { get; set; }
 
         /// <summary> Punkt, skravur, dropdown</summary>
+        [Display(Name = "Symboltype")]
         public string Type { get; set; }
 
         /// <summary>Dato for når filen/informasjonen i registeret sist ble endret.</summary>
@@ -47,9 +51,11 @@ namespace Geonorge.Symbol.Models
         public bool OfficialStatus { get; set; }
 
         /// <summary>Hovedtema (hentes fra liste) + verdi «generell».</summary>
+        [Display(Name = "Tema")]
         public string Theme { get; set; }
 
         /// <summary>Navn på symbolsamling symbolet hentes fra. Tekstfelt</summary>
+        [Display(Name = "Kilde")]
         public string Source { get; set; } 
 
         /// <summary>URL til symbolsamling symbolet hentes fra.</summary>

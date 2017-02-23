@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Geonorge.Symbol.Services;
 using Geonorge.Symbol.Models;
+using PagedList;
 
 namespace Geonorge.Symbol.Controllers
 {
@@ -23,9 +24,45 @@ namespace Geonorge.Symbol.Controllers
         }
 
         // GET: Files
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string text, int? page)
         {
-            return View(_symbolService.GetSymbols());
+
+            var symbols = _symbolService.GetSymbols(text);
+
+            switch (sortOrder)
+            {
+                case "symbolname_desc":
+                    symbols = symbols.OrderByDescending(s => s.Name).ToList();
+                    break;
+                case "owner":
+                    symbols = symbols.OrderBy(s => s.Owner).ToList();
+                    break;
+                case "owner_desc":
+                    symbols = symbols.OrderByDescending(s => s.Owner).ToList();
+                    break;
+                case "theme_desc":
+                    symbols = symbols.OrderByDescending(s => s.Theme).ToList();
+                    break;
+                case "theme":
+                    symbols = symbols.OrderBy(s => s.Theme).ToList();
+                    break;
+                default:
+                    symbols = symbols.OrderBy(s => s.Name).ToList();
+                    break;
+            }
+            if (string.IsNullOrEmpty(sortOrder))
+                sortOrder = "symbolname";
+
+            ViewBag.SymbolnameSortParm = sortOrder == "symbolname" ? "symbolname_desc" : "symbolname";
+            ViewBag.Owner = sortOrder == "owner" ? "owner_desc" : "owner";
+            ViewBag.Theme = sortOrder == "theme" ? "theme_desc" : "theme";
+            ViewBag.SortOrder = sortOrder;
+            ViewBag.text = text;
+
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+
+            return View(symbols.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Files/Details/5

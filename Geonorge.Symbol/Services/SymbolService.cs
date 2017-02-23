@@ -22,11 +22,18 @@ namespace Geonorge.Symbol.Services
 
         public List<Models.Symbol> GetSymbols(string text = null)
         {
+            if (!string.IsNullOrEmpty(text))
+            {
+               return _dbContext.Symbols.Where(s => s.Name.Contains(text)).ToList();
+            }
+            else { 
             return _dbContext.Symbols.ToList();
+            }
         }
 
         public void AddSymbol(Models.Symbol symbol)
         {
+            symbol.SystemId = Guid.NewGuid();
             _dbContext.Symbols.Add(symbol);
             _dbContext.SaveChanges();
         }
