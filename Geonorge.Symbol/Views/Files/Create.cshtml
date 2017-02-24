@@ -1,10 +1,24 @@
 ﻿@model Geonorge.Symbol.Models.Symbol
-
+@section breadcrumb {
+    <li><a href="~/symbol/">Digital kartografi</a></li>
+    <li>Registrer symbol</li>
+}
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Symboler";
 }
 
-<h2>Create</h2>
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>
+                Registrer symbol
+            </h1>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
 
 
 @using (Html.BeginForm()) 
@@ -12,8 +26,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Symbol</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -120,15 +132,14 @@
                 @Html.ValidationMessageFor(model => model.SourceUrl, "", new { @class = "text-danger" })
             </div>
         </div>
+    </div>
+    <div>
+        <div class="clearfix"></div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
+            <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="~/symbol/">Tilbake</a>
+            <input type="submit" value="Lagre" style="margin-left: 15px;" class="btn btn-default pull-right" />
+
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
