@@ -75,6 +75,7 @@ namespace Geonorge.Symbol.Controllers
         // GET: Files/Create
         public ActionResult Create()
         {
+            ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value", "Submitted");
             ViewBag.IsAdmin = false;
             if (Request.IsAuthenticated)
             {
@@ -89,6 +90,7 @@ namespace Geonorge.Symbol.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create(Models.Symbol symbol)
         {
             if (ModelState.IsValid)
