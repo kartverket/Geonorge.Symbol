@@ -20,8 +20,6 @@ namespace Geonorge.Symbol.Migrations
                         LastEditedBy = c.String(),
                         Type = c.String(),
                         DateChanged = c.DateTime(nullable: false),
-                        Status = c.String(),
-                        DateAccepted = c.DateTime(nullable: false),
                         OfficialStatus = c.Boolean(nullable: false),
                         Theme = c.String(),
                         Source = c.String(),

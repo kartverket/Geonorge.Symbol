@@ -13,13 +13,6 @@ namespace Geonorge.Symbol.Services
             {"skravur", "Skravur"}
         };
 
-        public static readonly Dictionary<string, string> Status = new Dictionary<string, string>()
-        {
-            {"Submitted", "Sendt inn"},
-            {"Accepted", "Godkjent"},
-            {"Superseded", "Erstattet"},
-            {"Retired", "Utgått"},
-        };
 
         public static readonly Dictionary<string, string> Themes = new Dictionary<string, string>()
         {

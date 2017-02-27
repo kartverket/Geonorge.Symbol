@@ -42,14 +42,8 @@ namespace Geonorge.Symbol.Models
 
         /// <summary>Dato for når filen/informasjonen i registeret sist ble endret.</summary>
         [Display(Name = "Dato endret")]
-        public DateTime DateChanged { get; set; }
-
-        /// <summary>Viser på samme måte som andre registre i geonorge om filen er godkjent eller ikke. Settes av administrator. (Ikke synlig før den er godkjent)</summary>
-        public string Status { get; set; }
-
-        /// <summary>Dato for når filen ble godkjent. Settes av administrator.</summary>
-        [Display(Name = "Dato godkjent")]
-        public DateTime DateAccepted { get; set; }
+        [DisplayFormat(NullDisplayText = "", ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
+        public DateTime DateChanged { get; set; } = DateTime.Now;
 
         /// <summary>Angi om kartografi er levert som offisielt tilbud eller som et alternativ til offisiell kartografi, radioknapp</summary>
         [Display(Name = "Offisiell")]

@@ -171,9 +171,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Migrations\201702231306476_Initial.cs" />
-    <Compile Include="Migrations\201702231306476_Initial.Designer.cs">
-      <DependentUpon>201702231306476_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201702271425435_Initial.cs" />
+    <Compile Include="Migrations\201702271425435_Initial.Designer.cs">
+      <DependentUpon>201702271425435_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\AuthorizationService.cs" />
     <Compile Include="Services\IAuthorizationService.cs" />
@@ -365,6 +365,7 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\bower.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\README.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -413,8 +414,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702231306476_Initial.resx">
-      <DependentUpon>201702231306476_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702271425435_Initial.resx">
+      <DependentUpon>201702271425435_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

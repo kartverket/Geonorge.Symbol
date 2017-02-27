@@ -33,7 +33,14 @@ namespace Geonorge.Symbol.Services
 
         public void AddSymbol(Models.Symbol symbol)
         {
+            string owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
+            if (_authorizationService.IsAdmin() && !string.IsNullOrEmpty(symbol.Owner))
+                owner = symbol.Owner;
+
             symbol.SystemId = Guid.NewGuid();
+            symbol.Owner = owner;
+            symbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
+
             _dbContext.Symbols.Add(symbol);
             _dbContext.SaveChanges();
         }

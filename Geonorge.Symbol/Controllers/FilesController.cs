@@ -75,6 +75,12 @@ namespace Geonorge.Symbol.Controllers
         // GET: Files/Create
         public ActionResult Create()
         {
+            ViewBag.IsAdmin = false;
+            if (Request.IsAuthenticated)
+            {
+                ViewBag.IsAdmin = _authorizationService.IsAdmin();
+            }
+
             return View();
         }
 
