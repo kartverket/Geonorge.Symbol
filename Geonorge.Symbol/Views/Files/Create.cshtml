@@ -94,7 +94,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Theme, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Theme, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.DropDownList("Theme", ViewBag.Themes as SelectList, String.Empty, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Theme, "", new { @class = "text-danger" })
                     </div>
                 </div>

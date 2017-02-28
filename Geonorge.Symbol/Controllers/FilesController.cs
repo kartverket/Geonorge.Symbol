@@ -76,6 +76,7 @@ namespace Geonorge.Symbol.Controllers
         public ActionResult Create()
         {
             ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value", "Submitted");
+            ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", "Submitted");
             ViewBag.IsAdmin = false;
             if (Request.IsAuthenticated)
             {
