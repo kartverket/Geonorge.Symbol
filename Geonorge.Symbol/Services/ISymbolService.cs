@@ -13,5 +13,6 @@ namespace Geonorge.Symbol.Services
         void AddPackage(SymbolPackage symbolPackage);
         void UpdatePackage(SymbolPackage symbolPackage);
         void RemovePackage(Guid systemid);
+        Models.Symbol GetSymbol(Guid systemid);
     }
 }

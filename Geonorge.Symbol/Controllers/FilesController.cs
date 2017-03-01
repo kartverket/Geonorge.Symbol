@@ -118,7 +118,30 @@ namespace Geonorge.Symbol.Controllers
         // GET: Files/Edit/5
         public ActionResult Edit(Guid? systemid)
         {
-            return View();
+
+            if (systemid == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Models.Symbol symbol = _symbolService.GetSymbol(systemid.Value);
+
+            if (symbol == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value", symbol.Type);
+            ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbol.Theme);
+            ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name", symbol.SymbolPackage);
+
+            ViewBag.IsAdmin = false;
+            if (Request.IsAuthenticated)
+            {
+                ViewBag.IsAdmin = _authorizationService.IsAdmin();
+            }
+
+            return View(symbol);
         }
 
         // POST: Files/Edit/5

@@ -74,5 +74,10 @@ namespace Geonorge.Symbol.Services
             _dbContext.SymbolPackages.Remove(symbolPackage);
             _dbContext.SaveChanges();
         }
+
+        public Models.Symbol GetSymbol(Guid systemid)
+        {
+            return _dbContext.Symbols.Where(s => s.SystemId == systemid).FirstOrDefault();
+        }
     }
 }
