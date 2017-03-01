@@ -15,9 +15,9 @@ namespace Geonorge.Symbol.Services
             file.InputStream.CopyTo(data);
             MagickImage image = new MagickImage(data);
             //image.Format = MagickFormat.Svg;
-            image.Format = MagickFormat.Pdf;
+            image.Format = MagickFormat.Png;
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
-            string fileName = "test.pdf";
+            string fileName = "test.png";
             string targetPath = Path.Combine(targetFolder, fileName);
             image.Write(targetPath);
         }
