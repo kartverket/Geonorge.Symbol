@@ -44,5 +44,35 @@ namespace Geonorge.Symbol.Services
             _dbContext.Symbols.Add(symbol);
             _dbContext.SaveChanges();
         }
+
+        public List<SymbolPackage> GetPackages()
+        {
+            return _dbContext.SymbolPackages.ToList();
+        }
+
+        public SymbolPackage GetPackage(Guid systemid)
+        {
+            return _dbContext.SymbolPackages.Where(p => p.SystemId == systemid).FirstOrDefault();
+        }
+
+        public void AddPackage(SymbolPackage symbolPackage)
+        {
+            symbolPackage.SystemId = Guid.NewGuid();
+            _dbContext.SymbolPackages.Add(symbolPackage);
+            _dbContext.SaveChanges();
+        }
+
+        public void UpdatePackage(SymbolPackage symbolPackage)
+        {
+            _dbContext.Entry(symbolPackage).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+        }
+
+        public void RemovePackage(Guid systemid)
+        {
+            SymbolPackage symbolPackage = GetPackage(systemid);
+            _dbContext.SymbolPackages.Remove(symbolPackage);
+            _dbContext.SaveChanges();
+        }
     }
 }

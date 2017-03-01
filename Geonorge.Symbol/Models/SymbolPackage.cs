@@ -12,6 +12,7 @@ namespace Geonorge.Symbol.Models
         public Guid SystemId { get; set; }
 
         /// <summary> Beskrivende navn på pakke.</summary>
+        [Display(Name = "Navn")]
         public string Name { get; set; }
 
         /// <summary>Angi om symbolpakke er offisiell eller ikke</summary>

@@ -1,0 +1,76 @@
+﻿@model Geonorge.Symbol.Models.SymbolPackage
+
+@section breadcrumb {
+    <li><a href="~/symbol/">Symbol</a></li>
+    <li><a href="~/symbolpackages/">Symbolpakker</a></li>
+    <li>Opprett</li>
+}
+@{
+    ViewBag.Title = "Symbolpakke opprett";
+}
+
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>
+                Opprett pakke
+            </h1>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.OfficialStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.OfficialStatus)
+                    @Html.ValidationMessageFor(model => model.OfficialStatus, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Owner, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select class="ownerOrganizationSelect form-control" id="Owner" name="Owner"> </select>
+                @Html.ValidationMessageFor(model => model.Owner, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Theme, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Theme", ViewBag.Themes as SelectList, String.Empty, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Theme, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
+            <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="/">Tilbake</a>
+            @if (Request.IsAuthenticated)
+            {
+                <input type="submit" value="Opprett" class="btn btn-default btn-space pull-right" />
+            }
+
+        </div>
+    </div>
+}
+<script type="text/javascript" src="~/Scripts/custom.js"></script>

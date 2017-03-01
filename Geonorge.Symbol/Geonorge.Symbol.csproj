@@ -171,6 +171,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SymbolPackagesController.cs" />
     <Compile Include="Migrations\201703010640130_Initial.cs" />
     <Compile Include="Migrations\201703010640130_Initial.Designer.cs">
       <DependentUpon>201703010640130_Initial.cs</DependentUpon>
@@ -402,6 +403,11 @@
     <Content Include="Views\Files\Details.cshtml" />
     <Content Include="Views\Files\Edit.cshtml" />
     <Content Include="Views\Files\Index.cshtml" />
+    <Content Include="Views\SymbolPackages\Create.cshtml" />
+    <Content Include="Views\SymbolPackages\Delete.cshtml" />
+    <Content Include="Views\SymbolPackages\Details.cshtml" />
+    <Content Include="Views\SymbolPackages\Edit.cshtml" />
+    <Content Include="Views\SymbolPackages\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
