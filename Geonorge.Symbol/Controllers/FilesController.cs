@@ -150,9 +150,11 @@ namespace Geonorge.Symbol.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Models.Symbol symbol)
+        public ActionResult Edit(Models.Symbol symbol, HttpPostedFileBase uploadFile)
         {
             Models.Symbol originalSymbol = _symbolService.GetSymbol(symbol.SystemId);
+
+            new ImageService().ConvertImage(uploadFile);
 
             ViewBag.IsAdmin = false;
             if (Request.IsAuthenticated)
