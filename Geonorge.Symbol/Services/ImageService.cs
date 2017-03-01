@@ -14,8 +14,8 @@ namespace Geonorge.Symbol.Services
         {
             Stream data = new MemoryStream();
             file.InputStream.CopyTo(data);
-            MagickImage image = new MagickImage(data);
             MagickNET.SetGhostscriptDirectory(WebConfigurationManager.AppSettings["GhostscriptDirectory"]);
+            MagickImage image = new MagickImage(data);
             //image.Format = MagickFormat.Svg;
             image.Format = MagickFormat.Png;
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
