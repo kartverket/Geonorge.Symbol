@@ -77,6 +77,7 @@ namespace Geonorge.Symbol.Controllers
         {
             ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value");
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", "Annen");
+            ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name");
             ViewBag.IsAdmin = false;
             if (Request.IsAuthenticated)
             {
@@ -94,6 +95,11 @@ namespace Geonorge.Symbol.Controllers
         [Authorize]
         public ActionResult Create(Models.Symbol symbol)
         {
+
+            ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value", symbol.Type);
+            ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbol.Theme);
+            ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name", symbol.SymbolPackage);
+
             if (ModelState.IsValid)
             {
                 _symbolService.AddSymbol(symbol);
@@ -104,7 +110,7 @@ namespace Geonorge.Symbol.Controllers
         }
 
         // GET: Files/Edit/5
-        public ActionResult Edit(Guid? id)
+        public ActionResult Edit(Guid? systemid)
         {
             return View();
         }
@@ -124,9 +130,9 @@ namespace Geonorge.Symbol.Controllers
         }
 
         // GET: Files/Delete/5
-        public ActionResult Delete(Guid? id)
+        public ActionResult Delete(Guid? systemid)
         {
-            if (id == null)
+            if (systemid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -137,7 +143,7 @@ namespace Geonorge.Symbol.Controllers
         // POST: Files/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public ActionResult DeleteConfirmed(Guid systemid)
         {
 
             return RedirectToAction("Index");

@@ -64,6 +64,7 @@ namespace Geonorge.Symbol.Models
         /// <summary>ulike grafiske forekomster av symbolet (ulike formater eller farger, .. )</summary>
         public List<SymbolFile> SymbolFiles { get; set; }
 
+        [Display(Name = "Pakke")]
         public SymbolPackage SymbolPackage { get; set; }
 
         public string ThumbnailUrl()
