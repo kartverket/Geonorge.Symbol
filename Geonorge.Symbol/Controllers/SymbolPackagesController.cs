@@ -57,6 +57,8 @@ namespace Geonorge.Symbol.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(SymbolPackage symbolPackage)
         {
+            ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbolPackage.Theme);
+
             if (ModelState.IsValid)
             {
                 _symbolService.AddPackage(symbolPackage);
@@ -78,6 +80,9 @@ namespace Geonorge.Symbol.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbolPackage.Theme);
+
             return View(symbolPackage);
         }
 

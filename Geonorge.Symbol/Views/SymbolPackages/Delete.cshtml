@@ -1,15 +1,29 @@
 ﻿@model Geonorge.Symbol.Models.SymbolPackage
 
+@section breadcrumb {
+    <li><a href="~/symbol/">Symbol</a></li>
+    <li><a href="~/symbolpackages/">Symbolpakker</a></li>
+    <li>Slett</li>
+}
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Symbolpakke slett";
 }
 
-<h2>Delete</h2>
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>
+                Slett pakke
+            </h1>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Er du sikker på at du vil slette symbolpakke?</h3>
 <div>
-    <h4>SymbolPackage</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -48,9 +62,11 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div class="row">
+            <div class="col-md-12">
+                <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="~/symbolpackages/Edit/@Model.SystemId">Tilbake</a>
+                <input type="submit" value="Slett" class="btn btn-default pull-right" />
+            </div>
         </div>
     }
 </div>
