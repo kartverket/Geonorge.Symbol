@@ -45,15 +45,15 @@ namespace Geonorge.Symbol.Models
         [DisplayFormat(NullDisplayText = "", ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime DateChanged { get; set; } = DateTime.Now;
 
-        /// <summary>Angi om kartografi er levert som offisielt tilbud eller som et alternativ til offisiell kartografi, radioknapp</summary>
+        /// <summary>Angi om symbol er offisiell eller ikke</summary>
         [Display(Name = "Offisiell")]
         public bool OfficialStatus { get; set; }
 
-        /// <summary>Hovedtema (hentes fra liste) + verdi «generell».</summary>
+        /// <summary>Hovedtema verdi «Annen».</summary>
         [Display(Name = "Tema")]
         public string Theme { get; set; }
 
-        /// <summary>Navn på symbolsamling symbolet hentes fra. Tekstfelt</summary>
+        /// <summary>Navn på symbolsamling symbolet hentes fra</summary>
         [Display(Name = "Kilde")]
         public string Source { get; set; }
 

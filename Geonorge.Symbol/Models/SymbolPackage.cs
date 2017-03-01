@@ -13,5 +13,18 @@ namespace Geonorge.Symbol.Models
 
         /// <summary> Beskrivende navn på pakke.</summary>
         public string Name { get; set; }
+
+        /// <summary>Angi om symbolpakke er offisiell eller ikke</summary>
+        [Display(Name = "Offisiell")]
+        public bool OfficialStatus { get; set; }
+
+        /// <summary> Organisasjon som har sendt inn pakken.</summary>
+        [Display(Name = "Eier")]
+        public string Owner { get; set; }
+
+        /// <summary>Hovedtema (hentes fra liste) + verdi «Annen».</summary>
+        [Display(Name = "Tema")]
+        public string Theme { get; set; }
+
     }
 }

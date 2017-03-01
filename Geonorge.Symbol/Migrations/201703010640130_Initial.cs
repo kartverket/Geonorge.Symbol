@@ -52,6 +52,9 @@ namespace Geonorge.Symbol.Migrations
                     {
                         SystemId = c.Guid(nullable: false),
                         Name = c.String(),
+                        OfficialStatus = c.Boolean(nullable: false),
+                        Owner = c.String(),
+                        Theme = c.String(),
                     })
                 .PrimaryKey(t => t.SystemId);
             
