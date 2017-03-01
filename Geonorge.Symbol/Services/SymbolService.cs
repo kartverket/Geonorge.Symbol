@@ -79,5 +79,32 @@ namespace Geonorge.Symbol.Services
         {
             return _dbContext.Symbols.Where(s => s.SystemId == systemid).FirstOrDefault();
         }
+
+        public void UpdateSymbol(Models.Symbol originalSymbol, Models.Symbol symbol)
+        {
+            if (symbol != null)
+            {
+                originalSymbol.Name = symbol.Name;
+                originalSymbol.Description = symbol.Description;
+                originalSymbol.EksternalSymbolID = symbol.EksternalSymbolID;
+                originalSymbol.OfficialStatus = symbol.OfficialStatus;
+
+                string owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
+                if (_authorizationService.IsAdmin() && !string.IsNullOrEmpty(symbol.Owner))
+                    owner = symbol.Owner;
+
+                originalSymbol.Owner = owner;
+                originalSymbol.Source = symbol.Source;
+                originalSymbol.SourceUrl = symbol.SourceUrl;
+                originalSymbol.SymbolPackage = symbol.SymbolPackage;
+                originalSymbol.Theme = symbol.Theme;
+                originalSymbol.Type = symbol.Type;
+
+            originalSymbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
+            _dbContext.Entry(originalSymbol).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+
+            }
+        }
     }
 }

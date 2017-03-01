@@ -152,11 +152,33 @@ namespace Geonorge.Symbol.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Models.Symbol symbol)
         {
+            Models.Symbol originalSymbol = _symbolService.GetSymbol(symbol.SystemId);
+
+            ViewBag.IsAdmin = false;
+            if (Request.IsAuthenticated)
+            {
+                ViewBag.IsAdmin = _authorizationService.IsAdmin();
+            }
+
+            if (!_authorizationService.HasAccess(originalSymbol.Owner,
+                    _authorizationService.GetSecurityClaim("organization").FirstOrDefault()))
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+
+
+
             if (ModelState.IsValid)
             {
+                _symbolService.UpdateSymbol(originalSymbol, symbol);
+
                 return RedirectToAction("Index");
             }
-            return View();
+
+            ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value", symbol.Type);
+            ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbol.Theme);
+            ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name", symbol.SymbolPackage);
+
+
+            return View(symbol);
         }
 
         // GET: Files/Delete/5
