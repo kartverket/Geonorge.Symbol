@@ -106,5 +106,11 @@ namespace Geonorge.Symbol.Services
 
             }
         }
+
+        public void RemoveSymbol(Models.Symbol symbol)
+        {
+            _dbContext.Symbols.Remove(symbol);
+            _dbContext.SaveChanges();
+        }
     }
 }

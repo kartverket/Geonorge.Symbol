@@ -165,7 +165,6 @@ namespace Geonorge.Symbol.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
 
 
-
             if (ModelState.IsValid)
             {
                 _symbolService.UpdateSymbol(originalSymbol, symbol);
@@ -188,8 +187,15 @@ namespace Geonorge.Symbol.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
-            return View();
+
+            Models.Symbol symbol = _symbolService.GetSymbol(systemid.Value);
+
+            if (symbol == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(symbol);
         }
 
         // POST: Files/Delete/5
@@ -199,6 +205,19 @@ namespace Geonorge.Symbol.Controllers
         public ActionResult DeleteConfirmed(Guid systemid)
         {
 
+            Models.Symbol symbol = _symbolService.GetSymbol(systemid);
+
+            bool hasAccess = _authorizationService.HasAccess(symbol.Owner,
+                _authorizationService.GetSecurityClaim("organization").FirstOrDefault());
+
+            bool isAdmin = _authorizationService.IsAdmin();
+
+            if (!hasAccess)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+
+            _symbolService.RemoveSymbol(symbol);
             return RedirectToAction("Index");
         }
     }
