@@ -10,17 +10,58 @@ namespace Geonorge.Symbol.Services
 {
     public class ImageService
     {
-        public void ConvertImage(HttpPostedFileBase file)
+        public string ConvertImage(HttpPostedFileBase file, string format)
         {
-            Stream data = new MemoryStream();
-            file.InputStream.CopyTo(data);
-            MagickImage image = new MagickImage(data);
-            //image.Format = MagickFormat.Svg;
-            image.Format = MagickFormat.Png;
-            string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
-            string fileName = "test.png";
-            string targetPath = Path.Combine(targetFolder, fileName);
-            image.Write(targetPath);
+
+            string fileName = Path.GetFileNameWithoutExtension(file.FileName) + "." + format;
+
+            using (MemoryStream memStream = new MemoryStream())
+            {
+                file.InputStream.CopyTo(memStream);
+
+                using (MagickImage image = new MagickImage(memStream))
+                {
+                    switch (format)
+                    {
+                        case "png":
+                            {
+                                image.Format = MagickFormat.Png;
+                                break;
+                            }
+                        case "jpg":
+                            {
+                                image.Format = MagickFormat.Jpg;
+                                break;
+                            }
+                        case "gif":
+                            {
+                                image.Format = MagickFormat.Gif;
+                                break;
+                            }
+                        case "ai":
+                            {
+                                image.Format = MagickFormat.Ai;
+                                break;
+                            }
+                        case "svg":
+                            {
+                                image.Format = MagickFormat.Svg;
+                                break;
+                            }
+                        default:
+                            {
+                                image.Format = MagickFormat.Png;
+                                break;
+                            }
+                    }
+
+                    string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
+                    string targetPath = Path.Combine(targetFolder, fileName);
+                    image.Write(targetPath);
+                }
+            }
+
+            return fileName;
         }
 
     }
