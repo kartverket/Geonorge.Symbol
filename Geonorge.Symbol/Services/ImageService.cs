@@ -5,6 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
+using ImageTracerNet;
+using System.Globalization;
+using System.Threading;
 
 namespace Geonorge.Symbol.Services
 {
@@ -43,14 +46,15 @@ namespace Geonorge.Symbol.Services
                                 image.Format = MagickFormat.Ai;
                                 break;
                             }
-                        case "svg":
-                            {
-                                image.Format = MagickFormat.Svg;
-                                break;
-                            }
+                        //case "svg":
+                        //    {
+                        //        image.Format = MagickFormat.Svg;
+                        //        break;
+                        //    }
                         default:
                             {
                                 image.Format = MagickFormat.Png;
+                                fileName = Path.GetFileNameWithoutExtension(file.FileName) + ".png";
                                 break;
                             }
                     }
@@ -58,6 +62,24 @@ namespace Geonorge.Symbol.Services
                     string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
                     string targetPath = Path.Combine(targetFolder, fileName);
                     image.Write(targetPath);
+
+                    if (format == "svg")
+                    {
+                        //To use . instead of , for decimals
+                        var culture = new CultureInfo("en-US");
+                        Thread.CurrentThread.CurrentCulture = culture;
+                        Options options = new Options();
+                        options.Tracing = new ImageTracerNet.OptionTypes.Tracing { LTres = 1f, QTres = 1f, PathOmit = 8 };
+
+                        string targetFolderSvg = System.Web.HttpContext.Current.Server.MapPath("~/files");
+                        string fileNameSvg = Path.GetFileNameWithoutExtension(file.FileName) + ".svg";
+                        string targetPathSvg = Path.Combine(targetFolderSvg, fileNameSvg);
+
+                        File.WriteAllText(targetPathSvg, ImageTracer.ImageToSvg(targetPath, options));
+
+                        fileName = fileNameSvg;
+                    }
+
                 }
             }
 

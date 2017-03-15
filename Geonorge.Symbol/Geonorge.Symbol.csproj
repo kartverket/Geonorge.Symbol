@@ -437,6 +437,12 @@
       <CustomToolNamespace>Geonorge.Symbol.Resources</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImageTracerNet\ImageTracerNet.csproj">
+      <Project>{84ee293e-b938-4512-8a39-86ffc00ed267}</Project>
+      <Name>ImageTracerNet</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
