@@ -70,6 +70,8 @@ namespace Geonorge.Symbol.Services
                         Thread.CurrentThread.CurrentCulture = culture;
                         Options options = new Options();
                         options.Tracing = new ImageTracerNet.OptionTypes.Tracing { LTres = 1f, QTres = 1f, PathOmit = 8 };
+                        options.ColorQuantization = new ImageTracerNet.OptionTypes.ColorQuantization { ColorSampling = 0f };
+                        options.Blur = new ImageTracerNet.OptionTypes.Blur { BlurDelta = 20f, BlurRadius = 1 };
 
                         string targetFolderSvg = System.Web.HttpContext.Current.Server.MapPath("~/files");
                         string fileNameSvg = Path.GetFileNameWithoutExtension(file.FileName) + ".svg";
