@@ -8,12 +8,13 @@ using System.Web.Configuration;
 using ImageTracerNet;
 using System.Globalization;
 using System.Threading;
+using Geonorge.Symbol.Models;
 
 namespace Geonorge.Symbol.Services
 {
     public class ImageService
     {
-        public string ConvertImage(HttpPostedFileBase file, string format)
+        public string ConvertImage(HttpPostedFileBase file, ImageSettings s, string format)
         {
 
             string fileName = Path.GetFileNameWithoutExtension(file.FileName) + "." + format;
@@ -69,9 +70,10 @@ namespace Geonorge.Symbol.Services
                         var culture = new CultureInfo("en-US");
                         Thread.CurrentThread.CurrentCulture = culture;
                         Options options = new Options();
-                        options.Tracing = new ImageTracerNet.OptionTypes.Tracing { LTres = 1f, QTres = 1f, PathOmit = 8 };
-                        options.ColorQuantization = new ImageTracerNet.OptionTypes.ColorQuantization { ColorSampling = 0f };
-                        options.Blur = new ImageTracerNet.OptionTypes.Blur { BlurDelta = 20f, BlurRadius = 1 };
+                        options.Tracing = new ImageTracerNet.OptionTypes.Tracing { LTres = s.LTres, QTres = s.QTres, PathOmit = s.PathOmit };
+                        options.ColorQuantization = new ImageTracerNet.OptionTypes.ColorQuantization { ColorSampling = s.ColorSampling, ColorQuantCycles = s.ColorQuantCycles, MinColorRatio = s.MinColorRatio, NumberOfColors = s.NumberOfColors };
+                        options.Blur = new ImageTracerNet.OptionTypes.Blur { BlurDelta = s.BlurDelta, BlurRadius = s.BlurRadius };
+                        options.SvgRendering = new ImageTracerNet.OptionTypes.SvgRendering { LCpr = s.LCpr, QCpr = s.QCpr, RoundCoords = s.RoundCoords, Scale = s.Scale, SimplifyTolerance = s.SimplifyTolerance, Viewbox = s.Viewbox };
 
                         string targetFolderSvg = System.Web.HttpContext.Current.Server.MapPath("~/files");
                         string fileNameSvg = Path.GetFileNameWithoutExtension(file.FileName) + ".svg";

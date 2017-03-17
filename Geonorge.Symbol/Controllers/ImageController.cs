@@ -14,17 +14,18 @@ namespace Geonorge.Symbol.Controllers
         // GET: Image
         public ActionResult Index()
         {
+            ImageSettings model = new ImageSettings();
             ViewBag.FileUrl = "";
-            return View();
+            return View(model);
         }
 
-        public ActionResult Create(HttpPostedFileBase uploadFile, string format)
+        public ActionResult Create(HttpPostedFileBase uploadFile, ImageSettings settings, string format)
         {
             SymbolFile file = new SymbolFile();
-            file.FileName = new ImageService().ConvertImage(uploadFile, format);
+            file.FileName = new ImageService().ConvertImage(uploadFile, settings, format);
             ViewBag.FileUrl = file.FileUrl();
    
-            return View("Index");
+            return View("Index", settings);
         }
     }
 }
