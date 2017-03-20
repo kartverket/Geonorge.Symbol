@@ -93,7 +93,7 @@ namespace Geonorge.Symbol.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create(Models.Symbol symbol)
+        public ActionResult Create(Models.Symbol symbol, HttpPostedFileBase uploadFile)
         {
 
             ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value", symbol.Type);
@@ -108,6 +108,10 @@ namespace Geonorge.Symbol.Controllers
 
             if (ModelState.IsValid)
             {
+                ImageService img = new ImageService();
+                symbol.Thumbnail = img.SaveFileAndCreateThumbnail(uploadFile, symbol);
+                symbol.SymbolFiles = new List<SymbolFile>();
+                symbol.SymbolFiles.Add(new SymbolFile { SystemId = Guid.NewGuid(), FileName = symbol.Thumbnail });
                 _symbolService.AddSymbol(symbol);
                 return RedirectToAction("Index", "Files");
             }

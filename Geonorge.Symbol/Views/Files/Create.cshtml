@@ -21,7 +21,7 @@
 </section>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "symbolform" }))
 {
     @Html.AntiForgeryToken()
 
@@ -128,6 +128,12 @@
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.SourceUrl, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.SourceUrl, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Fil", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="file" id="uploadFile" name="uploadFile" />
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
