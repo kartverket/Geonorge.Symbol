@@ -77,7 +77,7 @@ namespace Geonorge.Symbol.Services
 
         public Models.Symbol GetSymbol(Guid systemid)
         {
-            return _dbContext.Symbols.Where(s => s.SystemId == systemid).FirstOrDefault();
+            return _dbContext.Symbols.Where(s => s.SystemId == systemid).Include(f => f.SymbolFiles).FirstOrDefault();
         }
 
         public void UpdateSymbol(Models.Symbol originalSymbol, Models.Symbol symbol)

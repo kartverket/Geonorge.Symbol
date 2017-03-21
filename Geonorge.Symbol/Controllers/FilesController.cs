@@ -66,10 +66,28 @@ namespace Geonorge.Symbol.Controllers
         }
 
         // GET: Files/Details/5
-        public ActionResult Details(Guid? id)
+        public ActionResult Details(Guid? systemid)
         {
 
-            return View();
+            if (systemid == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Models.Symbol symbol = _symbolService.GetSymbol(systemid.Value);
+
+            if (symbol == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.IsAdmin = false;
+            if (Request.IsAuthenticated)
+            {
+                ViewBag.IsAdmin = _authorizationService.IsAdmin();
+            }
+
+            return View(symbol);
         }
 
         // GET: Files/Create

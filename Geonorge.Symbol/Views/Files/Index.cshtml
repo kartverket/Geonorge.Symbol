@@ -45,7 +45,7 @@
                 <div class="row result-row metadata">
 
                     <div class="col-sm-3">
-                        @Html.ActionLink(item.Name ?? "->", "Edit", new { SystemId = item.SystemId })
+                        @Html.ActionLink(item.Name ?? "->", "Details", new { SystemId = item.SystemId })
                     </div>
                     <div class="col-sm-2">
                         @Html.DisplayFor(modelItem => item.Theme)
