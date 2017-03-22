@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Threading;
 using Geonorge.Symbol.Models;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace Geonorge.Symbol.Services
 {
@@ -67,20 +68,26 @@ namespace Geonorge.Symbol.Services
 
                     if (format == "svg")
                     {
-                        //To use . instead of , for decimals
-                        var culture = new CultureInfo("en-US");
-                        Thread.CurrentThread.CurrentCulture = culture;
-                        Options options = new Options();
-                        options.Tracing = new ImageTracerNet.OptionTypes.Tracing { LTres = s.LTres, QTres = s.QTres, PathOmit = s.PathOmit };
-                        options.ColorQuantization = new ImageTracerNet.OptionTypes.ColorQuantization { ColorSampling = s.ColorSampling, ColorQuantCycles = s.ColorQuantCycles, MinColorRatio = s.MinColorRatio, NumberOfColors = s.NumberOfColors };
-                        options.Blur = new ImageTracerNet.OptionTypes.Blur { BlurDelta = s.BlurDelta, BlurRadius = s.BlurRadius };
-                        options.SvgRendering = new ImageTracerNet.OptionTypes.SvgRendering { LCpr = s.LCpr, QCpr = s.QCpr, RoundCoords = s.RoundCoords, Scale = s.Scale, SimplifyTolerance = s.SimplifyTolerance, Viewbox = s.Viewbox };
+                        ////To use . instead of , for decimals
+                        //var culture = new CultureInfo("en-US");
+                        //Thread.CurrentThread.CurrentCulture = culture;
+                        //Options options = new Options();
+                        //options.Tracing = new ImageTracerNet.OptionTypes.Tracing { LTres = s.LTres, QTres = s.QTres, PathOmit = s.PathOmit };
+                        //options.ColorQuantization = new ImageTracerNet.OptionTypes.ColorQuantization { ColorSampling = s.ColorSampling, ColorQuantCycles = s.ColorQuantCycles, MinColorRatio = s.MinColorRatio, NumberOfColors = s.NumberOfColors };
+                        //options.Blur = new ImageTracerNet.OptionTypes.Blur { BlurDelta = s.BlurDelta, BlurRadius = s.BlurRadius };
+                        //options.SvgRendering = new ImageTracerNet.OptionTypes.SvgRendering { LCpr = s.LCpr, QCpr = s.QCpr, RoundCoords = s.RoundCoords, Scale = s.Scale, SimplifyTolerance = s.SimplifyTolerance, Viewbox = s.Viewbox };
 
                         string targetFolderSvg = System.Web.HttpContext.Current.Server.MapPath("~/files");
                         string fileNameSvg = Path.GetFileNameWithoutExtension(file.FileName) + ".svg";
                         string targetPathSvg = Path.Combine(targetFolderSvg, fileNameSvg);
 
-                        File.WriteAllText(targetPathSvg, ImageTracer.ImageToSvg(targetPath, options));
+                        String command = @"/k java -jar "+ targetFolder + "\\ImageTracer.jar "+ targetPath + " outfilename "+ targetPathSvg + " ltres 1 qtres 4 pathomit 150 colorsampling 1 numberofcolors 8 mincolorratio 0.05 colorquantcycles 15 scale 1 simplifytolerance 1 roundcoords 3 lcpr 0 qcpr 0 desc 1 viewbox 0 blurradius 1 blurdelta 2000";
+                        ProcessStartInfo cmdsi = new ProcessStartInfo("cmd.exe");
+                        cmdsi.Arguments = command;
+                        Process cmd = Process.Start(cmdsi);
+                        cmd.WaitForExit();
+
+                        //File.WriteAllText(targetPathSvg, ImageTracer.ImageToSvg(targetPath, options));
 
                         fileName = fileNameSvg;
                     }
