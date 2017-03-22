@@ -85,7 +85,7 @@ namespace Geonorge.Symbol.Services
                         ProcessStartInfo cmdsi = new ProcessStartInfo("cmd.exe");
                         cmdsi.Arguments = command;
                         Process cmd = Process.Start(cmdsi);
-                        cmd.WaitForExit();
+                        //cmd.WaitForExit();
 
                         //File.WriteAllText(targetPathSvg, ImageTracer.ImageToSvg(targetPath, options));
 
