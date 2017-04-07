@@ -26,7 +26,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         @if (ViewBag.IsAdmin)
         {
             <div class="panel panel-default">
@@ -110,7 +110,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.SymbolPackage, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.DropDownList("SymbolPackage", ViewBag.SymbolPackages as SelectList, String.Empty, new { @class = "form-control" })
+                        @Html.DropDownList("packageid", ViewBag.SymbolPackages as SelectList, String.Empty, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.SymbolPackage, "", new { @class = "text-danger" })
                     </div>
                 </div>

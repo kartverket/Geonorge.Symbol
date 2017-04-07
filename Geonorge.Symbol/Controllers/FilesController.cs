@@ -111,12 +111,13 @@ namespace Geonorge.Symbol.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create(Models.Symbol symbol, HttpPostedFileBase uploadFile)
+        public ActionResult Create(Models.Symbol symbol, HttpPostedFileBase uploadFile, string packageid)
         {
 
             ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value", symbol.Type);
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbol.Theme);
-            ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name", symbol.SymbolPackage);
+            ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name", packageid);
+            symbol.SymbolPackage = _symbolService.GetPackage(Guid.Parse(packageid));
 
             ViewBag.IsAdmin = false;
             if (Request.IsAuthenticated)
@@ -170,8 +171,9 @@ namespace Geonorge.Symbol.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Models.Symbol symbol)
+        public ActionResult Edit(Models.Symbol symbol, string packageid)
         {
+            symbol.SymbolPackage = _symbolService.GetPackage(Guid.Parse(packageid));
             Models.Symbol originalSymbol = _symbolService.GetSymbol(symbol.SystemId);
 
             ViewBag.IsAdmin = false;
