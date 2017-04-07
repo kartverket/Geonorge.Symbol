@@ -175,7 +175,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\SymbolPackagesController.cs" />
     <Compile Include="Migrations\201703010640130_Initial.cs" />
     <Compile Include="Migrations\201703010640130_Initial.Designer.cs">
@@ -415,7 +414,6 @@
     <Content Include="Views\SymbolPackages\Details.cshtml" />
     <Content Include="Views\SymbolPackages\Edit.cshtml" />
     <Content Include="Views\SymbolPackages\Index.cshtml" />
-    <Content Include="Views\Image\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -437,12 +435,6 @@
       <LastGenOutput>UI.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Geonorge.Symbol.Resources</CustomToolNamespace>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ImageTracerNet\ImageTracerNet.csproj">
-      <Project>{84ee293e-b938-4512-8a39-86ffc00ed267}</Project>
-      <Name>ImageTracerNet</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

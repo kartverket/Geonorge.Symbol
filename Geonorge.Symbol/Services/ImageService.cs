@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
-using ImageTracerNet;
 using System.Globalization;
 using System.Threading;
 using Geonorge.Symbol.Models;
@@ -16,7 +15,7 @@ namespace Geonorge.Symbol.Services
 {
     public class ImageService
     {
-        public string ConvertImage(HttpPostedFileBase file, ImageSettings s, string format)
+        public string ConvertImage(HttpPostedFileBase file, string format)
         {
 
             string fileName = Path.GetFileNameWithoutExtension(file.FileName) + "." + format;
@@ -49,11 +48,11 @@ namespace Geonorge.Symbol.Services
                                 image.Format = MagickFormat.Ai;
                                 break;
                             }
-                        //case "svg":
-                        //    {
-                        //        image.Format = MagickFormat.Svg;
-                        //        break;
-                        //    }
+                        case "svg":
+                            {
+                                image.Format = MagickFormat.Svg;
+                                break;
+                            }
                         default:
                             {
                                 image.Format = MagickFormat.Png;
@@ -65,32 +64,6 @@ namespace Geonorge.Symbol.Services
                     string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
                     string targetPath = Path.Combine(targetFolder, fileName);
                     image.Write(targetPath);
-
-                    if (format == "svg")
-                    {
-                        ////To use . instead of , for decimals
-                        //var culture = new CultureInfo("en-US");
-                        //Thread.CurrentThread.CurrentCulture = culture;
-                        //Options options = new Options();
-                        //options.Tracing = new ImageTracerNet.OptionTypes.Tracing { LTres = s.LTres, QTres = s.QTres, PathOmit = s.PathOmit };
-                        //options.ColorQuantization = new ImageTracerNet.OptionTypes.ColorQuantization { ColorSampling = s.ColorSampling, ColorQuantCycles = s.ColorQuantCycles, MinColorRatio = s.MinColorRatio, NumberOfColors = s.NumberOfColors };
-                        //options.Blur = new ImageTracerNet.OptionTypes.Blur { BlurDelta = s.BlurDelta, BlurRadius = s.BlurRadius };
-                        //options.SvgRendering = new ImageTracerNet.OptionTypes.SvgRendering { LCpr = s.LCpr, QCpr = s.QCpr, RoundCoords = s.RoundCoords, Scale = s.Scale, SimplifyTolerance = s.SimplifyTolerance, Viewbox = s.Viewbox };
-
-                        string targetFolderSvg = System.Web.HttpContext.Current.Server.MapPath("~/files");
-                        string fileNameSvg = Path.GetFileNameWithoutExtension(file.FileName) + ".svg";
-                        string targetPathSvg = Path.Combine(targetFolderSvg, fileNameSvg);
-
-                        String command = @"/k java -jar "+ targetFolder + "\\ImageTracer.jar "+ targetPath + " outfilename "+ targetPathSvg + " ltres 1 qtres 4 pathomit 150 colorsampling 1 numberofcolors 8 mincolorratio 0.05 colorquantcycles 15 scale 1 simplifytolerance 1 roundcoords 3 lcpr 0 qcpr 0 desc 1 viewbox 0 blurradius 1 blurdelta 2000";
-                        ProcessStartInfo cmdsi = new ProcessStartInfo("cmd.exe");
-                        cmdsi.Arguments = command;
-                        Process cmd = Process.Start(cmdsi);
-                        //cmd.WaitForExit();
-
-                        //File.WriteAllText(targetPathSvg, ImageTracer.ImageToSvg(targetPath, options));
-
-                        fileName = fileNameSvg;
-                    }
 
                 }
             }
