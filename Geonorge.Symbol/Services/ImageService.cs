@@ -71,7 +71,7 @@ namespace Geonorge.Symbol.Services
             return fileName;
         }
 
-        public string SaveFileAndCreateThumbnail(HttpPostedFileBase file, Models.Symbol symbol)
+        public string SaveThumbnail(HttpPostedFileBase file, Models.Symbol symbol)
         {
             var ext = Path.GetExtension(file.FileName);
 

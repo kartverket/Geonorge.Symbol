@@ -180,7 +180,6 @@
     <Compile Include="Migrations\201703010640130_Initial.Designer.cs">
       <DependentUpon>201703010640130_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\ImageSettings.cs" />
     <Compile Include="Services\AuthorizationService.cs" />
     <Compile Include="Services\IAuthorizationService.cs" />
     <Compile Include="Services\ImageService.cs" />

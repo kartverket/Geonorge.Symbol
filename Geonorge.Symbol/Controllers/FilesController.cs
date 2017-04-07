@@ -127,9 +127,7 @@ namespace Geonorge.Symbol.Controllers
             if (ModelState.IsValid)
             {
                 ImageService img = new ImageService();
-                symbol.Thumbnail = img.SaveFileAndCreateThumbnail(uploadFile, symbol);
-                symbol.SymbolFiles = new List<SymbolFile>();
-                symbol.SymbolFiles.Add(new SymbolFile { SystemId = Guid.NewGuid(), FileName = symbol.Thumbnail });
+                symbol.Thumbnail = img.SaveThumbnail(uploadFile, symbol);
                 _symbolService.AddSymbol(symbol);
                 return RedirectToAction("Index", "Files");
             }
