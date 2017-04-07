@@ -171,9 +171,13 @@ namespace Geonorge.Symbol.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Models.Symbol symbol, string packageid)
+        public ActionResult Edit(Models.Symbol symbol, HttpPostedFileBase uploadFile, string packageid)
         {
             symbol.SymbolPackage = _symbolService.GetPackage(Guid.Parse(packageid));
+            ImageService img = new ImageService();
+            if(uploadFile != null)
+                symbol.Thumbnail = img.SaveThumbnail(uploadFile, symbol);
+
             Models.Symbol originalSymbol = _symbolService.GetSymbol(symbol.SystemId);
 
             ViewBag.IsAdmin = false;

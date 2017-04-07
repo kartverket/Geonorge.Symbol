@@ -99,6 +99,7 @@ namespace Geonorge.Symbol.Services
                 originalSymbol.SymbolPackage = symbol.SymbolPackage;
                 originalSymbol.Theme = symbol.Theme;
                 originalSymbol.Type = symbol.Type;
+                originalSymbol.Thumbnail = symbol.Thumbnail;
 
             originalSymbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
             _dbContext.Entry(originalSymbol).State = EntityState.Modified;
