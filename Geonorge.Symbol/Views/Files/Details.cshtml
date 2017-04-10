@@ -51,7 +51,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.SourceUrl)
+            <a href="@Model.SourceUrl" target="_blank">@Html.DisplayFor(model => model.SourceUrl)</a>
         </dd>
 
         <dt>
@@ -59,7 +59,10 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.SymbolPackage.Name)
+            @if(Model.SymbolPackage != null)
+            {
+                <a href="~/symbolpackages/details/@Model.SymbolPackage.SystemId">@Model.SymbolPackage.Name</a>
+            }
         </dd>
 
     </dl>
