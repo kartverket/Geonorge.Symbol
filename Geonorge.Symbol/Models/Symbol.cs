@@ -58,14 +58,14 @@ namespace Geonorge.Symbol.Models
         public string Source { get; set; }
 
         /// <summary>URL til symbolsamling symbolet hentes fra.</summary>
-        [Display(Name = "Url til symbolsamling")]
+        [Display(Name = "Kilde-URL")]
         public string SourceUrl { get; set; }
 
         /// <summary>ulike grafiske forekomster av symbolet (ulike formater eller farger, .. )</summary>
-        public List<SymbolFile> SymbolFiles { get; set; }
+        public virtual List<SymbolFile> SymbolFiles { get; set; }
 
         [Display(Name = "Pakke")]
-        public SymbolPackage SymbolPackage { get; set; }
+        public virtual SymbolPackage SymbolPackage { get; set; }
 
         public string ThumbnailUrl()
         {

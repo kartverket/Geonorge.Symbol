@@ -117,7 +117,8 @@ namespace Geonorge.Symbol.Controllers
             ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value", symbol.Type);
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbol.Theme);
             ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name", packageid);
-            symbol.SymbolPackage = _symbolService.GetPackage(Guid.Parse(packageid));
+            if(!string.IsNullOrEmpty(packageid))
+                symbol.SymbolPackage = _symbolService.GetPackage(Guid.Parse(packageid));
 
             ViewBag.IsAdmin = false;
             if (Request.IsAuthenticated)
@@ -128,7 +129,8 @@ namespace Geonorge.Symbol.Controllers
             if (ModelState.IsValid)
             {
                 ImageService img = new ImageService();
-                symbol.Thumbnail = img.SaveThumbnail(uploadFile, symbol);
+                if(uploadFile != null)
+                    symbol.Thumbnail = img.SaveThumbnail(uploadFile, symbol);
                 _symbolService.AddSymbol(symbol);
                 return RedirectToAction("Index", "Files");
             }
@@ -154,7 +156,10 @@ namespace Geonorge.Symbol.Controllers
 
             ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value", symbol.Type);
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbol.Theme);
-            ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name", symbol.SymbolPackage);
+            string packageId = "";
+            if (symbol.SymbolPackage != null)
+                packageId = symbol.SymbolPackage.SystemId.ToString();
+            ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name", packageId);
 
             ViewBag.IsAdmin = false;
             if (Request.IsAuthenticated)
@@ -173,7 +178,8 @@ namespace Geonorge.Symbol.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Models.Symbol symbol, HttpPostedFileBase uploadFile, string packageid)
         {
-            symbol.SymbolPackage = _symbolService.GetPackage(Guid.Parse(packageid));
+            if (!string.IsNullOrEmpty(packageid))
+                symbol.SymbolPackage = _symbolService.GetPackage(Guid.Parse(packageid));
             ImageService img = new ImageService();
             if(uploadFile != null)
                 symbol.Thumbnail = img.SaveThumbnail(uploadFile, symbol);

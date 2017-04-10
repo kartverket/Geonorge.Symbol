@@ -77,7 +77,9 @@ namespace Geonorge.Symbol.Services
 
         public Models.Symbol GetSymbol(Guid systemid)
         {
-            return _dbContext.Symbols.Where(s => s.SystemId == systemid).Include(f => f.SymbolFiles).FirstOrDefault();
+            var symbol = _dbContext.Symbols.Where(s => s.SystemId == systemid).Include(f => f.SymbolFiles).FirstOrDefault();
+
+            return symbol;
         }
 
         public void UpdateSymbol(Models.Symbol originalSymbol, Models.Symbol symbol)
@@ -96,10 +98,12 @@ namespace Geonorge.Symbol.Services
                 originalSymbol.Owner = owner;
                 originalSymbol.Source = symbol.Source;
                 originalSymbol.SourceUrl = symbol.SourceUrl;
+                var symbolPackage = originalSymbol.SymbolPackage;
                 originalSymbol.SymbolPackage = symbol.SymbolPackage;
                 originalSymbol.Theme = symbol.Theme;
                 originalSymbol.Type = symbol.Type;
-                originalSymbol.Thumbnail = symbol.Thumbnail;
+                if(symbol.Thumbnail != null)
+                    originalSymbol.Thumbnail = symbol.Thumbnail;
 
             originalSymbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
             _dbContext.Entry(originalSymbol).State = EntityState.Modified;
