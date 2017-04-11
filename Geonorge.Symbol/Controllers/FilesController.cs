@@ -59,7 +59,7 @@ namespace Geonorge.Symbol.Controllers
             ViewBag.SortOrder = sortOrder;
             ViewBag.text = text;
 
-            int pageSize = 50;
+            int pageSize = 30;
             int pageNumber = (page ?? 1);
 
             return View(symbols.ToPagedList(pageNumber, pageSize));

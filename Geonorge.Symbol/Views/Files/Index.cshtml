@@ -19,7 +19,7 @@
         </div>
     </div>
 </section>
-
+@Html.Partial("_SearchBarPartial")
 <div class="row">
 
     <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
@@ -29,12 +29,9 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div id="tableView" class="search-results">
             <div class="row search-results-table-heading">
-                <div class="col-sm-3"><p>@Html.ActionLink("Symbolnavn", "Index", new { sortOrder = ViewBag.SymbolnameSortParm, text = ViewBag.text }, new { @class = ViewBag.SortOrder.Contains("symbolname") ? (ViewBag.SymbolnameSortParm.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
-                <div class="col-sm-2"><p>@Html.ActionLink("Tema", "Index", new { sortOrder = ViewBag.Theme, text = ViewBag.text }, new { @class = ViewBag.SortOrder.Contains("theme") ? (ViewBag.Theme.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
-                <div class="col-sm-2"><p>@Html.ActionLink("Eier", "Index", new { sortOrder = ViewBag.Owner, text = ViewBag.text }, new { @class = ViewBag.SortOrder.Contains("owner") ? (ViewBag.Owner.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
-                <div class="col-sm-1"><p>Offisiell</p></div>
-                <div class="col-sm-1"><p>Type</p></div>
-                <div class="col-sm-2"><p>Kilde</p></div>
+                <div class="col-sm-4"><p>@Html.ActionLink("Symbolnavn", "Index", new { sortOrder = ViewBag.SymbolnameSortParm, text = ViewBag.text }, new { @class = ViewBag.SortOrder.Contains("symbolname") ? (ViewBag.SymbolnameSortParm.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
+                <div class="col-sm-3"><p>@Html.ActionLink("Eier", "Index", new { sortOrder = ViewBag.Owner, text = ViewBag.text }, new { @class = ViewBag.SortOrder.Contains("owner") ? (ViewBag.Owner.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
+                <div class="col-sm-3"><p>@Html.ActionLink("Tema", "Index", new { sortOrder = ViewBag.Theme, text = ViewBag.text }, new { @class = ViewBag.SortOrder.Contains("theme") ? (ViewBag.Theme.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
                 <div class="col-sm-1"><p>Symbol</p></div>
             </div>
 
@@ -44,27 +41,14 @@
             {
                 <div class="row result-row metadata">
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         @Html.ActionLink(item.Name ?? "->", "Details", new { SystemId = item.SystemId })
                     </div>
-                    <div class="col-sm-2">
-                        @Html.DisplayFor(modelItem => item.Theme)
-                    </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         @Html.DisplayFor(modelItem => item.Owner)
                     </div>
-                    <div class="col-sm-1">
-                        @Html.DisplayFor(modelItem => item.OfficialStatus)
-                    </div>
-                    <div class="col-sm-1">
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </div>
-                    <div class="col-sm-2">
-                        @if (!string.IsNullOrEmpty(item.SourceUrl) && !string.IsNullOrEmpty(item.Source))
-                        {
-                            <a href="@item.SourceUrl" target="_blank">@item.Source</a>
-                        }
-                       
+                    <div class="col-sm-3">
+                        @Html.DisplayFor(modelItem => item.Theme)
                     </div>
                     <div class="col-sm-1">
                         <img src="@item.ThumbnailUrl()" />
@@ -73,7 +57,7 @@
                 <hr />
             }
         </div>
-        Side @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) av @Model.PageCount
+        Viser @(Model.TotalItemCount == 0 ? 0 : Model.FirstItemOnPage) - @Model.LastItemOnPage av @Model.TotalItemCount treff
 
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, text = ViewBag.text }))
     </div>

@@ -426,6 +426,7 @@
     <Content Include="Views\SymbolFiles\Create.cshtml" />
     <Content Include="Views\SymbolFiles\Delete.cshtml" />
     <Content Include="Views\SymbolFiles\Edit.cshtml" />
+    <Content Include="Views\Shared\_SearchBarPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
