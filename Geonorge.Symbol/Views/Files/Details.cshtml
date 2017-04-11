@@ -68,10 +68,13 @@
     </dl>
     @foreach (var variant in Model.SymbolFiles.Select(v => v.SymbolFileVariant).Distinct().ToList())
     {
+        if (variant != null)
+        {
         <h4>@variant.Name</h4>
         foreach (var file in Model.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == variant.SystemId).ToList())
         {
-            <div>@file.FileUrl()</div>
+            <div><a href="@file.FileUrl()">@file.FileName</a></div>
+            }
         }
     }
     <hr />
