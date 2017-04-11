@@ -1,50 +1,36 @@
 ﻿@model Geonorge.Symbol.Models.SymbolPackage
 
+@section breadcrumb {
+    <li><a href="~/files/index">Symbol</a></li>
+    <li>@Model.Name</li>
+}
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Symbolpakke - " + Model.Name;
 }
 
-<h2>Details</h2>
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>
+                @Model.Name
+            </h1>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
 
 <div>
-    <h4>SymbolPackage</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OfficialStatus)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OfficialStatus)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Owner)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Owner)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Theme)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Theme)
-        </dd>
-
-    </dl>
+    @foreach (var symbol in Model.Symbols)
+    {
+        foreach (var file in symbol.SymbolFiles)
+        {
+            <a href="~/files/details/@symbol.SystemId"><img height="50" src="@file.FileUrl()" alt="@file.FileName" /></a>
+        }
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.SystemId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="clearfix"></div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
+    <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="~/files/index">Tilbake</a>
+</div>
