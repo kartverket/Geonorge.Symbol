@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using Geonorge.Symbol.Models;
 using Geonorge.Symbol.Services;
+using System.IO;
+using Ionic.Zip;
 
 namespace Geonorge.Symbol.Controllers
 {
@@ -127,5 +129,31 @@ namespace Geonorge.Symbol.Controllers
 
             return RedirectToAction("Index");
         }
+
+
+        public FileResult Download(Guid? systemid)
+        {
+            var package = _symbolService.GetPackage(systemid.Value);
+            string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/");
+
+            using (ZipFile zip = new ZipFile())
+            {
+                foreach (var symbol in package.Symbols)
+                {
+                    foreach (var file in symbol.SymbolFiles)
+                    {
+                        zip.AddFile(targetFolder + file.FileName,"");
+                    }
+                }
+
+                MemoryStream output = new MemoryStream();
+                zip.Save(output);
+                output.Position = 0;
+
+            return File(output, "application/zip", "package.zip");
+            }
+
+        }
+
     }
 }
