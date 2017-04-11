@@ -18,13 +18,20 @@ namespace Geonorge.Symbol.Models
         public string Format { get; set; }
 
         /// <summary>Positiv, negativ, utenramme, nedtrekksliste</summary>
+        [Display(Name = "Symbolgrafikk")]
         public string Type { get; set; }
 
         /// <summary>Rød, grønn, blå, gul, svart, oransje, fiolett, grå, annen, nedtrekksliste, tekstfelt</summary>
+        [Display(Name = "Farge")]
         public string Color { get; set; }
 
         /// <summary>Angi størrelse på symbol. (Stor >1000 px, middels 250 px - 999, liten <250)</summary>
+        [Display(Name = "Størrelse")]
         public string Size { get; set; }
+
+        public virtual SymbolFileVariant SymbolFileVariant { get; set; }
+
+        public virtual Symbol Symbol { get; set; }
 
         public string FileUrl()
         {

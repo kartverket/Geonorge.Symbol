@@ -117,5 +117,78 @@ namespace Geonorge.Symbol.Services
             _dbContext.Symbols.Remove(symbol);
             _dbContext.SaveChanges();
         }
+
+        public SymbolFile GetSymbolFile(Guid systemid)
+        {
+            var symbolFile = _dbContext.SymbolFiles.Where(s => s.SystemId == systemid).FirstOrDefault();
+
+            return symbolFile;
+        }
+
+        public void AddSymbolFile(SymbolFile symbolFile, HttpPostedFileBase uploadFile)
+        {
+            var symbol = GetSymbol(symbolFile.Symbol.SystemId);
+            SymbolFileVariant variant = new SymbolFileVariant();
+            variant.SystemId = Guid.NewGuid();
+            variant.Name = symbol.Name + "_" + symbolFile.Type;
+            symbolFile.SymbolFileVariant = variant;
+            symbol.DateChanged = DateTime.Now;
+            symbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
+            symbolFile.Symbol = symbol;
+            symbolFile.SystemId = Guid.NewGuid();
+            var filename = new ImageService().SaveImage(uploadFile, symbol);
+            symbolFile.FileName = filename;
+            _dbContext.SymbolFiles.Add(symbolFile);
+            _dbContext.SaveChanges();
+        }
+
+        public void UpdateSymbolFile(SymbolFile originalSymbolFile, Models.SymbolFile symbolFile)
+        {
+            //Todo set changes
+            _dbContext.Entry(originalSymbolFile).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+        }
+
+        public void RemoveSymbolFile(SymbolFile symbolFile)
+        {
+            _dbContext.SymbolFiles.Remove(symbolFile);
+            _dbContext.SaveChanges();
+        }
+
+        public void AddSymbolFilesFromSvg(SymbolFile symbolFile, HttpPostedFileBase uploadFile)
+        {
+            var symbol = GetSymbol(symbolFile.Symbol.SystemId);
+            SymbolFileVariant variant = new SymbolFileVariant();
+            variant.SystemId = Guid.NewGuid();
+            variant.Name = symbol.Name + "_" + symbolFile.Type;
+
+            ImageService imageService = new ImageService();
+
+            symbolFile.SymbolFileVariant = variant;
+            symbol.DateChanged = DateTime.Now;
+            symbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
+            symbolFile.Symbol = symbol;
+            symbolFile.SystemId = Guid.NewGuid();
+            var filename = imageService.SaveImage(uploadFile, symbol);
+            symbolFile.FileName = filename;
+            _dbContext.SymbolFiles.Add(symbolFile);
+            _dbContext.SaveChanges();
+
+            filename = imageService.ConvertImage(uploadFile, symbol, "png");
+            SymbolFile png = new SymbolFile();
+            png.SystemId = Guid.NewGuid();
+            png.Color = symbolFile.Color;
+            png.Size = symbolFile.Size;
+            png.Symbol = symbol;
+            png.SymbolFileVariant = variant;
+            png.Type = symbolFile.Type;
+            png.SystemId = Guid.NewGuid();
+            png.FileName = filename;
+            _dbContext.SymbolFiles.Add(png);
+            _dbContext.SaveChanges();
+
+            //Todo: convert more formats than png
+
+        }
     }
 }

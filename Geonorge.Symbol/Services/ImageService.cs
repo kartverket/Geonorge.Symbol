@@ -15,16 +15,23 @@ namespace Geonorge.Symbol.Services
 {
     public class ImageService
     {
-        public string ConvertImage(HttpPostedFileBase file, string format)
+        public string ConvertImage(HttpPostedFileBase file, Models.Symbol symbol, string format)
         {
+            string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
 
-            string fileName = Path.GetFileNameWithoutExtension(file.FileName) + "." + format;
+            var ext = "." + format;
+
+            MagickReadSettings readerSettings = new MagickReadSettings();
+            if (file.ContentType.Equals("image/svg+xml"))
+                readerSettings.Format = MagickFormat.Svg;
+
+            string fileName = CreateFileName(symbol, ext, targetFolder);
 
             using (MemoryStream memStream = new MemoryStream())
             {
                 file.InputStream.CopyTo(memStream);
 
-                using (MagickImage image = new MagickImage(memStream))
+                using (MagickImage image = new MagickImage(memStream, readerSettings))
                 {
                     switch (format)
                     {
@@ -61,7 +68,6 @@ namespace Geonorge.Symbol.Services
                             }
                     }
 
-                    string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
                     string targetPath = Path.Combine(targetFolder, fileName);
                     image.Write(targetPath);
 
@@ -71,11 +77,30 @@ namespace Geonorge.Symbol.Services
             return fileName;
         }
 
-        public string SaveThumbnail(HttpPostedFileBase file, Models.Symbol symbol)
+        public string SaveImage(HttpPostedFileBase file, Models.Symbol symbol)
         {
+
+            string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
+
             var ext = Path.GetExtension(file.FileName);
 
-            string fileName = CreateFileName(symbol, ext);
+            string fileName = CreateFileName(symbol, ext, targetFolder);
+
+            string targetPath = Path.Combine(targetFolder, fileName);
+            file.SaveAs(targetPath);
+
+            return fileName;
+
+        }
+
+        public string SaveThumbnail(HttpPostedFileBase file, Models.Symbol symbol)
+        {
+
+            string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/thumbnail");
+
+            var ext = Path.GetExtension(file.FileName);
+
+            string fileName = CreateFileName(symbol, ext, targetFolder);
 
             using (MemoryStream memStream = new MemoryStream())
             {
@@ -119,13 +144,9 @@ namespace Geonorge.Symbol.Services
                             }
                     }
 
-                    string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/thumbnail");
                     string targetPath = Path.Combine(targetFolder, fileName);
                     image.Write(targetPath);
 
-                    targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
-                    targetPath = Path.Combine(targetFolder, fileName);
-                    file.SaveAs(targetPath);
                 }
             }
 
@@ -133,8 +154,11 @@ namespace Geonorge.Symbol.Services
 
         }
 
-        public string CreateFileName(Models.Symbol symbol, string ext)
+        public string CreateFileName(Models.Symbol symbol, string ext, string targetFolder = null)
         {
+            if(string.IsNullOrEmpty(targetFolder))
+                targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
+
             string filename;
 
             if (symbol.SymbolPackage != null)
@@ -143,8 +167,6 @@ namespace Geonorge.Symbol.Services
                 filename = MakeSeoFriendlyString(symbol.Owner)  +"_" + MakeSeoFriendlyString(symbol.Name);
 
             string additionalNumber = "";
-
-            string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
             
 
             for (int i = 1; ; i++)

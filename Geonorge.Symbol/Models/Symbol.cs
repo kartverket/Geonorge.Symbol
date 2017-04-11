@@ -69,7 +69,7 @@ namespace Geonorge.Symbol.Models
 
         public string ThumbnailUrl()
         {
-            return CurrentDomain() + "/files/" + Thumbnail;
+            return CurrentDomain() + "/files/thumbnail/" + Thumbnail;
         }
 
         string CurrentDomain()

@@ -66,12 +66,13 @@
         </dd>
 
     </dl>
-
-    @foreach (var symbolFile in Model.SymbolFiles)
+    @foreach (var variant in Model.SymbolFiles.Select(v => v.SymbolFileVariant).Distinct().ToList())
     {
-    <div class="row">
-        <div class="col-sm-12"><a href="@symbolFile.FileUrl()" target="_blank">@symbolFile.FileName</a></div>
-    </div>
+        <h4>@variant.Name</h4>
+        foreach (var file in Model.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == variant.SystemId).ToList())
+        {
+            <div>@file.FileUrl()</div>
+        }
     }
     <hr />
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
@@ -79,6 +80,7 @@
         @if (Request.IsAuthenticated)
         {
         <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/files/Edit/@Model.SystemId">Rediger</a>
+        <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/symbolfiles/Create/@Model.SystemId">Legg til</a>
         }
     </div>
 

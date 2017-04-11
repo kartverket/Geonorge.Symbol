@@ -175,11 +175,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SymbolFilesController.cs" />
     <Compile Include="Controllers\SymbolPackagesController.cs" />
     <Compile Include="Migrations\201703010640130_Initial.cs" />
     <Compile Include="Migrations\201703010640130_Initial.Designer.cs">
       <DependentUpon>201703010640130_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704101129347_AddSymbolFileVariant.cs" />
+    <Compile Include="Migrations\201704101129347_AddSymbolFileVariant.Designer.cs">
+      <DependentUpon>201704101129347_AddSymbolFileVariant.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SymbolFileVariant.cs" />
     <Compile Include="Services\AuthorizationService.cs" />
     <Compile Include="Services\IAuthorizationService.cs" />
     <Compile Include="Services\ImageService.cs" />
@@ -413,6 +419,9 @@
     <Content Include="Views\SymbolPackages\Details.cshtml" />
     <Content Include="Views\SymbolPackages\Edit.cshtml" />
     <Content Include="Views\SymbolPackages\Index.cshtml" />
+    <Content Include="Views\SymbolFiles\Create.cshtml" />
+    <Content Include="Views\SymbolFiles\Delete.cshtml" />
+    <Content Include="Views\SymbolFiles\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -428,6 +437,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201703010640130_Initial.resx">
       <DependentUpon>201703010640130_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704101129347_AddSymbolFileVariant.resx">
+      <DependentUpon>201704101129347_AddSymbolFileVariant.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

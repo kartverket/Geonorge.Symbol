@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Geonorge.Symbol.Models;
+using System.Web;
 
 namespace Geonorge.Symbol.Services
 {
@@ -16,5 +17,10 @@ namespace Geonorge.Symbol.Services
         Models.Symbol GetSymbol(Guid systemid);
         void UpdateSymbol(Models.Symbol originalSymbol, Models.Symbol symbol);
         void RemoveSymbol(Models.Symbol symbol);
+        SymbolFile GetSymbolFile(Guid systemid);
+        void AddSymbolFile(Models.SymbolFile symbolFile, HttpPostedFileBase uploadFile);
+        void AddSymbolFilesFromSvg(Models.SymbolFile symbolFile, HttpPostedFileBase uploadFile);
+        void UpdateSymbolFile(Models.SymbolFile originalSymbolFile, Models.SymbolFile symbolFile);
+        void RemoveSymbolFile(Models.SymbolFile symbolFile);
     }
 }
