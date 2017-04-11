@@ -184,12 +184,22 @@ namespace Geonorge.Symbol.Services
             png.Symbol = symbol;
             png.SymbolFileVariant = variant;
             png.Type = symbolFile.Type;
-            png.SystemId = Guid.NewGuid();
             png.FileName = filename;
             _dbContext.SymbolFiles.Add(png);
             _dbContext.SaveChanges();
 
-            //Todo: convert more formats than png
+            uploadFile.InputStream.Position = 0;
+            filename = imageService.ConvertImage(uploadFile, symbol, "gif");
+            SymbolFile gif = new SymbolFile();
+            gif.SystemId = Guid.NewGuid();
+            gif.Color = symbolFile.Color;
+            gif.Size = symbolFile.Size;
+            gif.Symbol = symbol;
+            gif.SymbolFileVariant = variant;
+            gif.Type = symbolFile.Type;
+            gif.FileName = filename;
+            _dbContext.SymbolFiles.Add(gif);
+            _dbContext.SaveChanges();
 
         }
     }
