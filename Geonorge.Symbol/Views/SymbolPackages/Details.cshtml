@@ -24,10 +24,7 @@
 <div>
     @foreach (var symbol in Model.Symbols)
     {
-        foreach (var file in symbol.SymbolFiles)
-        {
-            <a href="~/files/details/@symbol.SystemId"><img height="50" src="@file.FileUrl()" alt="@file.FileName" /></a>
-        }
+        <a href="~/files/details/@symbol.SystemId"><img height="50" src="@symbol.ThumbnailUrl()" alt="@symbol.Thumbnail" /></a>
     }
 </div>
 <div class="clearfix"></div>
