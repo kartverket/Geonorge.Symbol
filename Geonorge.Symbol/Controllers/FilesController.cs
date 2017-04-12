@@ -247,8 +247,6 @@ namespace Geonorge.Symbol.Controllers
             bool hasAccess = _authorizationService.HasAccess(symbol.Owner,
                 _authorizationService.GetSecurityClaim("organization").FirstOrDefault());
 
-            bool isAdmin = _authorizationService.IsAdmin();
-
             if (!hasAccess)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);

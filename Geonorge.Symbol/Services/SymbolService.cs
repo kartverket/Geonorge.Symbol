@@ -119,6 +119,11 @@ namespace Geonorge.Symbol.Services
         {
             _dbContext.Symbols.Remove(symbol);
             _dbContext.SaveChanges();
+            foreach (var file in symbol.SymbolFiles)
+            {
+                DeleteFile(file.FileName);
+            }
+            DeleteThumbnailFile(symbol.Thumbnail);
         }
 
         public SymbolFile GetSymbolFile(Guid systemid)
@@ -221,6 +226,17 @@ namespace Geonorge.Symbol.Services
             if (!string.IsNullOrEmpty(fileName))
             {
                 string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
+                string targetPath = Path.Combine(targetFolder, fileName);
+                if (File.Exists(targetPath))
+                    File.Delete(targetPath);
+            }
+        }
+
+        private void DeleteThumbnailFile(string fileName)
+        {
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/thumbnail");
                 string targetPath = Path.Combine(targetFolder, fileName);
                 if (File.Exists(targetPath))
                     File.Delete(targetPath);

@@ -119,7 +119,7 @@ namespace Geonorge.Symbol.Controllers
                     _symbolService.RemoveSymbolFile(file);
                 }
             }
-            else { return new HttpStatusCodeResult(HttpStatusCode.BadRequest); }
+            else { return new HttpStatusCodeResult(HttpStatusCode.Unauthorized); }
             return RedirectToAction("Details", "Files", new { systemid = symbolId });
         }
     }
