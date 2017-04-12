@@ -1,74 +1,60 @@
-﻿@model Geonorge.Symbol.Models.SymbolFile
+﻿@model List<Geonorge.Symbol.Models.SymbolFile>
 
+@section breadcrumb {
+    <li><a href="~/files/index">Symbol</a></li>
+    <li><a href="~/files/details/@Model[0].Symbol.SystemId">@Model[0].Symbol.Name</a></li>
+    <li>Rediger @Model[0].SymbolFileVariant.Name</li>
+}
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Rediger symbol-variant";
 }
 
-<h2>Edit</h2>
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>
+                Rediger @Model[0].SymbolFileVariant.Name
+            </h1>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
 
+<p>Under konstruksjon, her er det tenkt at man kan redigere variant navn, samt at man kan fjerne, legge til filer</p>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>SymbolFile</h4>
-        <hr />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.SystemId)
-
+        @Html.HiddenFor(model => model[0].SymbolFileVariant.SystemId)
         <div class="form-group">
-            @Html.LabelFor(model => model.FileName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FileName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FileName, "", new { @class = "text-danger" })
+            <label class="col-md-1">Variant:</label>
+            <div class="col-md-5">
+                <input type="text" class="form-control" name="variant" value="@Model[0].SymbolFileVariant.Name" />
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Format, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Format, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Format, "", new { @class = "text-danger" })
+        @foreach (var file in Model)
+        {
+            <div class="row">
+                <div class="col-md-10">@file.FileName</div>
+                <div class="col-md-1"><input type="button" class="btn btn-default" disabled value="Rediger" /></div>
+                <div class="col-md-1"><input type="button" class="btn btn-default" disabled value="Slett" /></div>
             </div>
-        </div>
-
+            <hr />
+        }
         <div class="form-group">
-            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Color, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="col-md-12">
+                <input type="submit" disabled value="Lagre" style="margin-left: 15px;" class="btn btn-default pull-right" />
+                <input type="button" class="btn btn-default pull-right" disabled value="Legg til fil" />
+                <a class="hidden-print show-loading-animation pull-left"  data-loading-message="Henter innhold" href="~/files/details?systemid=@Model[0].Symbol.SystemId">Tilbake</a>
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

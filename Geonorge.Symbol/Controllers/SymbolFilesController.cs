@@ -63,12 +63,12 @@ namespace Geonorge.Symbol.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SymbolFile symbolFile = _symbolService.GetSymbolFile(systemid.Value);
-            if (symbolFile == null)
+            List<SymbolFile> symbolFiles = _symbolService.GetSymbolVariant(systemid.Value);
+            if (symbolFiles == null)
             {
                 return HttpNotFound();
             }
-            return View(symbolFile);
+            return View(symbolFiles);
         }
 
         // POST: SymbolFiles/Edit/5
