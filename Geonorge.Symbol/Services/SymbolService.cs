@@ -26,6 +26,7 @@ namespace Geonorge.Symbol.Services
             {
                return _dbContext.Symbols.Where(s => s.Name.Contains(text) || s.Description.Contains(text)
                || s.Owner.Contains(text) || s.Theme.Contains(text) || s.Type.Contains(text)
+               || s.SymbolPackage.Name.Contains(text) || s.SymbolPackage.Theme.Contains(text)
                ).ToList();
             }
             else { 
