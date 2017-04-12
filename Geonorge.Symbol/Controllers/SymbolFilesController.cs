@@ -95,12 +95,12 @@ namespace Geonorge.Symbol.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SymbolFile symbolFile = _symbolService.GetSymbolFile(systemid.Value);
-            if (symbolFile == null)
+            var symbolFiles = _symbolService.GetSymbolVariant(systemid.Value);
+            if (symbolFiles == null)
             {
                 return HttpNotFound();
             }
-            return View(symbolFile);
+            return View(symbolFiles);
         }
 
         // POST: SymbolFiles/Delete/5
@@ -109,9 +109,18 @@ namespace Geonorge.Symbol.Controllers
         [Authorize]
         public ActionResult DeleteConfirmed(Guid? systemid)
         {
-            SymbolFile symbolFile = _symbolService.GetSymbolFile(systemid.Value);
-            _symbolService.RemoveSymbolFile(symbolFile);
-            return RedirectToAction("Index");
+            var symbolFiles = _symbolService.GetSymbolVariant(systemid.Value).ToList();
+            var symbolId = symbolFiles[0].Symbol.SystemId;
+            if (_authorizationService.HasAccess(symbolFiles[0].Symbol.Owner,
+                    _authorizationService.GetSecurityClaim("organization").FirstOrDefault()))
+            {
+                foreach (var file in symbolFiles)
+                {
+                    _symbolService.RemoveSymbolFile(file);
+                }
+            }
+            else { return new HttpStatusCodeResult(HttpStatusCode.BadRequest); }
+            return RedirectToAction("Details", "Files", new { systemid = symbolId });
         }
     }
 }

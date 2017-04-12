@@ -84,6 +84,11 @@
         <b>Farge:</b> @String.Join(",", Model.SymbolFiles.Where(va => va.SymbolFileVariant.SystemId == variant.SystemId).Select(c => c.Color).Distinct())
 
         <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/files/DownloadVariant/@variant.SystemId">Last ned</a>
+        if (ViewBag.HasAccess)
+        {
+            <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/symbolfiles/edit/@variant.SystemId">Rediger</a>
+            <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/symbolfiles/delete/@variant.SystemId">Slett</a>
+        }
         <p>&nbsp;</p>
     }
     <hr />

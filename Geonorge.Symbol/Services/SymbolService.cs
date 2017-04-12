@@ -157,6 +157,7 @@ namespace Geonorge.Symbol.Services
         {
             _dbContext.SymbolFiles.Remove(symbolFile);
             _dbContext.SaveChanges();
+            DeleteFile(symbolFile.FileName);
         }
 
         public void AddSymbolFilesFromSvg(SymbolFile symbolFile, HttpPostedFileBase uploadFile)
@@ -213,6 +214,17 @@ namespace Geonorge.Symbol.Services
             var symbolVariant = _dbContext.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == systemid).ToList();
 
             return symbolVariant;
+        }
+
+        private void DeleteFile(string fileName)
+        {
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
+                string targetPath = Path.Combine(targetFolder, fileName);
+                if (File.Exists(targetPath))
+                    File.Delete(targetPath);
+            }
         }
     }
 }
