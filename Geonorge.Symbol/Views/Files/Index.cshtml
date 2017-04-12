@@ -33,7 +33,7 @@
                 @{ var symbols = Model.Where(pa => pa.SymbolPackage.SystemId == package.SystemId); }
                 @foreach (var symbol in symbols)
                 {
-                    <img src="@symbol.ThumbnailUrl()" height="25" alt="@symbol.Thumbnail" />
+                    <img src="@symbol.ThumbnailUrl()" height="30" alt="@symbol.Thumbnail" />
                 }
                  <h4 style="font-weight:bold">@package.Name</h4>
                  <p>
