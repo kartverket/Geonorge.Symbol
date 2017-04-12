@@ -207,5 +207,12 @@ namespace Geonorge.Symbol.Services
             _dbContext.SaveChanges();
 
         }
+
+        public List<Models.SymbolFile> GetSymbolVariant(Guid systemid)
+        {
+            var symbolVariant = _dbContext.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == systemid).ToList();
+
+            return symbolVariant;
+        }
     }
 }

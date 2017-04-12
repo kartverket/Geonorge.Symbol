@@ -82,6 +82,9 @@
         <b>Symbolgrafikk:</b> @String.Join(",", Model.SymbolFiles.Where(va => va.SymbolFileVariant.SystemId == variant.SystemId).Select(t => t.Type).Distinct())
         <br />
         <b>Farge:</b> @String.Join(",", Model.SymbolFiles.Where(va => va.SymbolFileVariant.SystemId == variant.SystemId).Select(c => c.Color).Distinct())
+
+        <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/files/DownloadVariant/@variant.SystemId">Last ned</a>
+        <p>&nbsp;</p>
     }
     <hr />
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">

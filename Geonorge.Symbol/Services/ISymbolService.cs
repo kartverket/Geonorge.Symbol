@@ -15,6 +15,7 @@ namespace Geonorge.Symbol.Services
         void UpdatePackage(SymbolPackage symbolPackage);
         void RemovePackage(Guid systemid);
         Models.Symbol GetSymbol(Guid systemid);
+        List<Models.SymbolFile> GetSymbolVariant(Guid systemid);
         void UpdateSymbol(Models.Symbol originalSymbol, Models.Symbol symbol);
         void RemoveSymbol(Models.Symbol symbol);
         SymbolFile GetSymbolFile(Guid systemid);
