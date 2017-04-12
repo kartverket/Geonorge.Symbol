@@ -8,7 +8,7 @@ namespace Geonorge.Symbol.Services
     public interface ISymbolService
     {
         List<Models.Symbol> GetSymbols(string text = null);
-        void AddSymbol(Models.Symbol symbol);
+        Models.Symbol AddSymbol(Models.Symbol symbol);
         List<SymbolPackage> GetPackages();
         SymbolPackage GetPackage(Guid systemid);
         void AddPackage(SymbolPackage symbolPackage);

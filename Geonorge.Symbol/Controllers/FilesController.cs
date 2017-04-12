@@ -136,8 +136,9 @@ namespace Geonorge.Symbol.Controllers
                 ImageService img = new ImageService();
                 if(uploadFile != null)
                     symbol.Thumbnail = img.SaveThumbnail(uploadFile, symbol);
-                _symbolService.AddSymbol(symbol);
-                return RedirectToAction("Index", "Files");
+
+                var addedSymbol = _symbolService.AddSymbol(symbol);
+                return RedirectToAction("Details", "Files", new { systemid = addedSymbol.SystemId });
             }
 
             return View(symbol);

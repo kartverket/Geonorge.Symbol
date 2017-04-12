@@ -34,7 +34,7 @@ namespace Geonorge.Symbol.Services
             }
         }
 
-        public void AddSymbol(Models.Symbol symbol)
+        public Models.Symbol AddSymbol(Models.Symbol symbol)
         {
             string owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
             if (_authorizationService.IsAdmin() && !string.IsNullOrEmpty(symbol.Owner))
@@ -46,6 +46,8 @@ namespace Geonorge.Symbol.Services
 
             _dbContext.Symbols.Add(symbol);
             _dbContext.SaveChanges();
+
+            return symbol;
         }
 
         public List<SymbolPackage> GetPackages()
