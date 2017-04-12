@@ -83,9 +83,12 @@ namespace Geonorge.Symbol.Controllers
                 return HttpNotFound();
             }
 
+            ViewBag.HasAccess = false;
             ViewBag.IsAdmin = false;
             if (Request.IsAuthenticated)
             {
+                ViewBag.HasAccess = _authorizationService.HasAccess(symbol.Owner,
+                    _authorizationService.GetSecurityClaim("organization").FirstOrDefault());
                 ViewBag.IsAdmin = _authorizationService.IsAdmin();
             }
 
