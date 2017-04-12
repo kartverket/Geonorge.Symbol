@@ -141,6 +141,7 @@ namespace Geonorge.Symbol.Services
             symbolFile.SystemId = Guid.NewGuid();
             var filename = new ImageService().SaveImage(uploadFile, symbol);
             symbolFile.FileName = filename;
+            symbolFile.Format = Path.GetExtension(filename).Replace(".", "");
             _dbContext.SymbolFiles.Add(symbolFile);
             _dbContext.SaveChanges();
         }
@@ -174,6 +175,7 @@ namespace Geonorge.Symbol.Services
             symbolFile.SystemId = Guid.NewGuid();
             var filename = imageService.SaveImage(uploadFile, symbol);
             symbolFile.FileName = filename;
+            symbolFile.Format = Path.GetExtension(filename).Replace(".", "");
             _dbContext.SymbolFiles.Add(symbolFile);
             _dbContext.SaveChanges();
 
@@ -186,6 +188,7 @@ namespace Geonorge.Symbol.Services
             png.SymbolFileVariant = variant;
             png.Type = symbolFile.Type;
             png.FileName = filename;
+            symbolFile.Format = Path.GetExtension(filename).Replace(".", "");
             _dbContext.SymbolFiles.Add(png);
             _dbContext.SaveChanges();
 
@@ -199,6 +202,7 @@ namespace Geonorge.Symbol.Services
             gif.SymbolFileVariant = variant;
             gif.Type = symbolFile.Type;
             gif.FileName = filename;
+            symbolFile.Format = Path.GetExtension(filename).Replace(".", "");
             _dbContext.SymbolFiles.Add(gif);
             _dbContext.SaveChanges();
 
