@@ -26,6 +26,26 @@
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div id="packageView" class="search-results">
+            <br /><br />
+            @foreach (var package in Model.Select(p => p.SymbolPackage).Distinct())
+            {<div>
+                @{ var symbols = Model.Where(pa => pa.SymbolPackage.SystemId == package.SystemId); }
+                @foreach (var symbol in symbols)
+                {
+                    <img src="@symbol.ThumbnailUrl()" height="25" alt="@symbol.Thumbnail" />
+                }
+                 <h4 style="font-weight:bold">@package.Name</h4>
+                 <p>
+                     Antall symboler i pakke: @package.Symbols.Count<br />
+                     Eier: @package.Owner<br />
+                     Tema: @package.Theme<br />
+                     Offisiell symbolpakke: @Html.DisplayFor(model => package.OfficialStatus)<br /><br />
+                     <a class="btn btn-default btn-space" href="~/symbolpackages/details/@package.SystemId">Detaljert informasjon</a>
+                 </p>
+            </div>
+            }
+        </div>
         <div id="tableView" class="search-results">
             <div class="row search-results-table-heading">
                 <div class="col-sm-4"><p>@Html.ActionLink("Symbolnavn", "Index", new { sortOrder = ViewBag.SymbolnameSortParm, text = ViewBag.text }, new { @class = ViewBag.SortOrder.Contains("symbolname") ? (ViewBag.SymbolnameSortParm.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
