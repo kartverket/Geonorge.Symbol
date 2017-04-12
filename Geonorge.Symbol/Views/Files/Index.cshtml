@@ -29,22 +29,26 @@
         <div id="packageView" class="search-results">
             <br /><br />
             @foreach (var package in Model.Select(p => p.SymbolPackage).Distinct())
-            {<div>
-                @{ var symbols = Model.Where(pa => pa.SymbolPackage.SystemId == package.SystemId); }
-                @foreach (var symbol in symbols)
+            {
+                if (package != null)
                 {
-                    <a href="~/files/details/@symbol.SystemId"><img border="0" height="30" src="@symbol.ThumbnailUrl()" /></a>
-                }
-                 <h4 style="font-weight:bold">@package.Name</h4>
-                 <p>
-                     Antall symboler i pakke: @package.Symbols.Count<br />
-                     Eier: @package.Owner<br />
-                     Tema: @package.Theme<br />
-                     Offisiell symbolpakke: @Html.DisplayFor(model => package.OfficialStatus)<br /><br />
-                     <a class="btn btn-default btn-space" href="~/symbolpackages/details/@package.SystemId">Detaljert informasjon</a>
-                 </p>
-            </div>
-            }
+                    <div>
+                    @{ var symbols = Model.Where(pa => (pa.SymbolPackage != null ? pa.SymbolPackage.SystemId : new Guid()) == package.SystemId).ToList(); }
+                    @foreach (var symbol in symbols)
+                    {
+                        <a href="~/files/details/@symbol.SystemId"><img border="0" height="30" src="@symbol.ThumbnailUrl()" /></a>
+                    }
+                     <h4 style="font-weight:bold">@package.Name</h4>
+                     <p>
+                         Antall symboler i pakke: @package.Symbols.Count<br />
+                         Eier: @package.Owner<br />
+                         Tema: @package.Theme<br />
+                         Offisiell symbolpakke: @Html.DisplayFor(model => package.OfficialStatus)<br /><br />
+                         <a class="btn btn-default btn-space" href="~/symbolpackages/details/@package.SystemId">Detaljert informasjon</a>
+                     </p>
+                 </div>
+                    }
+              }
         </div>
         <div id="tableView" class="search-results">
             <div class="row search-results-table-heading">

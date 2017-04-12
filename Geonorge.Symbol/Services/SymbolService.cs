@@ -117,12 +117,22 @@ namespace Geonorge.Symbol.Services
 
         public void RemoveSymbol(Models.Symbol symbol)
         {
-            _dbContext.Symbols.Remove(symbol);
-            _dbContext.SaveChanges();
-            foreach (var file in symbol.SymbolFiles)
+            var symbolFiles = symbol.SymbolFiles.ToList();
+            foreach (var file in symbolFiles)
             {
+
+                if (file.SymbolFileVariant != null)
+                {
+                    _dbContext.SymbolFileVariants.Remove(file.SymbolFileVariant);
+                    _dbContext.SymbolFiles.Remove(file);
+                }
+                else { _dbContext.SymbolFiles.Remove(file); }
+                _dbContext.SaveChanges();
                 DeleteFile(file.FileName);
             }
+
+            _dbContext.Symbols.Remove(symbol);
+            _dbContext.SaveChanges();
             DeleteThumbnailFile(symbol.Thumbnail);
         }
 
@@ -219,6 +229,12 @@ namespace Geonorge.Symbol.Services
             var symbolVariant = _dbContext.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == systemid).ToList();
 
             return symbolVariant;
+        }
+
+        public void RemoveSymbolFileVariant(SymbolFileVariant variant)
+        {
+            _dbContext.SymbolFileVariants.Remove(variant);
+            _dbContext.SaveChanges();
         }
 
         private void DeleteFile(string fileName)

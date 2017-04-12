@@ -109,6 +109,7 @@ namespace Geonorge.Symbol.Controllers
         [Authorize]
         public ActionResult DeleteConfirmed(Guid? systemid)
         {
+            var list = _symbolService.GetSymbolVariant(systemid.Value);
             var symbolFiles = _symbolService.GetSymbolVariant(systemid.Value).ToList();
             var symbolId = symbolFiles[0].Symbol.SystemId;
             if (_authorizationService.HasAccess(symbolFiles[0].Symbol.Owner,
@@ -118,6 +119,8 @@ namespace Geonorge.Symbol.Controllers
                 {
                     _symbolService.RemoveSymbolFile(file);
                 }
+
+                _symbolService.RemoveSymbolFileVariant(list[0].SymbolFileVariant);
             }
             else { return new HttpStatusCodeResult(HttpStatusCode.Unauthorized); }
             return RedirectToAction("Details", "Files", new { systemid = symbolId });

@@ -17,5 +17,6 @@ namespace Geonorge.Symbol.Models
         public virtual DbSet<SymbolPackage> SymbolPackages { get; set; }
 
         public virtual DbSet<SymbolFile> SymbolFiles { get; set; }
+        public virtual DbSet<SymbolFileVariant> SymbolFileVariants { get; set; }
     }
 }
