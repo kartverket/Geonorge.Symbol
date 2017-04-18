@@ -28,23 +28,24 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div id="packageView" class="search-results">
             <br /><br />
-            @foreach (var package in Model.Select(p => p.SymbolPackages).Distinct())
+            @{var packages = Model.Select(p => p.SymbolPackages.FirstOrDefault()).ToList(); }
+            @foreach (var package in packages.Select(pp => pp.SystemId).Distinct())
             {
                 if (package != null)
                 {
                     <div>
-                    @{ var symbols = Model.Where(pa => (pa.SymbolPackages != null ? pa.SymbolPackages[0].SystemId : new Guid()) == package[0].SystemId).ToList(); }
+                    @{ var symbols = Model.Where(pa => (pa.SymbolPackages != null ? pa.SymbolPackages[0].SystemId : new Guid()) == package).ToList(); }
                     @foreach (var symbol in symbols)
                     {
                         <img border="0" height="30" src="@symbol.ThumbnailUrl()" />
                     }
-                     <h4 style="font-weight:bold">@package[0].Name</h4>
+                     <h4 style="font-weight:bold">@symbols.FirstOrDefault().SymbolPackages.FirstOrDefault().Name</h4>
                      <p>
-                         Antall symboler i pakke: @package[0].Symbols.Count<br />
-                         Eier: @package[0].Owner<br />
-                         Tema: @package[0].Theme<br />
-                         Offisiell symbolpakke: @Html.DisplayFor(model => package[0].OfficialStatus)<br /><br />
-                         <a class="btn btn-default btn-space" href="~/symbolpackages/details/@package[0].SystemId">Detaljert informasjon</a>
+                         Antall symboler i pakke: @symbols.Count<br />
+                         Eier: @symbols.FirstOrDefault().SymbolPackages.FirstOrDefault().Owner<br />
+                         Tema: @symbols.FirstOrDefault().SymbolPackages.FirstOrDefault().Theme<br />
+                         Offisiell symbolpakke: @Html.DisplayFor(model => symbols.FirstOrDefault().SymbolPackages.FirstOrDefault().OfficialStatus)<br /><br />
+                         <a class="btn btn-default btn-space" href="~/symbolpackages/details/@symbols.FirstOrDefault().SymbolPackages.FirstOrDefault().SystemId">Detaljert informasjon</a>
                      </p>
                  </div>
                     }
