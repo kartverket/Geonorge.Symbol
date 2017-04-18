@@ -60,6 +60,11 @@ namespace Geonorge.Symbol.Services
                                 image.Format = MagickFormat.Svg;
                                 break;
                             }
+                        case "tif":
+                            {
+                                image.Format = MagickFormat.Tif;
+                                break;
+                            }
                         default:
                             {
                                 image.Format = MagickFormat.Png;

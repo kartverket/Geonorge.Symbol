@@ -198,32 +198,31 @@ namespace Geonorge.Symbol.Services
             _dbContext.SaveChanges();
 
             filename = imageService.ConvertImage(uploadFile, symbol, "png");
-            SymbolFile png = new SymbolFile();
-            png.SystemId = Guid.NewGuid();
-            png.Color = symbolFile.Color;
-            png.Size = symbolFile.Size;
-            png.Symbol = symbol;
-            png.SymbolFileVariant = variant;
-            png.Type = symbolFile.Type;
-            png.FileName = filename;
-            png.Format = "png";
-            _dbContext.SymbolFiles.Add(png);
-            _dbContext.SaveChanges();
+            AddFile(symbolFile, symbol, variant, filename, "png");
 
             uploadFile.InputStream.Position = 0;
             filename = imageService.ConvertImage(uploadFile, symbol, "gif");
-            SymbolFile gif = new SymbolFile();
-            gif.SystemId = Guid.NewGuid();
-            gif.Color = symbolFile.Color;
-            gif.Size = symbolFile.Size;
-            gif.Symbol = symbol;
-            gif.SymbolFileVariant = variant;
-            gif.Type = symbolFile.Type;
-            gif.FileName = filename;
-            gif.Format = "gif";
-            _dbContext.SymbolFiles.Add(gif);
-            _dbContext.SaveChanges();
+            AddFile(symbolFile, symbol, variant, filename, "gif");
 
+            uploadFile.InputStream.Position = 0;
+            filename = imageService.ConvertImage(uploadFile, symbol, "tif");
+            AddFile(symbolFile, symbol, variant, filename, "tif");
+
+        }
+
+        private void AddFile(SymbolFile symbolFile, Models.Symbol symbol, SymbolFileVariant variant, string filename, string format)
+        {
+            SymbolFile file = new SymbolFile();
+            file.SystemId = Guid.NewGuid();
+            file.Color = symbolFile.Color;
+            file.Size = symbolFile.Size;
+            file.Symbol = symbol;
+            file.SymbolFileVariant = variant;
+            file.Type = symbolFile.Type;
+            file.FileName = filename;
+            file.Format = format;
+            _dbContext.SymbolFiles.Add(file);
+            _dbContext.SaveChanges();
         }
 
         public List<Models.SymbolFile> GetSymbolVariant(Guid systemid)
