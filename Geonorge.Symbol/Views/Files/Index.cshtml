@@ -36,7 +36,7 @@
                     @{ var symbols = Model.Where(pa => (pa.SymbolPackage != null ? pa.SymbolPackage.SystemId : new Guid()) == package.SystemId).ToList(); }
                     @foreach (var symbol in symbols)
                     {
-                        <a href="~/files/details/@symbol.SystemId"><img border="0" height="30" src="@symbol.ThumbnailUrl()" /></a>
+                        <img border="0" height="30" src="@symbol.ThumbnailUrl()" />
                     }
                      <h4 style="font-weight:bold">@package.Name</h4>
                      <p>
