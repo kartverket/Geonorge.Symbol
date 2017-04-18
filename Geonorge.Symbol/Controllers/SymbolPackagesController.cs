@@ -142,7 +142,7 @@ namespace Geonorge.Symbol.Controllers
                 {
                     foreach (var file in symbol.SymbolFiles)
                     {
-                        zip.AddFile(targetFolder + file.FileName,"");
+                        zip.AddFile(targetFolder + file.FileName, symbol.Name + @"\" + file.SymbolFileVariant.Name);
                     }
                 }
 
@@ -150,7 +150,7 @@ namespace Geonorge.Symbol.Controllers
                 zip.Save(output);
                 output.Position = 0;
 
-            return File(output, "application/zip", "package.zip");
+            return File(output, "application/zip", ImageService.MakeSeoFriendlyString(package.Name) + ".zip");
             }
 
         }

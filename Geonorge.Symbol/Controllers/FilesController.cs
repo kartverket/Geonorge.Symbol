@@ -266,18 +266,17 @@ namespace Geonorge.Symbol.Controllers
         {
             var symbol = _symbolService.GetSymbol(systemid.Value);
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/");
-
             using (ZipFile zip = new ZipFile())
             {
                 foreach (var file in symbol.SymbolFiles)
                 {
-                        zip.AddFile(targetFolder + file.FileName, "");
+                        zip.AddFile(targetFolder + file.FileName, file.SymbolFileVariant.Name);
                 }
                 MemoryStream output = new MemoryStream();
                 zip.Save(output);
                 output.Position = 0;
 
-                return File(output, "application/zip", "symbol.zip");
+                return File(output, "application/zip", ImageService.MakeSeoFriendlyString(symbol.Name) + ".zip");
             }
         }
 
@@ -296,7 +295,7 @@ namespace Geonorge.Symbol.Controllers
                 zip.Save(output);
                 output.Position = 0;
 
-                return File(output, "application/zip", "symbol.zip");
+                return File(output, "application/zip", ImageService.MakeSeoFriendlyString(symbolFiles[0].SymbolFileVariant.Name) + ".zip");
             }
         }
     }
