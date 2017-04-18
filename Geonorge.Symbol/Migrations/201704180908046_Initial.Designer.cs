@@ -7,13 +7,13 @@ namespace Geonorge.Symbol.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddSymbolFileVariant : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddSymbolFileVariant));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201704101129347_AddSymbolFileVariant"; }
+            get { return "201704180908046_Initial"; }
         }
         
         string IMigrationMetadata.Source

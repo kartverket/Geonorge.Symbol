@@ -181,13 +181,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SymbolFilesController.cs" />
     <Compile Include="Controllers\SymbolPackagesController.cs" />
-    <Compile Include="Migrations\201703010640130_Initial.cs" />
-    <Compile Include="Migrations\201703010640130_Initial.Designer.cs">
-      <DependentUpon>201703010640130_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704101129347_AddSymbolFileVariant.cs" />
-    <Compile Include="Migrations\201704101129347_AddSymbolFileVariant.Designer.cs">
-      <DependentUpon>201704101129347_AddSymbolFileVariant.cs</DependentUpon>
+    <Compile Include="Migrations\201704180908046_Initial.cs" />
+    <Compile Include="Migrations\201704180908046_Initial.Designer.cs">
+      <DependentUpon>201704180908046_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\SymbolFileVariant.cs" />
     <Compile Include="Services\AuthorizationService.cs" />
@@ -440,11 +436,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703010640130_Initial.resx">
-      <DependentUpon>201703010640130_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704101129347_AddSymbolFileVariant.resx">
-      <DependentUpon>201704101129347_AddSymbolFileVariant.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704180908046_Initial.resx">
+      <DependentUpon>201704180908046_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

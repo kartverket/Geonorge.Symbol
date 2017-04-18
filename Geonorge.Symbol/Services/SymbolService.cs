@@ -25,8 +25,7 @@ namespace Geonorge.Symbol.Services
             if (!string.IsNullOrEmpty(text))
             {
                return _dbContext.Symbols.Where(s => s.Name.Contains(text) || s.Description.Contains(text)
-               || s.Owner.Contains(text) || s.Theme.Contains(text) || s.Type.Contains(text)
-               || s.SymbolPackage.Name.Contains(text) || s.SymbolPackage.Theme.Contains(text)
+               || s.Owner.Contains(text) || s.Theme.Contains(text) || s.Type.Contains(text)   
                ).ToList();
             }
             else { 
@@ -93,8 +92,6 @@ namespace Geonorge.Symbol.Services
             {
                 originalSymbol.Name = symbol.Name;
                 originalSymbol.Description = symbol.Description;
-                originalSymbol.EksternalSymbolID = symbol.EksternalSymbolID;
-                originalSymbol.OfficialStatus = symbol.OfficialStatus;
 
                 string owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
                 if (_authorizationService.IsAdmin() && !string.IsNullOrEmpty(symbol.Owner))
@@ -103,8 +100,8 @@ namespace Geonorge.Symbol.Services
                 originalSymbol.Owner = owner;
                 originalSymbol.Source = symbol.Source;
                 originalSymbol.SourceUrl = symbol.SourceUrl;
-                var symbolPackage = originalSymbol.SymbolPackage;
-                originalSymbol.SymbolPackage = symbol.SymbolPackage;
+                var symbolPackages = originalSymbol.SymbolPackages;
+                originalSymbol.SymbolPackages = symbol.SymbolPackages;
                 originalSymbol.Theme = symbol.Theme;
                 originalSymbol.Type = symbol.Type;
                 if(symbol.Thumbnail != null)

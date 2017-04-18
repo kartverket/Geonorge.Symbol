@@ -166,8 +166,8 @@ namespace Geonorge.Symbol.Services
 
             string filename;
 
-            if (symbol.SymbolPackage != null)
-                filename = MakeSeoFriendlyString(symbol.SymbolPackage.Name) + "_" + MakeSeoFriendlyString(symbol.Name);
+            if (symbol.SymbolPackages != null)
+                filename = MakeSeoFriendlyString(symbol.SymbolPackages[0].Name) + "_" + MakeSeoFriendlyString(symbol.Name);
             else
                 filename = MakeSeoFriendlyString(symbol.Owner)  +"_" + MakeSeoFriendlyString(symbol.Name);
 

@@ -33,3 +33,5 @@ $('.ownerOrganizationSelect').select2({
     },
     minimumInputLength: 3
 });
+
+$(".packagesSelect").select2();

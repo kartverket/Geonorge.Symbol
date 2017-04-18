@@ -24,10 +24,6 @@ namespace Geonorge.Symbol.Models
         [Display(Name = "Symbol")]
         public string Thumbnail { get; set; }
 
-        /// <summary> Ekstern ID, eks surfisk3</summary>
-        [Display(Name = "Ekstern ID")]
-        public string EksternalSymbolID { get; set; }
-
         /// <summary> Organisasjon som har sendt inn filen.</summary>
         [Display(Name = "Organisasjon")]
         public string Owner { get; set; }
@@ -45,10 +41,6 @@ namespace Geonorge.Symbol.Models
         [DisplayFormat(NullDisplayText = "", ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime DateChanged { get; set; } = DateTime.Now;
 
-        /// <summary>Angi om symbol er offisiell eller ikke</summary>
-        [Display(Name = "Offisiell")]
-        public bool OfficialStatus { get; set; }
-
         /// <summary>Hovedtema verdi «Annen».</summary>
         [Display(Name = "Tema")]
         public string Theme { get; set; }
@@ -65,7 +57,7 @@ namespace Geonorge.Symbol.Models
         public virtual List<SymbolFile> SymbolFiles { get; set; }
 
         [Display(Name = "Pakke")]
-        public virtual SymbolPackage SymbolPackage { get; set; }
+        public virtual List<SymbolPackage> SymbolPackages { get; set; }
 
         public string ThumbnailUrl()
         {

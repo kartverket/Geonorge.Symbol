@@ -55,13 +55,16 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.SymbolPackage)
+            @Html.DisplayNameFor(model => model.SymbolPackages)
         </dt>
 
         <dd>
-            @if(Model.SymbolPackage != null)
+            @if(Model.SymbolPackages != null)
             {
-                <a href="~/symbolpackages/details/@Model.SymbolPackage.SystemId">@Model.SymbolPackage.Name</a>
+                foreach(var symbolpackage in Model.SymbolPackages)
+                {
+                <a href="~/symbolpackages/details/@symbolpackage.SystemId">@symbolpackage.Name</a><br />
+                }
             }
         </dd>
 

@@ -100,7 +100,7 @@ namespace Geonorge.Symbol.Controllers
         {
             ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value");
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", "Annen");
-            ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name");
+            ViewBag.SymbolPackages = new MultiSelectList(_symbolService.GetPackages(), "SystemId", "Name");
             ViewBag.IsAdmin = false;
             if (Request.IsAuthenticated)
             {
@@ -116,14 +116,18 @@ namespace Geonorge.Symbol.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create(Models.Symbol symbol, HttpPostedFileBase uploadFile, string packageid)
+        public ActionResult Create(Models.Symbol symbol, HttpPostedFileBase uploadFile, string[] packages)
         {
 
             ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value", symbol.Type);
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbol.Theme);
-            ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name", packageid);
-            if(!string.IsNullOrEmpty(packageid))
-                symbol.SymbolPackage = _symbolService.GetPackage(Guid.Parse(packageid));
+            ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name");
+            symbol.SymbolPackages = new List<SymbolPackage>();
+            if (packages != null)
+            {
+                foreach (var package in packages)
+                    symbol.SymbolPackages.Add(_symbolService.GetPackage(Guid.Parse(package)));
+            }
 
             ViewBag.IsAdmin = false;
             if (Request.IsAuthenticated)
@@ -162,10 +166,7 @@ namespace Geonorge.Symbol.Controllers
 
             ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value", symbol.Type);
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbol.Theme);
-            string packageId = "";
-            if (symbol.SymbolPackage != null)
-                packageId = symbol.SymbolPackage.SystemId.ToString();
-            ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name", packageId);
+            ViewBag.SymbolPackages = new MultiSelectList(_symbolService.GetPackages(), "SystemId", "Name", symbol.SymbolPackages.Select(c => c.SystemId).ToArray());
 
             ViewBag.IsAdmin = false;
             if (Request.IsAuthenticated)
@@ -182,10 +183,14 @@ namespace Geonorge.Symbol.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Models.Symbol symbol, HttpPostedFileBase uploadFile, string packageid)
+        public ActionResult Edit(Models.Symbol symbol, HttpPostedFileBase uploadFile, string[] packages)
         {
-            if (!string.IsNullOrEmpty(packageid))
-                symbol.SymbolPackage = _symbolService.GetPackage(Guid.Parse(packageid));
+            symbol.SymbolPackages = new List<SymbolPackage>();
+            if (packages != null)
+            {
+                foreach (var package in packages)
+                    symbol.SymbolPackages.Add(_symbolService.GetPackage(Guid.Parse(package)));
+            }
             ImageService img = new ImageService();
             if(uploadFile != null)
                 symbol.Thumbnail = img.SaveThumbnail(uploadFile, symbol);
@@ -212,7 +217,7 @@ namespace Geonorge.Symbol.Controllers
 
             ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value", symbol.Type);
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbol.Theme);
-            ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name", symbol.SymbolPackage);
+            ViewBag.SymbolPackages = new MultiSelectList(_symbolService.GetPackages(), "SystemId", "Name", symbol.SymbolPackages.Select(c => c.SystemId).ToArray());
 
 
             return View(symbol);
