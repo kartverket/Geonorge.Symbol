@@ -80,7 +80,14 @@ namespace Geonorge.Symbol.Controllers
         public ActionResult Edit(SymbolFile symbolFile, HttpPostedFileBase uploadFile, string FileToRemove)
         {
             var variants = _symbolService.GetSymbolVariant(symbolFile.SymbolFileVariant.SystemId);
-            foreach(var variant in variants)
+
+            if (!_authorizationService.HasAccess(variants[0].Symbol.Owner,
+                    _authorizationService.GetSecurityClaim("organization").FirstOrDefault()))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+
+            foreach (var variant in variants)
             {
                 variant.SymbolFileVariant.Name = symbolFile.SymbolFileVariant.Name;
                 _symbolService.UpdateSymbolFile(variant);

@@ -58,7 +58,9 @@
             <div class="dataset-list metadata">
                 <div class="row">
                     <div class="col-md-10">@file.FileName</div>
+                    @if(Model.Count > 1) { 
                     <div class="col-md-2"><input type="submit" class="btn btn-default pull-right" value="Slett" onclick="SetFileToRemove('@file.SystemId');" /></div>
+                    }
                 </div>
             </div>
             <hr style="margin-top:2px; margin-bottom:6px;" />
