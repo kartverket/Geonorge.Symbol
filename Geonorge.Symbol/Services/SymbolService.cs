@@ -59,11 +59,12 @@ namespace Geonorge.Symbol.Services
             return _dbContext.SymbolPackages.Where(p => p.SystemId == systemid).FirstOrDefault();
         }
 
-        public void AddPackage(SymbolPackage symbolPackage)
+        public SymbolPackage AddPackage(SymbolPackage symbolPackage)
         {
             symbolPackage.SystemId = Guid.NewGuid();
             _dbContext.SymbolPackages.Add(symbolPackage);
             _dbContext.SaveChanges();
+            return symbolPackage;
         }
 
         public void UpdatePackage(SymbolPackage symbolPackage)

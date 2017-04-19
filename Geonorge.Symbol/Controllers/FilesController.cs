@@ -102,6 +102,7 @@ namespace Geonorge.Symbol.Controllers
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", "Annen");
             ViewBag.SymbolPackages = new MultiSelectList(_symbolService.GetPackages(), "SystemId", "Name");
             ViewBag.IsAdmin = false;
+            ViewBag.Owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
             if (Request.IsAuthenticated)
             {
                 ViewBag.IsAdmin = _authorizationService.IsAdmin();

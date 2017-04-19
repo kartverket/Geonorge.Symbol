@@ -91,9 +91,15 @@
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.SymbolPackages, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                    <div class="col-md-8">
                         @Html.ListBox("packages", (MultiSelectList)ViewBag.SymbolPackages, new { @class = "form-control packagesSelect", multiple = "multiple" })
                         @Html.ValidationMessageFor(model => model.SymbolPackages, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#packageModal">
+                            Legg til pakke
+                        </button>
                     </div>
                 </div>
 
@@ -127,4 +133,87 @@
         </div>
      </div>
 }
+
+<!-- Modal -->
+
+@using (Html.BeginForm("addpackage","api"))
+{
+    @Html.AntiForgeryToken()
+<div class="modal fade" id="packageModal" tabindex="-1" role="dialog" aria-labelledby="packageModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="packageModalLabel">Legg til pakke</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Lukk">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.Label("Navn", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input type="text" id="NamePackage" name="Name" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Offisiell", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    <input type="checkbox" name="OfficialStatus" id="OfficialStatusPackage" value="True" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Owner, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <span>@ViewBag.Owner</span>
+                                <input type="hidden" id="OwnerPackage" name="Owner" value="@ViewBag.Owner" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Tema", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("ThemePackage", ViewBag.Themes as SelectList, String.Empty, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Lukk</button>
+                <button type="button" id="AddPackage" class="btn btn-primary">Legg til</button>
+            </div>
+        </div>
+    </div>
+</div>
+}
+<script>
+    $(document).ready(function () {
+        $("#AddPackage").click(function () {
+            var packageData = {
+                Name: $('#NamePackage').val(),
+                OfficialStatus: $('#OfficialStatusPackage').val(),
+                Owner: $('#OwnerPackage').val(),
+                Theme: $('#ThemePackage').val()
+            };
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: "/api/addpackage",
+                data: JSON.stringify(packageData),
+                contentType: "application/json",
+                dataType: "json",
+                success: function (pkg) {
+                    console.log(pkg);
+                    console.log(pkg.SystemId);
+                    $("#packages").append(new Option(pkg.Name, pkg.SystemId, true, true))
+                    $('#packageModal').modal('toggle');
+                }
+            });
+        });
+    });
+</script>
 <script type="text/javascript" src="~/Scripts/custom.js"></script>

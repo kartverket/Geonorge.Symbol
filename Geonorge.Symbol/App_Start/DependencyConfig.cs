@@ -35,11 +35,15 @@ namespace Geonorge.Symbol.App_Start
         {
             // dependency resolver for MVC
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
+            // dependency resolver for Web API
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
         }
 
         private static void ConfigureInfrastructure(ContainerBuilder builder)
         {
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly()).PropertiesAutowired();
             builder.RegisterModule(new AutofacWebTypesModule());
         }
     }
