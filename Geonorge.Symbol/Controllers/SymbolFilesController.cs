@@ -77,15 +77,32 @@ namespace Geonorge.Symbol.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit(SymbolFile symbolFile)
+        public ActionResult Edit(SymbolFile symbolFile, HttpPostedFileBase uploadFile, string FileToRemove)
         {
-            if (ModelState.IsValid)
+            var variants = _symbolService.GetSymbolVariant(symbolFile.SymbolFileVariant.SystemId);
+            foreach(var variant in variants)
             {
-                var originalSymbolFile = _symbolService.GetSymbolFile(symbolFile.SystemId);
-                _symbolService.UpdateSymbolFile(originalSymbolFile, symbolFile);
-                return RedirectToAction("Index");
+                variant.SymbolFileVariant.Name = symbolFile.SymbolFileVariant.Name;
+                _symbolService.UpdateSymbolFile(variant);
             }
-            return View(symbolFile);
+
+            if (uploadFile != null)
+            {
+                var file = variants.FirstOrDefault();
+                symbolFile.SymbolFileVariant = file.SymbolFileVariant;
+                symbolFile.Symbol = file.Symbol;
+                _symbolService.AddSymbolFile(symbolFile, uploadFile);
+            }
+
+            if (!string.IsNullOrEmpty(FileToRemove))
+            {
+                var fileToRemove = _symbolService.GetSymbolFile(Guid.Parse(FileToRemove));
+                _symbolService.RemoveSymbolFile(fileToRemove);
+            }
+
+            variants = _symbolService.GetSymbolVariant(symbolFile.SymbolFileVariant.SystemId);
+
+            return View(variants);
         }
 
         // GET: SymbolFiles/Delete/5

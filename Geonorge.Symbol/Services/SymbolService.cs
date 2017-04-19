@@ -145,10 +145,14 @@ namespace Geonorge.Symbol.Services
         public void AddSymbolFile(SymbolFile symbolFile, HttpPostedFileBase uploadFile)
         {
             var symbol = GetSymbol(symbolFile.Symbol.SystemId);
-            SymbolFileVariant variant = new SymbolFileVariant();
-            variant.SystemId = Guid.NewGuid();
-            variant.Name = symbol.Name + "_" + symbolFile.Type;
-            symbolFile.SymbolFileVariant = variant;
+
+            if(symbolFile.SymbolFileVariant == null)
+            { 
+                SymbolFileVariant variant = new SymbolFileVariant();
+                variant.SystemId = Guid.NewGuid();
+                variant.Name = symbol.Name + "_" + symbolFile.Type;
+                symbolFile.SymbolFileVariant = variant;
+            }
             symbol.DateChanged = DateTime.Now;
             symbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
             symbolFile.Symbol = symbol;
@@ -160,10 +164,9 @@ namespace Geonorge.Symbol.Services
             _dbContext.SaveChanges();
         }
 
-        public void UpdateSymbolFile(SymbolFile originalSymbolFile, Models.SymbolFile symbolFile)
+        public void UpdateSymbolFile(Models.SymbolFile symbolFile)
         {
-            //Todo set changes
-            _dbContext.Entry(originalSymbolFile).State = EntityState.Modified;
+            _dbContext.Entry(symbolFile).State = EntityState.Modified;
             _dbContext.SaveChanges();
         }
 
@@ -177,13 +180,16 @@ namespace Geonorge.Symbol.Services
         public void AddSymbolFilesFromSvg(SymbolFile symbolFile, HttpPostedFileBase uploadFile)
         {
             var symbol = GetSymbol(symbolFile.Symbol.SystemId);
-            SymbolFileVariant variant = new SymbolFileVariant();
-            variant.SystemId = Guid.NewGuid();
-            variant.Name = symbol.Name + "_" + symbolFile.Type;
+            if (symbolFile.SymbolFileVariant == null)
+            {
+                SymbolFileVariant variant = new SymbolFileVariant();
+                variant.SystemId = Guid.NewGuid();
+                variant.Name = symbol.Name + "_" + symbolFile.Type;
+                symbolFile.SymbolFileVariant = variant;
+            }
 
             ImageService imageService = new ImageService();
 
-            symbolFile.SymbolFileVariant = variant;
             symbol.DateChanged = DateTime.Now;
             symbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
             symbolFile.Symbol = symbol;
@@ -195,15 +201,15 @@ namespace Geonorge.Symbol.Services
             _dbContext.SaveChanges();
 
             filename = imageService.ConvertImage(uploadFile, symbol, "png");
-            AddFile(symbolFile, symbol, variant, filename, "png");
+            AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "png");
 
             uploadFile.InputStream.Position = 0;
             filename = imageService.ConvertImage(uploadFile, symbol, "gif");
-            AddFile(symbolFile, symbol, variant, filename, "gif");
+            AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "gif");
 
             uploadFile.InputStream.Position = 0;
             filename = imageService.ConvertImage(uploadFile, symbol, "tif");
-            AddFile(symbolFile, symbol, variant, filename, "tif");
+            AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "tif");
 
         }
 
