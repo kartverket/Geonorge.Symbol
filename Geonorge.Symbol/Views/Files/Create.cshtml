@@ -131,7 +131,7 @@
 @using (Html.BeginForm("addpackage","api"))
 {
     @Html.AntiForgeryToken()
-<div class="modal fade" id="packageModal" tabindex="-1" role="dialog" aria-labelledby="packageModalLabel" aria-hidden="true">
+<div class="modal fade" id="packageModal" role="dialog" aria-labelledby="packageModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -159,10 +159,17 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Owner, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.Label("Organisasjon", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
+                                @if (ViewBag.IsAdmin)
+                                {
+                                   <select class="ownerOrganizationPackageSelect" id="OwnerPackage" name="Owner"> </select>
+                                }
+                                else
+                                {
                                 <span>@ViewBag.Owner</span>
                                 <input type="hidden" id="OwnerPackage" name="Owner" value="@ViewBag.Owner" />
+                                }
                             </div>
                         </div>
 
@@ -209,3 +216,40 @@
     });
 </script>
 <script type="text/javascript" src="~/Scripts/custom.js"></script>
+<script>
+    var organizationsPackage = [];
+
+    $('.ownerOrganizationPackageSelect').select2({
+        placeholder: "Søk etter organisasjon",
+        language: "nb",
+        ajax: {
+            url: registryUrl + "api/search",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    text: params.term,// search term
+                    limit: 10,
+                    'facets[0]name': "type",
+                    'facets[0]value': "organisasjoner"
+                };
+            },
+            processResults: function (data, params) {
+                organizationsPackage = [];
+                $.each(data.Results, function (i, item) {
+                    option = {}
+                    option["id"] = item.Name;
+                    option["text"] = item.Name;
+
+                    organizationsPackage.push(option);
+                })
+
+                return {
+                    results: organizationsPackage
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 3
+    });
+</script>
