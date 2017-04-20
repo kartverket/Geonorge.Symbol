@@ -25,7 +25,7 @@ namespace Geonorge.Symbol.Services
             if (!string.IsNullOrEmpty(text))
             {
                return _dbContext.Symbols.Where(s => s.Name.Contains(text) || s.Description.Contains(text)
-               || s.Owner.Contains(text) || s.Theme.Contains(text) || s.Type.Contains(text)   
+               || s.Owner.Contains(text) || s.Theme.Contains(text)  
                ).ToList();
             }
             else { 
@@ -104,7 +104,6 @@ namespace Geonorge.Symbol.Services
                 var symbolPackages = originalSymbol.SymbolPackages;
                 originalSymbol.SymbolPackages = symbol.SymbolPackages;
                 originalSymbol.Theme = symbol.Theme;
-                originalSymbol.Type = symbol.Type;
                 if(symbol.Thumbnail != null)
                     originalSymbol.Thumbnail = symbol.Thumbnail;
 

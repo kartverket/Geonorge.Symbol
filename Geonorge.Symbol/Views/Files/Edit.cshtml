@@ -85,14 +85,6 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("Type", ViewBag.Types as SelectList, String.Empty, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
                     @Html.LabelFor(model => model.SymbolPackages, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.ListBox("packages", (MultiSelectList)ViewBag.SymbolPackages, new { @class = "form-control packagesSelect", multiple = "multiple" })

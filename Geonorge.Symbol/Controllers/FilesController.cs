@@ -98,7 +98,6 @@ namespace Geonorge.Symbol.Controllers
         // GET: Files/Create
         public ActionResult Create()
         {
-            ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value");
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", "Annen");
             ViewBag.SymbolPackages = new MultiSelectList(_symbolService.GetPackages(), "SystemId", "Name");
             ViewBag.IsAdmin = false;
@@ -119,8 +118,6 @@ namespace Geonorge.Symbol.Controllers
         [Authorize]
         public ActionResult Create(Models.Symbol symbol, HttpPostedFileBase uploadFile, string[] packages)
         {
-
-            ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value", symbol.Type);
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbol.Theme);
             ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name");
             symbol.SymbolPackages = new List<SymbolPackage>();
@@ -165,7 +162,6 @@ namespace Geonorge.Symbol.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value", symbol.Type);
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbol.Theme);
             ViewBag.SymbolPackages = new MultiSelectList(_symbolService.GetPackages(), "SystemId", "Name", symbol.SymbolPackages.Select(c => c.SystemId).ToArray());
 
@@ -216,7 +212,6 @@ namespace Geonorge.Symbol.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Types = new SelectList(CodeList.SymbolTypes, "Key", "Value", symbol.Type);
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbol.Theme);
             ViewBag.SymbolPackages = new MultiSelectList(_symbolService.GetPackages(), "SystemId", "Name", symbol.SymbolPackages.Select(c => c.SystemId).ToArray());
 

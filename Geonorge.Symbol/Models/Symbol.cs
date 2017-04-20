@@ -32,7 +32,8 @@ namespace Geonorge.Symbol.Models
         [Display(Name = "Redigert av")]
         public string LastEditedBy { get; set; }
 
-        /// <summary> Punkt, skravur, dropdown</summary>
+        /// <summary> Punkt, skravur</summary>
+        [Obsolete]
         [Display(Name = "Symboltype")]
         public string Type { get; set; }
 

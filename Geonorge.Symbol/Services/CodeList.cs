@@ -8,13 +8,6 @@ namespace Geonorge.Symbol.Services
 {
     public class CodeList
     {
-        public static readonly Dictionary<string, string> SymbolTypes = new Dictionary<string, string>()
-        {
-            {"punkt", "Punkt"},
-            {"skravur", "Skravur"}
-        };
-
-
         public static Dictionary<string, string> Themes()
         {
             Dictionary<string, string> themes = GetCodeList("42CECF70-0359-49E6-B8FF-0D6D52EBC73F");
