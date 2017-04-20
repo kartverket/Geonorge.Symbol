@@ -75,7 +75,7 @@
         {
         <h4 style="background-color: gainsboro;">@variant.Name</h4>
             bool first = true;
-            foreach (var file in Model.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == variant.SystemId).ToList())
+            foreach (var file in Model.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == variant.SystemId).ToList().OrderBy(o => o.FileName))
             {
                 if (first && !file.FileName.EndsWith(".tif")) { 
                 <img src="@file.FileUrl()" height="50" alt="@file.FileName" />
