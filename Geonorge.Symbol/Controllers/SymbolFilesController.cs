@@ -39,16 +39,17 @@ namespace Geonorge.Symbol.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create(SymbolFile symbolFile, HttpPostedFileBase uploadFile, bool autogenererFraSvg = false)
+        public ActionResult Create(SymbolFile symbolFile, HttpPostedFileBase[] uploadFiles, bool autogenererFraSvg = false)
         {
             ViewBag.Size = new SelectList(CodeList.Size, "Key", "Value", symbolFile.Size);
             ViewBag.SymbolGraphics = new SelectList(CodeList.SymbolGraphics, "Key", "Value", symbolFile.Type);
             if (ModelState.IsValid)
             {
                 if(autogenererFraSvg)
-                    _symbolService.AddSymbolFilesFromSvg(symbolFile, uploadFile);
+                    _symbolService.AddSymbolFilesFromSvg(symbolFile, uploadFiles[0]);
                 else
-                    _symbolService.AddSymbolFile(symbolFile, uploadFile);
+                    _symbolService.AddSymbolFiles(symbolFile, uploadFiles);
+
 
                 return RedirectToAction("Details", "Files", new { systemid = symbolFile.Symbol.SystemId });
             }
@@ -77,7 +78,7 @@ namespace Geonorge.Symbol.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit(SymbolFile symbolFile, HttpPostedFileBase uploadFile, string FileToRemove)
+        public ActionResult Edit(SymbolFile symbolFile, HttpPostedFileBase[] uploadFile, string FileToRemove)
         {
             var variants = _symbolService.GetSymbolVariant(symbolFile.SymbolFileVariant.SystemId);
 
@@ -98,7 +99,7 @@ namespace Geonorge.Symbol.Controllers
                 var file = variants.FirstOrDefault();
                 symbolFile.SymbolFileVariant = file.SymbolFileVariant;
                 symbolFile.Symbol = file.Symbol;
-                _symbolService.AddSymbolFile(symbolFile, uploadFile);
+                _symbolService.AddSymbolFiles(symbolFile, uploadFile);
             }
 
             if (!string.IsNullOrEmpty(FileToRemove))

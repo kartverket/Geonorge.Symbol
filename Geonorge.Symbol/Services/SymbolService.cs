@@ -142,7 +142,7 @@ namespace Geonorge.Symbol.Services
             return symbolFile;
         }
 
-        public void AddSymbolFile(SymbolFile symbolFile, HttpPostedFileBase uploadFile)
+        public void AddSymbolFiles(SymbolFile symbolFile, HttpPostedFileBase[] uploadFiles)
         {
             var symbol = GetSymbol(symbolFile.Symbol.SystemId);
 
@@ -153,15 +153,16 @@ namespace Geonorge.Symbol.Services
                 variant.Name = symbol.Name + "_" + symbolFile.Type;
                 symbolFile.SymbolFileVariant = variant;
             }
+
             symbol.DateChanged = DateTime.Now;
             symbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
-            symbolFile.Symbol = symbol;
-            symbolFile.SystemId = Guid.NewGuid();
-            var filename = new ImageService().SaveImage(uploadFile, symbol);
-            symbolFile.FileName = filename;
-            symbolFile.Format = Path.GetExtension(filename).Replace(".", "");
-            _dbContext.SymbolFiles.Add(symbolFile);
-            _dbContext.SaveChanges();
+
+            foreach(var uploadFile in uploadFiles)
+            { 
+                var filename = new ImageService().SaveImage(uploadFile, symbol);
+                var format = Path.GetExtension(filename).Replace(".","");
+                AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, format);
+            }
         }
 
         public void UpdateSymbolFile(Models.SymbolFile symbolFile)

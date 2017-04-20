@@ -20,7 +20,7 @@ namespace Geonorge.Symbol.Services
         void UpdateSymbol(Models.Symbol originalSymbol, Models.Symbol symbol);
         void RemoveSymbol(Models.Symbol symbol);
         SymbolFile GetSymbolFile(Guid systemid);
-        void AddSymbolFile(Models.SymbolFile symbolFile, HttpPostedFileBase uploadFile);
+        void AddSymbolFiles(Models.SymbolFile symbolFile, HttpPostedFileBase[] uploadFile);
         void AddSymbolFilesFromSvg(Models.SymbolFile symbolFile, HttpPostedFileBase uploadFile);
         void UpdateSymbolFile(Models.SymbolFile symbolFile);
         void RemoveSymbolFile(Models.SymbolFile symbolFile);
