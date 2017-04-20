@@ -202,7 +202,7 @@
             $.ajax({
                 type: "POST",
                 async: false,
-                url: "/api/addpackage",
+                url: "@(!HttpContext.Current.Request.Url.Host.Contains("localhost") ? "/symbol" : "")/api/addpackage",
                 data: JSON.stringify(packageData),
                 contentType: "application/json",
                 dataType: "json",
