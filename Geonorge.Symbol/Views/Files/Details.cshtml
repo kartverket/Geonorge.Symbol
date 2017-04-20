@@ -77,7 +77,7 @@
             bool first = true;
             foreach (var file in Model.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == variant.SystemId).ToList())
             {
-                if (first) { 
+                if (first && !file.FileName.EndsWith(".tif")) { 
                 <img src="@file.FileUrl()" height="50" alt="@file.FileName" />
                 first = false;
                 }
