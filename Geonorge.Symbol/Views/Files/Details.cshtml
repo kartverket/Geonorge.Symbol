@@ -75,16 +75,27 @@
         {
         <h4 style="background-color: gainsboro;">@variant.Name</h4>
         <img src="@Model.ThumbnailUrl()" alt="@Model.Thumbnail" />
-        foreach (var file in Model.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == variant.SystemId).ToList())
-        {
+            foreach (var file in Model.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == variant.SystemId).ToList())
+            {
             <div><a href="@file.FileUrl()" target="_blank">@file.FileName</a></div>
             }
         }
-        <b>Format:</b> @String.Join(",", Model.SymbolFiles.Where(va => va.SymbolFileVariant.SystemId == variant.SystemId).Select(f => f.Format).Distinct())
+        <b>Format:</b> @String.Join(", ", Model.SymbolFiles.Where(va => va.SymbolFileVariant.SystemId == variant.SystemId).Select(f => f.Format).Distinct())
         <br />
-        <b>Symbolgrafikk:</b> @String.Join(",", Model.SymbolFiles.Where(va => va.SymbolFileVariant.SystemId == variant.SystemId).Select(t => t.Type).Distinct())
-        <br />
-        <b>Farge:</b> @String.Join(",", Model.SymbolFiles.Where(va => va.SymbolFileVariant.SystemId == variant.SystemId).Select(c => c.Color).Distinct())
+        {
+            var types = Model.SymbolFiles.Where(va => va.SymbolFileVariant.SystemId == variant.SystemId && !string.IsNullOrEmpty(va.Type)).Select(t => t.Type).Distinct();
+            if (types.Any())
+            {
+            <b>Symbolgrafikk:</b> @String.Join(", ", types) <br />
+            }
+        }
+        {
+            var colors = Model.SymbolFiles.Where(va => va.SymbolFileVariant.SystemId == variant.SystemId && !string.IsNullOrEmpty(va.Color)).Select(c => c.Color).Distinct();
+            if (colors.Any())
+            {
+            <b>Farge:</b> @String.Join(", ", colors) <br />
+            }
+        }
 
         <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/files/DownloadVariant/@variant.SystemId">Last ned</a>
         if (ViewBag.HasAccess)
