@@ -78,7 +78,7 @@
             foreach (var file in Model.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == variant.SystemId).ToList())
             {
                 if (first) { 
-                <img src="@file.FileUrl()" height="30" alt="@file.FileName" />
+                <img src="@file.FileUrl()" height="50" alt="@file.FileName" />
                 first = false;
                 }
             <div><a href="@file.FileUrl()" target="_blank">@file.FileName</a></div>
