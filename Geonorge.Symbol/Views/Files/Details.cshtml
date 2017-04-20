@@ -74,9 +74,13 @@
         if (variant != null)
         {
         <h4 style="background-color: gainsboro;">@variant.Name</h4>
-        <img src="@Model.ThumbnailUrl()" alt="@Model.Thumbnail" />
+            bool first = true;
             foreach (var file in Model.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == variant.SystemId).ToList())
             {
+                if (first) { 
+                <img src="@file.FileUrl()" height="30" alt="@file.FileName" />
+                first = false;
+                }
             <div><a href="@file.FileUrl()" target="_blank">@file.FileName</a></div>
             }
         }
