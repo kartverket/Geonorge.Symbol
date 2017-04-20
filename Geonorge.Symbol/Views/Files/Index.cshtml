@@ -28,13 +28,15 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div id="packageView" class="search-results">
             <br /><br />
-            @{var packages = Model.Select(p => p.SymbolPackages.FirstOrDefault()).ToList(); }
-            @foreach (var package in packages.Select(pp => pp.SystemId).Distinct())
+            @{var packageList = Model.Select(p => p.SymbolPackages.FirstOrDefault()).ToList();
+             var packages = packageList.Where(pac => pac != null).Select(pp => pp.SystemId).Distinct();
+             }
+            @foreach (var package in packages)
             {
                 if (package != null)
                 {
                     <div>
-                    @{ var symbols = Model.Where(pa => (pa.SymbolPackages != null ? pa.SymbolPackages[0].SystemId : new Guid()) == package).ToList(); }
+                    @{ var symbols = Model.Where(pa => (pa.SymbolPackages != null && pa.SymbolPackages.Count > 0 ? pa.SymbolPackages[0].SystemId : new Guid()) == package).ToList(); }
                     @foreach (var symbol in symbols)
                     {
                         <img border="0" height="30" src="@symbol.ThumbnailUrl()" />
