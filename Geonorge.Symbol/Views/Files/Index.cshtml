@@ -36,10 +36,23 @@
                 if (package != null)
                 {
                     <div>
-                    @{ var symbols = Model.Where(pa => (pa.SymbolPackages != null && pa.SymbolPackages.Count > 0 ? pa.SymbolPackages[0].SystemId : new Guid()) == package).ToList(); }
+                    @{ var symbols = Model.Where(pa => (pa.SymbolPackages != null && pa.SymbolPackages.Count > 0 ? pa.SymbolPackages[0].SystemId : new Guid()) == package).ToList();
+                    int maxSymbols = 18, counter = 1, colIndex = 1, colsMax = 6; }
                     @foreach (var symbol in symbols)
                     {
                         <img border="0" height="30" src="@symbol.ThumbnailUrl()" />
+
+                        if (colIndex == colsMax) 
+                        {
+                            <br />
+                            colIndex = 0;
+                        }
+                        if (counter == maxSymbols)
+                        {
+                            break;
+                        }
+                        colIndex++;
+                        counter++;
                     }
                      <h4 style="font-weight:bold">@symbols.FirstOrDefault().SymbolPackages.FirstOrDefault().Name</h4>
                      <p>
