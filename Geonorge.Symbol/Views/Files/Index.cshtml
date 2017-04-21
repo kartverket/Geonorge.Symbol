@@ -56,7 +56,14 @@
                     }
                      <h4 style="font-weight:bold">@symbols.FirstOrDefault().SymbolPackages.FirstOrDefault().Name</h4>
                      <p>
-                         Antall symboler i pakke: @symbols.Count<br />
+                         @if (!string.IsNullOrEmpty(ViewBag.text))
+                         {
+                            <span>Antall treff i pakke: @symbols.Count</span><br />
+                         }
+                         else
+                         {
+                            <span>Antall symboler i pakke: @symbols.Count</span><br />
+                         }
                          Eier: @symbols.FirstOrDefault().SymbolPackages.FirstOrDefault().Owner<br />
                          Tema: @symbols.FirstOrDefault().SymbolPackages.FirstOrDefault().Theme<br />
                          Offisiell symbolpakke: @Html.DisplayFor(model => symbols.FirstOrDefault().SymbolPackages.FirstOrDefault().OfficialStatus)<br /><br />
