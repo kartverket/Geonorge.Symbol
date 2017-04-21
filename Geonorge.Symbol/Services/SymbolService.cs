@@ -54,6 +54,17 @@ namespace Geonorge.Symbol.Services
             return _dbContext.SymbolPackages.ToList();
         }
 
+        public List<SymbolPackage> GetPackagesWithAccessControl()
+        {
+            if (_authorizationService.IsAdmin())
+                return _dbContext.SymbolPackages.ToList();
+            else
+            {
+                string owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
+                return _dbContext.SymbolPackages.Where(o => o.Owner == owner).ToList();
+            }
+        }
+
         public SymbolPackage GetPackage(Guid systemid)
         {
             return _dbContext.SymbolPackages.Where(p => p.SystemId == systemid).FirstOrDefault();
@@ -62,14 +73,25 @@ namespace Geonorge.Symbol.Services
         public SymbolPackage AddPackage(SymbolPackage symbolPackage)
         {
             symbolPackage.SystemId = Guid.NewGuid();
+
+            string owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
+            if (_authorizationService.IsAdmin() && !string.IsNullOrEmpty(symbolPackage.Owner))
+                owner = symbolPackage.Owner;
+            symbolPackage.Owner = owner;
+
             _dbContext.SymbolPackages.Add(symbolPackage);
             _dbContext.SaveChanges();
             return symbolPackage;
         }
 
-        public void UpdatePackage(SymbolPackage symbolPackage)
+        public void UpdatePackage(SymbolPackage originalSymbolPackage, SymbolPackage symbolPackage)
         {
-            _dbContext.Entry(symbolPackage).State = EntityState.Modified;
+            originalSymbolPackage.Name = symbolPackage.Name;
+            originalSymbolPackage.OfficialStatus = symbolPackage.OfficialStatus;
+            originalSymbolPackage.Owner = symbolPackage.Owner;
+            originalSymbolPackage.Theme = symbolPackage.Theme;
+
+            _dbContext.Entry(originalSymbolPackage).State = EntityState.Modified;
             _dbContext.SaveChanges();
         }
 

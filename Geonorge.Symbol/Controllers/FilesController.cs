@@ -99,7 +99,7 @@ namespace Geonorge.Symbol.Controllers
         public ActionResult Create()
         {
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", "Annen");
-            ViewBag.SymbolPackages = new MultiSelectList(_symbolService.GetPackages(), "SystemId", "Name");
+            ViewBag.SymbolPackages = new MultiSelectList(_symbolService.GetPackagesWithAccessControl(), "SystemId", "Name");
             ViewBag.IsAdmin = false;
             ViewBag.Owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
             if (Request.IsAuthenticated)
@@ -119,7 +119,7 @@ namespace Geonorge.Symbol.Controllers
         public ActionResult Create(Models.Symbol symbol, HttpPostedFileBase uploadFile, string[] packages)
         {
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbol.Theme);
-            ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackages(), "SystemId", "Name");
+            ViewBag.SymbolPackages = new SelectList(_symbolService.GetPackagesWithAccessControl(), "SystemId", "Name");
             symbol.SymbolPackages = new List<SymbolPackage>();
             if (packages != null)
             {
@@ -163,7 +163,7 @@ namespace Geonorge.Symbol.Controllers
             }
 
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbol.Theme);
-            ViewBag.SymbolPackages = new MultiSelectList(_symbolService.GetPackages(), "SystemId", "Name", symbol.SymbolPackages.Select(c => c.SystemId).ToArray());
+            ViewBag.SymbolPackages = new MultiSelectList(_symbolService.GetPackagesWithAccessControl(), "SystemId", "Name", symbol.SymbolPackages.Select(c => c.SystemId).ToArray());
 
             ViewBag.IsAdmin = false;
             if (Request.IsAuthenticated)
@@ -213,7 +213,7 @@ namespace Geonorge.Symbol.Controllers
             }
 
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbol.Theme);
-            ViewBag.SymbolPackages = new MultiSelectList(_symbolService.GetPackages(), "SystemId", "Name", symbol.SymbolPackages.Select(c => c.SystemId).ToArray());
+            ViewBag.SymbolPackages = new MultiSelectList(_symbolService.GetPackagesWithAccessControl(), "SystemId", "Name", symbol.SymbolPackages.Select(c => c.SystemId).ToArray());
 
 
             return View(symbol);

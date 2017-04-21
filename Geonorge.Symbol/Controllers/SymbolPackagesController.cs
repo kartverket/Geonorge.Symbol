@@ -27,7 +27,7 @@ namespace Geonorge.Symbol.Controllers
         // GET: SymbolPackages
         public ActionResult Index()
         {
-            return View(_symbolService.GetPackages());
+            return View(_symbolService.GetPackagesWithAccessControl());
         }
 
         // GET: SymbolPackages/Details/5
@@ -48,8 +48,15 @@ namespace Geonorge.Symbol.Controllers
         // GET: SymbolPackages/Create
         public ActionResult Create()
         {
+            SymbolPackage symbolPackage = new SymbolPackage();
+            symbolPackage.Owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
+            ViewBag.IsAdmin = false;
+            if (Request.IsAuthenticated)
+            {
+                ViewBag.IsAdmin = _authorizationService.IsAdmin();
+            }
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", "Annen");
-            return View();
+            return View(symbolPackage);
         }
 
         // POST: SymbolPackages/Create
@@ -59,6 +66,11 @@ namespace Geonorge.Symbol.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(SymbolPackage symbolPackage)
         {
+            ViewBag.IsAdmin = false;
+            if (Request.IsAuthenticated)
+            {
+                ViewBag.IsAdmin = _authorizationService.IsAdmin();
+            }
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbolPackage.Theme);
 
             if (ModelState.IsValid)
@@ -73,6 +85,12 @@ namespace Geonorge.Symbol.Controllers
         // GET: SymbolPackages/Edit/5
         public ActionResult Edit(Guid? systemid)
         {
+            ViewBag.IsAdmin = false;
+            if (Request.IsAuthenticated)
+            {
+                ViewBag.IsAdmin = _authorizationService.IsAdmin();
+            }
+
             if (systemid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -96,9 +114,21 @@ namespace Geonorge.Symbol.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(SymbolPackage symbolPackage)
         {
+            ViewBag.IsAdmin = false;
+            if (Request.IsAuthenticated)
+            {
+                ViewBag.IsAdmin = _authorizationService.IsAdmin();
+            }
+
+            SymbolPackage symbolPackageOriginal = _symbolService.GetPackage(symbolPackage.SystemId);
+
+            if (!_authorizationService.HasAccess(symbolPackageOriginal.Owner,
+                _authorizationService.GetSecurityClaim("organization").FirstOrDefault()))
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+
             if (ModelState.IsValid)
             {
-                _symbolService.UpdatePackage(symbolPackage);
+                _symbolService.UpdatePackage(symbolPackageOriginal, symbolPackage);
                 return RedirectToAction("Index");
             }
             return View(symbolPackage);
@@ -125,6 +155,16 @@ namespace Geonorge.Symbol.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid systemid)
         {
+            Models.SymbolPackage symbolPackage = _symbolService.GetPackage(systemid);
+
+            bool hasAccess = _authorizationService.HasAccess(symbolPackage.Owner,
+                _authorizationService.GetSecurityClaim("organization").FirstOrDefault());
+
+            if (!hasAccess)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+
             _symbolService.RemovePackage(systemid);
 
             return RedirectToAction("Index");

@@ -10,9 +10,10 @@ namespace Geonorge.Symbol.Services
         List<Models.Symbol> GetSymbols(string text = null);
         Models.Symbol AddSymbol(Models.Symbol symbol);
         List<SymbolPackage> GetPackages();
+        List<SymbolPackage> GetPackagesWithAccessControl(); 
         SymbolPackage GetPackage(Guid systemid);
         SymbolPackage AddPackage(SymbolPackage symbolPackage);
-        void UpdatePackage(SymbolPackage symbolPackage);
+        void UpdatePackage(SymbolPackage originalSymbolPackage, SymbolPackage symbolPackage);
         void RemovePackage(Guid systemid);
         Models.Symbol GetSymbol(Guid systemid);
         List<Models.SymbolFile> GetSymbolVariant(Guid systemid);

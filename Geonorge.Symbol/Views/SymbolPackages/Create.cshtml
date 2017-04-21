@@ -49,8 +49,16 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Owner, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                @if (ViewBag.IsAdmin)
+                {
                 <select class="ownerOrganizationSelect form-control" id="Owner" name="Owner"> </select>
                 @Html.ValidationMessageFor(model => model.Owner, "", new { @class = "text-danger" })
+                }
+                else
+                {
+                    <span>@Model.Owner</span>
+                    <input type="hidden" name="Owner" value="@Model.Owner" />
+                }
             </div>
         </div>
 
