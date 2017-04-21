@@ -195,6 +195,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ApiSymbolController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SymbolFilesController.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="Migrations\201704180908046_Initial.Designer.cs">
       <DependentUpon>201704180908046_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\NotFoundModel.cs" />
     <Compile Include="Models\SymbolFileVariant.cs" />
     <Compile Include="Services\AuthorizationService.cs" />
     <Compile Include="Services\IAuthorizationService.cs" />
@@ -441,6 +443,7 @@
     <Content Include="Views\SymbolFiles\Delete.cshtml" />
     <Content Include="Views\SymbolFiles\Edit.cshtml" />
     <Content Include="Views\Shared\_SearchBarPartial.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
