@@ -13,10 +13,13 @@ using Ionic.Zip;
 
 namespace Geonorge.Symbol.Controllers
 {
+    [HandleError]
     public class SymbolPackagesController : Controller
     {
         ISymbolService _symbolService;
         private readonly IAuthorizationService _authorizationService;
+
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public SymbolPackagesController(ISymbolService symbolService, IAuthorizationService authorizationService)
         {
@@ -193,6 +196,11 @@ namespace Geonorge.Symbol.Controllers
             return File(output, "application/zip", ImageService.MakeSeoFriendlyString(package.Name) + ".zip");
             }
 
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            Log.Error("Error", filterContext.Exception);
         }
 
     }

@@ -14,10 +14,13 @@ using System.IO;
 
 namespace Geonorge.Symbol.Controllers
 {
+    [HandleError]
     public class FilesController : Controller
     {
         ISymbolService _symbolService;
         private readonly IAuthorizationService _authorizationService;
+
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public FilesController(ISymbolService symbolService, IAuthorizationService authorizationService)
         {
@@ -293,6 +296,11 @@ namespace Geonorge.Symbol.Controllers
 
                 return File(output, "application/zip", ImageService.MakeSeoFriendlyString(symbolFiles[0].SymbolFileVariant.Name) + ".zip");
             }
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            Log.Error("Error", filterContext.Exception);
         }
     }
 }

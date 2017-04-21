@@ -179,6 +179,7 @@
                                 @Html.DropDownList("ThemePackage", ViewBag.Themes as SelectList, String.Empty, new { @class = "form-control" })
                             </div>
                         </div>
+                        <span id="errormsg" class="alert-danger"></span>
                     </div>
             </div>
             <div class="modal-footer">
@@ -191,6 +192,11 @@
 }
 <script>
     $(document).ready(function () {
+
+        $("#packageModal").on("hide.bs.modal", function () {
+            $('#errormsg').html("");
+        });
+
         $("#AddPackage").click(function () {
             var packageData = {
                 Name: $('#NamePackage').val(),
@@ -210,6 +216,9 @@
                     console.log(pkg.SystemId);
                     $("#packages").append(new Option(pkg.Name, pkg.SystemId, true, true))
                     $('#packageModal').modal('toggle');
+                },
+                error: function (xhr, status, error) {
+                    $('#errormsg').html("Det oppstod en feil: " + error)
                 }
             });
         });

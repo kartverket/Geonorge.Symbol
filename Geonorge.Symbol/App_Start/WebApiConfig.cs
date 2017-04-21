@@ -20,6 +20,8 @@ namespace Geonorge.Symbol
             // don't show exception stacktrace to the public
             config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.LocalOnly;
 
+            config.MessageHandlers.Add(new MessageLoggingHandler());
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
