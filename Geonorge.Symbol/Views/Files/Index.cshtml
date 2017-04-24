@@ -29,14 +29,14 @@
         <div id="packageView" class="search-results row">
             <br /><br />
             @{var packageList = Model.Select(p => p.SymbolPackages.FirstOrDefault()).ToList();
-                var packages = packageList.Where(pac => pac != null).Select(pp => new { SystemId = pp.SystemId, Total = pp.Symbols.Count }).Distinct();
+                var packages = packageList.Where(pac => pac != null).Select(pp => new { SystemId = pp.SystemId, Total = pp.Symbols.Count }).GroupBy(g => g.SystemId).Distinct();
              }
             @foreach (var package in packages)
             {
                 if (package != null)
                 {
                     <div class="col-md-3">
-                    @{ var symbols = Model.Where(pa => (pa.SymbolPackages != null && pa.SymbolPackages.Count > 0 ? pa.SymbolPackages[0].SystemId : new Guid()) == package.SystemId).ToList();
+                    @{ var symbols = Model.Where(pa => (pa.SymbolPackages != null && pa.SymbolPackages.Count > 0 ? pa.SymbolPackages[0].SystemId : new Guid()) == package.FirstOrDefault().SystemId).ToList();
                     int maxSymbols = 18, counter = 1, colIndex = 1, colsMax = 6; }
                     @foreach (var symbol in symbols)
                     {
@@ -58,7 +58,7 @@
                      <p>
                          @if (!string.IsNullOrEmpty(ViewBag.text))
                          {
-                            <span>Antall symboler i pakke: @symbols.Count/@package.Total</span><br />
+                            <span>Antall symboler i pakke: @symbols.Count/@package.FirstOrDefault().Total</span><br />
                          }
                          else
                          {
