@@ -22,8 +22,11 @@ namespace Geonorge.Symbol.Services
             var ext = "." + format;
 
             MagickReadSettings readerSettings = new MagickReadSettings();
+            readerSettings.BackgroundColor = MagickColors.Transparent;
             if (file.ContentType.Equals("image/svg+xml"))
+            {
                 readerSettings.Format = MagickFormat.Svg;
+            }
 
             string fileName = CreateFileName(symbol, ext, targetFolder);
 
@@ -37,7 +40,7 @@ namespace Geonorge.Symbol.Services
                     {
                         case "png":
                             {
-                                image.Format = MagickFormat.Png;
+                                image.Format = MagickFormat.Png32;
                                 break;
                             }
                         case "jpg":
@@ -48,6 +51,7 @@ namespace Geonorge.Symbol.Services
                         case "gif":
                             {
                                 image.Format = MagickFormat.Gif;
+                                image.Settings.ColorType = ColorType.TrueColorAlpha;
                                 break;
                             }
                         case "ai":
