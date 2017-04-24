@@ -36,8 +36,8 @@
                 if (package != null)
                 {
                     <div class="col-md-3">
-                    @{ var symbols = Model.Where(pa => (pa.SymbolPackages != null && pa.SymbolPackages.Count > 0 ? pa.SymbolPackages[0].SystemId : new Guid()) == package.SystemId).ToList();
-                    int maxSymbols = 18, counter = 1, colIndex = 1, colsMax = 6; }
+                    @{ var symbols = Model.Where(p => p.SymbolPackages.Any(pp => pp.SystemId == package.SystemId)).ToList();
+                        int maxSymbols = 18, counter = 1, colIndex = 1, colsMax = 6; }
                     @foreach (var symbol in symbols)
                     {
                         <img border="0" height="30" src="@symbol.ThumbnailUrl()" />
