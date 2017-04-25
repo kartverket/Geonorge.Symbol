@@ -97,7 +97,7 @@ namespace Geonorge.Symbol.Controllers
                 _symbolService.UpdateSymbolFile(variant);
             }
 
-            if (uploadFile != null)
+            if (uploadFile != null && uploadFile[0] != null)
             {
                 var file = variants.FirstOrDefault();
                 symbolFile.SymbolFileVariant = file.SymbolFileVariant;
