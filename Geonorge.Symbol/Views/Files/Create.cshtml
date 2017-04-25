@@ -84,7 +84,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.SymbolPackages, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-8">
-                        @Html.ListBox("packages", (MultiSelectList)ViewBag.SymbolPackages, new { @class = "form-control packagesSelect", multiple = "multiple" })
+                        @Html.DropDownList("packages", (MultiSelectList)ViewBag.SymbolPackages,string.Empty, new { @class = "form-control packagesSelect" })
                         @Html.ValidationMessageFor(model => model.SymbolPackages, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-2">
