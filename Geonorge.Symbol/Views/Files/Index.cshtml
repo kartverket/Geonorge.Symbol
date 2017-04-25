@@ -29,7 +29,9 @@
         <div id="packageView" class="search-results row">
             <br /><br />
             @{var packageList = Model.Select(p => p.SymbolPackages.FirstOrDefault()).ToList();
-                var packages = packageList.Where(pac => pac != null).Select(pp => new { SystemId = pp.SystemId, Total = pp.Symbols.Count }).Distinct();
+                var packages = packageList.Where(pac => pac != null)
+                    .Select(pp => new { SystemId = pp.SystemId, Name = pp.Name, Owner = pp.Owner, Theme = pp.Theme,
+                        OfficialStatus = pp.OfficialStatus, Total = pp.Symbols.Count }).Distinct();
              }
             @foreach (var package in packages)
             {
@@ -54,7 +56,7 @@
                         colIndex++;
                         counter++;
                     }
-                     <h4 style="font-weight:bold">@symbols.FirstOrDefault().SymbolPackages.FirstOrDefault().Name</h4>
+                     <h4 style="font-weight:bold">@package.Name</h4>
                      <p>
                          @if (!string.IsNullOrEmpty(ViewBag.text))
                          {
@@ -64,10 +66,10 @@
                          {
                             <span>Antall symboler i pakke: @package.Total</span><br />
                          }
-                         Eier: @symbols.FirstOrDefault().SymbolPackages.FirstOrDefault().Owner<br />
-                         Tema: @symbols.FirstOrDefault().SymbolPackages.FirstOrDefault().Theme<br />
-                         Offisiell symbolpakke: @Html.DisplayFor(model => symbols.FirstOrDefault().SymbolPackages.FirstOrDefault().OfficialStatus)<br /><br />
-                         <a class="btn btn-default btn-space" href="~/symbolpackages/details/@symbols.FirstOrDefault().SymbolPackages.FirstOrDefault().SystemId">Detaljert informasjon</a>
+                         Eier: @package.Owner<br />
+                         Tema: @package.Theme<br />
+                         Offisiell symbolpakke: @Html.DisplayFor(model => package.OfficialStatus)<br /><br />
+                         <a class="btn btn-default btn-space" href="~/symbolpackages/details/@package.SystemId">Detaljert informasjon</a>
                      </p>
                  </div>
                     }
