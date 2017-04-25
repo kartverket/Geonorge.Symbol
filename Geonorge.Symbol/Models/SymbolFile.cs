@@ -35,7 +35,11 @@ namespace Geonorge.Symbol.Models
 
         public string FileUrl()
         {
-            return CurrentDomain() + "/files/" + FileName;
+            var folder = Symbol.SymbolPackages.FirstOrDefault().Folder;
+            if (!string.IsNullOrEmpty(folder))
+                folder = folder + "/";
+
+            return CurrentDomain() + "/files/" + folder + FileName;
         }
 
         string CurrentDomain()

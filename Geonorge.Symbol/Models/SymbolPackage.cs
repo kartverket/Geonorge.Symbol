@@ -27,6 +27,9 @@ namespace Geonorge.Symbol.Models
         [Display(Name = "Tema")]
         public string Theme { get; set; }
 
+        /// <summary>Folder for symbols in package</summary>
+        public string Folder { get; set; }
+
         public virtual List<Symbol> Symbols { get; set; }
 
     }

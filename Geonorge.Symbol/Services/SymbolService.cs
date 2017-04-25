@@ -51,17 +51,17 @@ namespace Geonorge.Symbol.Services
 
         public List<SymbolPackage> GetPackages()
         {
-            return _dbContext.SymbolPackages.ToList();
+            return _dbContext.SymbolPackages.OrderBy(o => o.Name).ToList();
         }
 
         public List<SymbolPackage> GetPackagesWithAccessControl()
         {
             if (_authorizationService.IsAdmin())
-                return _dbContext.SymbolPackages.ToList();
+                return _dbContext.SymbolPackages.OrderBy(o => o.Name).ToList();
             else
             {
                 string owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
-                return _dbContext.SymbolPackages.Where(o => o.Owner == owner).ToList();
+                return _dbContext.SymbolPackages.Where(o => o.Owner == owner).OrderBy(o => o.Name).ToList();
             }
         }
 
@@ -79,17 +79,24 @@ namespace Geonorge.Symbol.Services
                 owner = symbolPackage.Owner;
             symbolPackage.Owner = owner;
 
+            symbolPackage.Folder = CreatePackageFolder(symbolPackage.Name);
+
             _dbContext.SymbolPackages.Add(symbolPackage);
             _dbContext.SaveChanges();
+
             return symbolPackage;
         }
 
         public void UpdatePackage(SymbolPackage originalSymbolPackage, SymbolPackage symbolPackage)
         {
+            if (originalSymbolPackage.Name != symbolPackage.Name)
+                originalSymbolPackage.Folder = RenamePackageFolder(originalSymbolPackage.Name, symbolPackage.Name);
+
             originalSymbolPackage.Name = symbolPackage.Name;
             originalSymbolPackage.OfficialStatus = symbolPackage.OfficialStatus;
             originalSymbolPackage.Owner = symbolPackage.Owner;
             originalSymbolPackage.Theme = symbolPackage.Theme;
+
 
             _dbContext.Entry(originalSymbolPackage).State = EntityState.Modified;
             _dbContext.SaveChanges();
@@ -149,12 +156,12 @@ namespace Geonorge.Symbol.Services
                 }
                 else { _dbContext.SymbolFiles.Remove(file); }
                 _dbContext.SaveChanges();
-                DeleteFile(file.FileName);
+                DeleteFile(file.FileName, symbol.SymbolPackages.FirstOrDefault()?.Folder);
             }
 
             _dbContext.Symbols.Remove(symbol);
             _dbContext.SaveChanges();
-            DeleteThumbnailFile(symbol.Thumbnail);
+            DeleteThumbnailFile(symbol.Thumbnail, symbol.SymbolPackages.FirstOrDefault()?.Folder);
         }
 
         public SymbolFile GetSymbolFile(Guid systemid)
@@ -197,7 +204,7 @@ namespace Geonorge.Symbol.Services
         {
             _dbContext.SymbolFiles.Remove(symbolFile);
             _dbContext.SaveChanges();
-            DeleteFile(symbolFile.FileName);
+            DeleteFile(symbolFile.FileName, symbolFile.Symbol.SymbolPackages.FirstOrDefault()?.Folder);
         }
 
         public void AddSymbolFilesFromSvg(SymbolFile symbolFile, HttpPostedFileBase uploadFile)
@@ -264,26 +271,80 @@ namespace Geonorge.Symbol.Services
             _dbContext.SaveChanges();
         }
 
-        private void DeleteFile(string fileName)
+        private void DeleteFile(string fileName, string packageFolder)
         {
             if (!string.IsNullOrEmpty(fileName))
             {
                 string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
+                if (!string.IsNullOrEmpty(packageFolder))
+                    targetFolder = targetFolder + "/" + packageFolder;
                 string targetPath = Path.Combine(targetFolder, fileName);
                 if (File.Exists(targetPath))
                     File.Delete(targetPath);
             }
         }
 
-        private void DeleteThumbnailFile(string fileName)
+        private void DeleteThumbnailFile(string fileName, string packageFolder)
         {
             if (!string.IsNullOrEmpty(fileName))
             {
                 string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/thumbnail");
+                if (!string.IsNullOrEmpty(packageFolder))
+                    targetFolder = targetFolder + "/" + packageFolder;
                 string targetPath = Path.Combine(targetFolder, fileName);
                 if (File.Exists(targetPath))
                     File.Delete(targetPath);
             }
+        }
+
+        private string CreatePackageFolder(string packageName)
+        {
+
+            packageName = CreateValidFileString(packageName);
+            string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/" + packageName);
+            if (!Directory.Exists(targetFolder))
+                Directory.CreateDirectory(targetFolder);
+
+            return packageName;
+        }
+
+        private string RenamePackageFolder(string packageName, string newPackageName)
+        {
+
+            newPackageName = CreateValidFileString(newPackageName);
+            string sourceFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/" + packageName);
+            string destinationFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/" + newPackageName);
+            if (Directory.Exists(sourceFolder))
+            {
+                if (Directory.Exists(destinationFolder))
+                    Directory.CreateDirectory(destinationFolder);
+
+                Directory.Move(sourceFolder, destinationFolder);
+            }
+                
+
+            return newPackageName;
+        }
+
+        public static string CreateValidFileString(string input)
+        {
+            string encodedUrl = (input ?? "").ToLower();
+            // replace & with and
+            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
+
+            // remove characters
+            encodedUrl = encodedUrl.Replace("'", "");
+
+            // replace norwegian characters
+            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
+
+            // remove invalid characters
+            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "");
+
+            // trim leading & trailing characters
+            encodedUrl = encodedUrl.Trim(' ');
+
+            return encodedUrl;
         }
     }
 }
