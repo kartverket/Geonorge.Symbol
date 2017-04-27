@@ -22,15 +22,13 @@
     </div>
 </section>
 
-<p>Under konstruksjon, her er det tenkt at man kan redigere variant navn, samt at man kan fjerne, legge til filer</p>
-
 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "symbolvariantform" }))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         <input type="hidden" name="SymbolFileVariant.SystemId" value="@Model[0].SymbolFileVariant.SystemId" />
         <input type="hidden" id="FileToRemove" name="FileToRemove" value="" />
         <div class="form-group">
@@ -67,8 +65,9 @@
         <div class="row search-results-table-heading">
             <div class="col-sm-4"><p>Filnavn</p></div>
             <div class="col-sm-3"><p>Symbolgrafikk</p></div>
-            <div class="col-sm-3"><p>Farge</p></div>
+            <div class="col-sm-2"><p>Farge</p></div>
             <div class="col-sm-1"><p>Størrelse</p></div>
+            <div class="col-sm-1"></div>
             <div class="col-sm-1"></div>
         </div>
         <div class="menu-separator search-results-table-heading"></div>
@@ -77,11 +76,16 @@
             <div class="row dataset-list metadata">
                 <div class="col-sm-4">@file.FileName</div>
                 <div class="col-sm-3">@file.Type</div>
-                <div class="col-sm-3">@file.Color</div>
+                <div class="col-sm-2">@file.Color</div>
                 <div class="col-sm-1">@file.Size</div>
-                @if(Model.Count > 1) { 
-                <div class="col-sm-1"><input type="submit" class="btn btn-default pull-right" value="Slett" onclick="SetFileToRemove('@file.SystemId');" /></div>
+                <div class="col-sm-1">
+                    <a class="hidden-print btn btn-default" data-loading-message="Henter innhold" href="~/symbolfiles/editfile?systemid=@file.SystemId">Rediger</a>
+                </div>
+                <div class="col-sm-1">
+                @if (Model.Count > 1)
+                { <input type="submit" class="btn btn-default pull-right" value="Slett" onclick="SetFileToRemove('@file.SystemId');" />
                 }
+                </div>
             </div>
             <hr style="margin-top:2px; margin-bottom:6px;" />
         }

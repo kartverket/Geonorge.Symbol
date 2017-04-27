@@ -211,6 +211,7 @@
     <Compile Include="Models\NotFoundModel.cs" />
     <Compile Include="Models\SymbolFileVariant.cs" />
     <Compile Include="Services\AuthorizationService.cs" />
+    <Compile Include="Services\FileException.cs" />
     <Compile Include="Services\IAuthorizationService.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\ISymbolService.cs" />
@@ -449,6 +450,7 @@
     <Content Include="Views\SymbolFiles\Edit.cshtml" />
     <Content Include="Views\Shared\_SearchBarPartial.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\SymbolFiles\EditFile.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

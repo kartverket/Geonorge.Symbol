@@ -79,6 +79,26 @@ namespace Geonorge.Symbol.Controllers
             return View(symbolFiles);
         }
 
+        // GET: SymbolFiles/EditFile/5
+        public ActionResult EditFile(Guid? systemid)
+        {
+            if (systemid == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            SymbolFile symbolFile = _symbolService.GetSymbolFile(systemid.Value);
+            if (symbolFile == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.Sizes = new SelectList(CodeList.Size, "Key", "Value", symbolFile.Size);
+            ViewBag.SymbolGraphics = new SelectList(CodeList.SymbolGraphics, "Key", "Value", symbolFile.Type);
+
+            return View(symbolFile);
+        }
+
         // POST: SymbolFiles/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -124,6 +144,55 @@ namespace Geonorge.Symbol.Controllers
             variants = _symbolService.GetSymbolVariant(symbolFile.SymbolFileVariant.SystemId);
 
             return View(variants);
+        }
+
+        // POST: SymbolFiles/EditFile/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult EditFile(SymbolFile symbolFile)
+        {
+            var originalSymbolFile = _symbolService.GetSymbolFile(symbolFile.SystemId);
+
+            ViewBag.Sizes = new SelectList(CodeList.Size, "Key", "Value", originalSymbolFile.Size);
+            ViewBag.SymbolGraphics = new SelectList(CodeList.SymbolGraphics, "Key", "Value", originalSymbolFile.Type);
+
+            if (!_authorizationService.HasAccess(originalSymbolFile.Symbol.Owner,
+                    _authorizationService.GetSecurityClaim("organization").FirstOrDefault()))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (symbolFile.FileName != originalSymbolFile.FileName)
+                    {
+                        _symbolService.RenameFile(originalSymbolFile, symbolFile.FileName);
+                        originalSymbolFile.FileName = symbolFile.FileName;
+                    }
+
+                    originalSymbolFile.Color = symbolFile.Color;
+                    originalSymbolFile.Size = symbolFile.Size;
+                    originalSymbolFile.Type = symbolFile.Type;
+                       
+                    _symbolService.UpdateSymbolFile(originalSymbolFile);
+                    return RedirectToAction("edit", "symbolfiles", new { systemid = originalSymbolFile.SymbolFileVariant.SystemId });
+                }
+                catch (FileException exf)
+                {
+                    Log.Error(exf);
+                    ModelState.AddModelError("errorFile", exf.Message);
+                }
+                catch (Exception ex){
+                    Log.Error(ex);
+                    ModelState.AddModelError("error", "Det oppstod en feil");
+                }
+            }
+
+            return View(originalSymbolFile);
         }
 
         // GET: SymbolFiles/Delete/5

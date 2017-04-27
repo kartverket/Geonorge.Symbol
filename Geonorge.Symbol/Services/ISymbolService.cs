@@ -25,5 +25,6 @@ namespace Geonorge.Symbol.Services
         void AddSymbolFilesFromSvg(Models.SymbolFile symbolFile, HttpPostedFileBase uploadFile);
         void UpdateSymbolFile(Models.SymbolFile symbolFile);
         void RemoveSymbolFile(Models.SymbolFile symbolFile);
+        void RenameFile(SymbolFile symbolFile, string newFileName);
     }
 }

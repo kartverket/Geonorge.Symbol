@@ -365,5 +365,21 @@ namespace Geonorge.Symbol.Services
 
             return variantName;
         }
+
+        public void RenameFile(SymbolFile symbolFile, string newFileName)
+        {
+            var fileExists = _dbContext.SymbolFiles.Where(f => f.FileName == newFileName && f.SystemId != symbolFile.SystemId);
+            if(fileExists.Any())
+                throw new FileException("Filnavn finnes fra før");
+
+            string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
+            if (!string.IsNullOrEmpty(symbolFile.Symbol.SymbolPackages[0].Folder))
+                targetFolder = targetFolder + "\\" + symbolFile.Symbol.SymbolPackages[0].Folder;
+            string targetPath = Path.Combine(targetFolder, symbolFile.FileName);
+ 
+            string destinationPath = Path.Combine(targetFolder, newFileName);
+
+            File.Move(targetPath, destinationPath);
+        }
     }
 }
