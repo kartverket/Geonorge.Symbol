@@ -188,7 +188,7 @@ namespace Geonorge.Symbol.Services
 
             foreach(var uploadFile in uploadFiles)
             { 
-                var filename = new ImageService().SaveImage(uploadFile, symbol);
+                var filename = new ImageService().SaveImage(uploadFile, symbol, symbolFile);
                 var format = Path.GetExtension(filename).Replace(".","");
                 AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, format);
             }
@@ -224,21 +224,21 @@ namespace Geonorge.Symbol.Services
             symbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
             symbolFile.Symbol = symbol;
             symbolFile.SystemId = Guid.NewGuid();
-            var filename = imageService.SaveImage(uploadFile, symbol);
+            var filename = imageService.SaveImage(uploadFile, symbol, symbolFile);
             symbolFile.FileName = filename;
             symbolFile.Format = "svg";
             _dbContext.SymbolFiles.Add(symbolFile);
             _dbContext.SaveChanges();
 
-            filename = imageService.ConvertImage(uploadFile, symbol, "png");
+            filename = imageService.ConvertImage(uploadFile, symbol, "png", symbolFile);
             AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "png");
 
             uploadFile.InputStream.Position = 0;
-            filename = imageService.ConvertImage(uploadFile, symbol, "gif");
+            filename = imageService.ConvertImage(uploadFile, symbol, "gif", symbolFile);
             AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "gif");
 
             uploadFile.InputStream.Position = 0;
-            filename = imageService.ConvertImage(uploadFile, symbol, "tif");
+            filename = imageService.ConvertImage(uploadFile, symbol, "tif", symbolFile);
             AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "tif");
 
         }

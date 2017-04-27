@@ -45,14 +45,22 @@
 
         <div class="form-group">
             @Html.Label("Symbol", htmlAttributes: new { @class = "control-label col-md-1" })
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <input type="file" id="uploadFile" name="uploadFile" />
             </div>
+            @Html.Label("Symbolgrafikk", htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-2">
+                @Html.DropDownList("Type", ViewBag.SymbolGraphics as SelectList, String.Empty, new { @class = "form-control" })
+            </div>
+            @Html.Label("Farge", htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-1">
+                <input type="text" name="Color" id="Color" />
+            </div>
                 @Html.Label("Størrelse", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-3">
+                <div class="col-md-1">
                     @Html.DropDownList("Size", ViewBag.Size as SelectList, String.Empty, new { @class = "form-control" })
                 </div>
-            <div class="col-md-3 hidden-print">
+            <div class="col-md-1 hidden-print">
                 <input type="submit" value="Legg til fil" class="btn btn-default pull-left" />
             </div>
         </div>

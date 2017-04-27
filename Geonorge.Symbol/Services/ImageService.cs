@@ -15,7 +15,7 @@ namespace Geonorge.Symbol.Services
 {
     public class ImageService
     {
-        public string ConvertImage(HttpPostedFileBase file, Models.Symbol symbol, string format)
+        public string ConvertImage(HttpPostedFileBase file, Models.Symbol symbol, string format, Models.SymbolFile symbolFile)
         {
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
             if (!string.IsNullOrEmpty(symbol.SymbolPackages.FirstOrDefault()?.Folder))
@@ -30,7 +30,7 @@ namespace Geonorge.Symbol.Services
                 readerSettings.Format = MagickFormat.Svg;
             }
 
-            string fileName = CreateFileName(symbol, ext, targetFolder);
+            string fileName = CreateFileName(symbol, ext, targetFolder, symbolFile);
 
             using (MemoryStream memStream = new MemoryStream())
             {
@@ -88,7 +88,7 @@ namespace Geonorge.Symbol.Services
             return fileName;
         }
 
-        public string SaveImage(HttpPostedFileBase file, Models.Symbol symbol)
+        public string SaveImage(HttpPostedFileBase file, Models.Symbol symbol, Models.SymbolFile symbolFile)
         {
 
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
@@ -97,7 +97,7 @@ namespace Geonorge.Symbol.Services
 
             var ext = Path.GetExtension(file.FileName);
 
-            string fileName = CreateFileName(symbol, ext, targetFolder);
+            string fileName = CreateFileName(symbol, ext, targetFolder, symbolFile);
 
             string targetPath = Path.Combine(targetFolder, fileName);
             file.SaveAs(targetPath);
@@ -167,14 +167,26 @@ namespace Geonorge.Symbol.Services
 
         }
 
-        public string CreateFileName(Models.Symbol symbol, string ext, string targetFolder = null)
+        public string CreateFileName(Models.Symbol symbol, string ext, string targetFolder = null, Models.SymbolFile symbolFile = null)
         {
             if(string.IsNullOrEmpty(targetFolder))
                 targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
-
+ 
             string filename;
 
-            filename =  MakeSeoFriendlyString(symbol.Name);
+            filename = MakeSeoFriendlyString(symbol.Name);
+            if (symbolFile != null)
+            {
+                if (!string.IsNullOrEmpty(symbolFile.Type))
+                    filename = filename + "_" + MakeSeoFriendlyString(symbolFile.Type);
+
+                if (!string.IsNullOrEmpty(symbolFile.Color))
+                    filename = filename + "_" + MakeSeoFriendlyString(symbolFile.Color);
+
+                if (!string.IsNullOrEmpty(symbolFile.Size))
+                    filename = filename + "_" + MakeSeoFriendlyString(symbolFile.Size);
+
+            }
 
             string additionalNumber = "";
             

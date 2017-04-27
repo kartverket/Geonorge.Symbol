@@ -69,6 +69,7 @@ namespace Geonorge.Symbol.Controllers
             }
 
             ViewBag.Size = new SelectList(CodeList.Size, "Key", "Value");
+            ViewBag.SymbolGraphics = new SelectList(CodeList.SymbolGraphics, "Key", "Value");
 
             List<SymbolFile> symbolFiles = _symbolService.GetSymbolVariant(systemid.Value);
             if (symbolFiles == null)
@@ -84,9 +85,10 @@ namespace Geonorge.Symbol.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit(SymbolFile symbolFile, HttpPostedFileBase[] uploadFile, string FileToRemove, string Size)
+        public ActionResult Edit(SymbolFile symbolFile, HttpPostedFileBase[] uploadFile, string FileToRemove)
         {
             ViewBag.Size = new SelectList(CodeList.Size, "Key", "Value");
+            ViewBag.SymbolGraphics = new SelectList(CodeList.SymbolGraphics, "Key", "Value");
 
             var variants = _symbolService.GetSymbolVariant(symbolFile.SymbolFileVariant.SystemId);
 
@@ -106,7 +108,9 @@ namespace Geonorge.Symbol.Controllers
             {
                 var file = variants.FirstOrDefault();
                 symbolFile.SymbolFileVariant = file.SymbolFileVariant;
-                symbolFile.Size = Size;
+                symbolFile.Type = symbolFile.Type;
+                symbolFile.Color = symbolFile.Color;
+                symbolFile.Size = symbolFile.Size;
                 symbolFile.Symbol = file.Symbol;
                 _symbolService.AddSymbolFiles(symbolFile, uploadFile);
             }
