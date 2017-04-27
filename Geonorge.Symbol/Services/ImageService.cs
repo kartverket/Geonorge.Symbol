@@ -19,7 +19,7 @@ namespace Geonorge.Symbol.Services
         {
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
             if (!string.IsNullOrEmpty(symbol.SymbolPackages.FirstOrDefault()?.Folder))
-                targetFolder = targetFolder + "/" + symbol.SymbolPackages.FirstOrDefault().Folder;
+                targetFolder = targetFolder + "\\" + symbol.SymbolPackages.FirstOrDefault().Folder;
 
             var ext = "." + format;
 
@@ -93,7 +93,7 @@ namespace Geonorge.Symbol.Services
 
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
             if (!string.IsNullOrEmpty(symbol.SymbolPackages.FirstOrDefault()?.Folder))
-                targetFolder = targetFolder + "/" + symbol.SymbolPackages.FirstOrDefault().Folder;
+                targetFolder = targetFolder + "\\" + symbol.SymbolPackages.FirstOrDefault().Folder;
 
             var ext = Path.GetExtension(file.FileName);
 
@@ -171,8 +171,6 @@ namespace Geonorge.Symbol.Services
         {
             if(string.IsNullOrEmpty(targetFolder))
                 targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
-            if (!string.IsNullOrEmpty(symbol.SymbolPackages.FirstOrDefault()?.Folder))
-                targetFolder = targetFolder + "/" + symbol.SymbolPackages.FirstOrDefault().Folder;
 
             string filename;
 

@@ -179,7 +179,7 @@ namespace Geonorge.Symbol.Services
             { 
                 SymbolFileVariant variant = new SymbolFileVariant();
                 variant.SystemId = Guid.NewGuid();
-                variant.Name = symbol.Name + "_" + symbolFile.Type;
+                variant.Name = GetVariantName(symbol, symbolFile);
                 symbolFile.SymbolFileVariant = variant;
             }
 
@@ -214,7 +214,7 @@ namespace Geonorge.Symbol.Services
             {
                 SymbolFileVariant variant = new SymbolFileVariant();
                 variant.SystemId = Guid.NewGuid();
-                variant.Name = symbol.Name + "_" + symbolFile.Type;
+                variant.Name = GetVariantName(symbol, symbolFile);
                 symbolFile.SymbolFileVariant = variant;
             }
 
@@ -277,7 +277,7 @@ namespace Geonorge.Symbol.Services
             {
                 string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
                 if (!string.IsNullOrEmpty(packageFolder))
-                    targetFolder = targetFolder + "/" + packageFolder;
+                    targetFolder = targetFolder + "\\" + packageFolder;
                 string targetPath = Path.Combine(targetFolder, fileName);
                 if (File.Exists(targetPath))
                     File.Delete(targetPath);
@@ -351,6 +351,19 @@ namespace Geonorge.Symbol.Services
             encodedUrl = encodedUrl.Trim(' ');
 
             return encodedUrl;
+        }
+
+        private string GetVariantName(Models.Symbol symbol, SymbolFile symbolFile)
+        {
+            string variantName = symbol.Name;
+
+            if (!string.IsNullOrEmpty(symbolFile.Type))
+                variantName = variantName + "_" + symbolFile.Type;
+
+            if (!string.IsNullOrEmpty(symbolFile.Color))
+                variantName = variantName + "_" + symbolFile.Color;
+
+            return variantName;
         }
     }
 }
