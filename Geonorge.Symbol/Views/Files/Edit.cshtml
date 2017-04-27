@@ -87,7 +87,9 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.SymbolPackages, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.DropDownList("packages", (MultiSelectList)ViewBag.SymbolPackages, new { @class = "form-control packagesSelect", @readonly = "readonly" })
+                        @*@Html.DropDownList("packages", (MultiSelectList)ViewBag.SymbolPackages, new { @class = "form-control packagesSelect", @readonly = "readonly" })*@
+                        <input type="hidden" name="packages" id="packages" value="@Model.SymbolPackages[0].SystemId" />
+                        <span>@Model.SymbolPackages[0].Name</span>
                         @Html.ValidationMessageFor(model => model.SymbolPackages, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -123,6 +125,3 @@
     </div>
 }
 <script type="text/javascript" src="~/Scripts/custom.js"></script>
-<script>
-    $(".packagesSelect").prop("disabled", true);
-</script>
