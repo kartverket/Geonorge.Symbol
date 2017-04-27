@@ -88,10 +88,11 @@
                         @Html.ValidationMessageFor(model => model.SymbolPackages, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-2">
-                        <!-- Button trigger modal -->
+                        @if (ViewBag.IsAdmin) {
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#packageModal">
                             Legg til pakke
                         </button>
+                        }
                     </div>
                 </div>
 

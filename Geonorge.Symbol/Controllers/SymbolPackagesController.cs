@@ -66,6 +66,7 @@ namespace Geonorge.Symbol.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create(SymbolPackage symbolPackage)
         {
@@ -74,6 +75,10 @@ namespace Geonorge.Symbol.Controllers
             {
                 ViewBag.IsAdmin = _authorizationService.IsAdmin();
             }
+
+            if (!ViewBag.IsAdmin)
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbolPackage.Theme);
 
             if (ModelState.IsValid)
@@ -86,6 +91,7 @@ namespace Geonorge.Symbol.Controllers
         }
 
         // GET: SymbolPackages/Edit/5
+        [Authorize]
         public ActionResult Edit(Guid? systemid)
         {
             ViewBag.IsAdmin = false;
@@ -95,9 +101,11 @@ namespace Geonorge.Symbol.Controllers
             }
 
             if (systemid == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
+            if (!ViewBag.IsAdmin)
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+
             SymbolPackage symbolPackage = _symbolService.GetPackage(systemid.Value);
             if (symbolPackage == null)
             {
@@ -119,15 +127,12 @@ namespace Geonorge.Symbol.Controllers
         {
             ViewBag.IsAdmin = false;
             if (Request.IsAuthenticated)
-            {
                 ViewBag.IsAdmin = _authorizationService.IsAdmin();
-            }
+
+            if (!ViewBag.IsAdmin)
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
 
             SymbolPackage symbolPackageOriginal = _symbolService.GetPackage(symbolPackage.SystemId);
-
-            if (!_authorizationService.HasAccess(symbolPackageOriginal.Owner,
-                _authorizationService.GetSecurityClaim("organization").FirstOrDefault()))
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
 
             if (ModelState.IsValid)
             {
@@ -138,12 +143,12 @@ namespace Geonorge.Symbol.Controllers
         }
 
         // GET: SymbolPackages/Delete/5
+        [Authorize]
         public ActionResult Delete(Guid? systemid)
         {
             if (systemid == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             SymbolPackage symbolPackage = _symbolService.GetPackage(systemid.Value);
             if (symbolPackage == null)
             {
@@ -160,13 +165,12 @@ namespace Geonorge.Symbol.Controllers
         {
             Models.SymbolPackage symbolPackage = _symbolService.GetPackage(systemid);
 
-            bool hasAccess = _authorizationService.HasAccess(symbolPackage.Owner,
-                _authorizationService.GetSecurityClaim("organization").FirstOrDefault());
+            ViewBag.IsAdmin = false;
+            if (Request.IsAuthenticated)
+                ViewBag.IsAdmin = _authorizationService.IsAdmin();
 
-            if (!hasAccess)
-            {
+            if (!ViewBag.IsAdmin)
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
-            }
 
             _symbolService.RemovePackage(systemid);
 

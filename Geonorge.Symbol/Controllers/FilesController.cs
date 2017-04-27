@@ -67,6 +67,10 @@ namespace Geonorge.Symbol.Controllers
             int pageSize = 30;
             int pageNumber = (page ?? 1);
 
+            ViewBag.IsAdmin = false;
+            if (Request.IsAuthenticated)
+                ViewBag.IsAdmin = _authorizationService.IsAdmin();
+
             return View(symbols.ToPagedList(pageNumber, pageSize));
         }
 

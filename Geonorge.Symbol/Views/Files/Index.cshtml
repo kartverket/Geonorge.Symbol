@@ -114,7 +114,10 @@
         <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="/">Tilbake</a>
         @if (Request.IsAuthenticated)
         {
+            if (ViewBag.IsAdmin)
+            {
             <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/symbolpackages/">Pakker</a>
+            }
             <a class="btn btn-default btn-space pull-right" href="~/files/Create">Registrer symbol</a>
         }
 
