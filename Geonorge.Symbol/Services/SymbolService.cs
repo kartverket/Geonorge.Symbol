@@ -202,9 +202,9 @@ namespace Geonorge.Symbol.Services
 
         public void RemoveSymbolFile(SymbolFile symbolFile)
         {
+            DeleteFile(symbolFile.FileName, symbolFile.Symbol.SymbolPackages.FirstOrDefault()?.Folder);
             _dbContext.SymbolFiles.Remove(symbolFile);
             _dbContext.SaveChanges();
-            DeleteFile(symbolFile.FileName, symbolFile.Symbol.SymbolPackages.FirstOrDefault()?.Folder);
         }
 
         public void AddSymbolFilesFromSvg(SymbolFile symbolFile, HttpPostedFileBase uploadFile)
