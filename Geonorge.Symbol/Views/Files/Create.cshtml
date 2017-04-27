@@ -219,7 +219,8 @@
                     $('#packageModal').modal('toggle');
                 },
                 error: function (xhr, status, error) {
-                    $('#errormsg').html("Det oppstod en feil: " + error)
+                    var errorResponse = JSON.parse(xhr.responseText);
+                    $('#errormsg').html("Det oppstod en feil: " + errorResponse.Message)
                 }
             });
         });

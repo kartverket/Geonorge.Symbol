@@ -42,6 +42,11 @@ namespace Geonorge.Symbol.Api
             {
                 return Request.CreateResponse(HttpStatusCode.OK, _symbolService.AddPackage(package));
             }
+            catch (PackageException pex)
+            {
+                Log.Error("Error API", pex);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, new HttpError(pex.Message));
+            }
             catch (Exception ex)
             {
                 Log.Error("Error API", ex);

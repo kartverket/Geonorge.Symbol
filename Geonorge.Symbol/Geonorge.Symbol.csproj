@@ -231,6 +231,7 @@
       <DependentUpon>UI.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\CodeList.cs" />
+    <Compile Include="Services\PackageException.cs" />
     <Compile Include="Services\SymbolService.cs" />
   </ItemGroup>
   <ItemGroup>

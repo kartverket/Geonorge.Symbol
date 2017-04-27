@@ -302,8 +302,10 @@ namespace Geonorge.Symbol.Services
 
             packageName = CreateValidFileString(packageName);
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/" + packageName);
-            if (!Directory.Exists(targetFolder))
-                Directory.CreateDirectory(targetFolder);
+            if (Directory.Exists(targetFolder))
+                throw new PackageException("Pakkenavnet er opptatt, velg et annet pakkenavn");
+
+            Directory.CreateDirectory(targetFolder);
 
             return packageName;
         }
@@ -314,6 +316,10 @@ namespace Geonorge.Symbol.Services
             newPackageName = CreateValidFileString(newPackageName);
             string sourceFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/" + packageName);
             string destinationFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/" + newPackageName);
+
+            if(Directory.Exists(destinationFolder))
+                throw new PackageException("Pakkenavnet er opptatt, velg et annet pakkenavn");
+
             if (Directory.Exists(sourceFolder))
             {
                 if (Directory.Exists(destinationFolder))

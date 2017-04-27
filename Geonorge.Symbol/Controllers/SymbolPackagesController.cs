@@ -83,8 +83,16 @@ namespace Geonorge.Symbol.Controllers
 
             if (ModelState.IsValid)
             {
-                _symbolService.AddPackage(symbolPackage);
-                return RedirectToAction("Index");
+                try
+                {
+                    _symbolService.AddPackage(symbolPackage);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                    ModelState.AddModelError("error",ex.Message);
+                }
             }
 
             return View(symbolPackage);
@@ -134,10 +142,20 @@ namespace Geonorge.Symbol.Controllers
 
             SymbolPackage symbolPackageOriginal = _symbolService.GetPackage(symbolPackage.SystemId);
 
+            ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", symbolPackage.Theme);
+
             if (ModelState.IsValid)
             {
-                _symbolService.UpdatePackage(symbolPackageOriginal, symbolPackage);
-                return RedirectToAction("Index");
+                try
+                {
+                    _symbolService.UpdatePackage(symbolPackageOriginal, symbolPackage);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                    ModelState.AddModelError("error", ex.Message);
+                }               
             }
             return View(symbolPackage);
         }
