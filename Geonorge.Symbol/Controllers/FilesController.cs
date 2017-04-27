@@ -269,6 +269,8 @@ namespace Geonorge.Symbol.Controllers
         {
             var symbol = _symbolService.GetSymbol(systemid.Value);
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/");
+            if (!string.IsNullOrEmpty(symbol.SymbolPackages.FirstOrDefault()?.Folder))
+                targetFolder = targetFolder + symbol.SymbolPackages.FirstOrDefault()?.Folder + "\\";
             using (ZipFile zip = new ZipFile())
             {
                 foreach (var file in symbol.SymbolFiles)
@@ -287,6 +289,8 @@ namespace Geonorge.Symbol.Controllers
         {
             var symbolFiles = _symbolService.GetSymbolVariant(systemid.Value);
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/");
+            if (!string.IsNullOrEmpty(symbolFiles[0].Symbol.SymbolPackages.FirstOrDefault()?.Folder))
+                targetFolder = targetFolder + "\\" + symbolFiles[0].Symbol.SymbolPackages.FirstOrDefault()?.Folder + "\\";
 
             using (ZipFile zip = new ZipFile())
             {

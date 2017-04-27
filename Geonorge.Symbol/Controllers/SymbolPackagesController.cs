@@ -205,9 +205,13 @@ namespace Geonorge.Symbol.Controllers
             {
                 foreach (var symbol in package.Symbols)
                 {
+                    string folder = targetFolder;
+                    if (!string.IsNullOrEmpty(symbol.SymbolPackages.FirstOrDefault()?.Folder))
+                        folder = folder + symbol.SymbolPackages.FirstOrDefault()?.Folder + "\\";
+
                     foreach (var file in symbol.SymbolFiles)
                     {
-                        zip.AddFile(targetFolder + file.FileName, symbol.Name + @"\" + file.SymbolFileVariant.Name);
+                        zip.AddFile(folder + file.FileName, symbol.Name + @"\" + file.SymbolFileVariant.Name);
                     }
                 }
 
