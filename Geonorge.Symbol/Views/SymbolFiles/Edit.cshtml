@@ -63,8 +63,8 @@
             </div>
         </div>
         <div class="row search-results-table-heading">
-            <div class="col-sm-4"><p>Filnavn</p></div>
-            <div class="col-sm-3"><p>Symbolgrafikk</p></div>
+            <div class="col-sm-5"><p>Filnavn</p></div>
+            <div class="col-sm-2"><p>Symbolgrafikk</p></div>
             <div class="col-sm-2"><p>Farge</p></div>
             <div class="col-sm-1"><p>Størrelse</p></div>
             <div class="col-sm-1"></div>
@@ -74,8 +74,8 @@
         @foreach (var file in Model)
         {
             <div class="row dataset-list metadata">
-                <div class="col-sm-4">@file.FileName</div>
-                <div class="col-sm-3">@file.Type</div>
+                <div class="col-sm-5">@file.FileName</div>
+                <div class="col-sm-2">@file.Type</div>
                 <div class="col-sm-2">@file.Color</div>
                 <div class="col-sm-1">@file.Size</div>
                 <div class="col-sm-1">

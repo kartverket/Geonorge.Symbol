@@ -15,7 +15,7 @@ namespace Geonorge.Symbol.Services
 {
     public class ImageService
     {
-        public string ConvertImage(HttpPostedFileBase file, Models.Symbol symbol, string format, Models.SymbolFile symbolFile)
+        public string ConvertImage(HttpPostedFileBase file, Models.Symbol symbol, string format, Models.SymbolFile symbolFile, int maxWidth = 0, bool useWidthInFilname = true)
         {
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
             if (!string.IsNullOrEmpty(symbol.SymbolPackages.FirstOrDefault()?.Folder))
@@ -23,14 +23,14 @@ namespace Geonorge.Symbol.Services
 
             var ext = "." + format;
 
+            string fileName;
+
             MagickReadSettings readerSettings = new MagickReadSettings();
             readerSettings.BackgroundColor = MagickColors.Transparent;
             if (file.ContentType.Equals("image/svg+xml"))
             {
                 readerSettings.Format = MagickFormat.Svg;
             }
-
-            string fileName = CreateFileName(symbol, ext, targetFolder, symbolFile);
 
             using (MemoryStream memStream = new MemoryStream())
             {
@@ -74,11 +74,14 @@ namespace Geonorge.Symbol.Services
                         default:
                             {
                                 image.Format = MagickFormat.Png;
-                                fileName = Path.GetFileNameWithoutExtension(file.FileName) + ".png";
                                 break;
                             }
                     }
 
+                    if(maxWidth > 0)
+                        image.Resize(new MagickGeometry { IgnoreAspectRatio = false, Width = maxWidth });
+
+                    fileName = CreateFileName(symbol, ext, targetFolder, symbolFile, image.Width.ToString(), useWidthInFilname);
                     string targetPath = Path.Combine(targetFolder, fileName);
                     image.Write(targetPath);
 
@@ -88,7 +91,7 @@ namespace Geonorge.Symbol.Services
             return fileName;
         }
 
-        public string SaveImage(HttpPostedFileBase file, Models.Symbol symbol, Models.SymbolFile symbolFile)
+        public string SaveImage(HttpPostedFileBase file, Models.Symbol symbol, Models.SymbolFile symbolFile, int width = 0, bool useWidthInFilname = false)
         {
 
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
@@ -97,7 +100,7 @@ namespace Geonorge.Symbol.Services
 
             var ext = Path.GetExtension(file.FileName);
 
-            string fileName = CreateFileName(symbol, ext, targetFolder, symbolFile);
+            string fileName = CreateFileName(symbol, ext, targetFolder, symbolFile, width.ToString(), useWidthInFilname);
 
             string targetPath = Path.Combine(targetFolder, fileName);
             file.SaveAs(targetPath);
@@ -167,7 +170,7 @@ namespace Geonorge.Symbol.Services
 
         }
 
-        public string CreateFileName(Models.Symbol symbol, string ext, string targetFolder = null, Models.SymbolFile symbolFile = null)
+        public string CreateFileName(Models.Symbol symbol, string ext, string targetFolder = null, Models.SymbolFile symbolFile = null, string width = null, bool useWidthInFilname = true)
         {
             if(string.IsNullOrEmpty(targetFolder))
                 targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
@@ -183,8 +186,8 @@ namespace Geonorge.Symbol.Services
                 if (!string.IsNullOrEmpty(symbolFile.Color))
                     filename = filename + "_" + MakeSeoFriendlyString(symbolFile.Color);
 
-                if (!string.IsNullOrEmpty(symbolFile.Size))
-                    filename = filename + "_" + MakeSeoFriendlyString(symbolFile.Size);
+                if (useWidthInFilname && !string.IsNullOrEmpty(width))
+                    filename = filename + "_" + MakeSeoFriendlyString(width);
 
             }
 
@@ -205,9 +208,32 @@ namespace Geonorge.Symbol.Services
             return filename;
         }
 
+        public int GetWidth(HttpPostedFileBase uploadFile)
+        {
+            int width = 0;
+            using (MemoryStream memStream = new MemoryStream())
+            {
+                uploadFile.InputStream.CopyTo(memStream);
+
+                using (MagickImage image = new MagickImage(memStream))
+                {
+                    width = image.Width;
+                }
+            }
+
+            return width;
+        }
+
         public static string MakeSeoFriendlyString(string input)
         {
             string encodedUrl = (input ?? "").ToLower();
+
+            // trim leading & trailing characters
+            encodedUrl = encodedUrl.Trim(' ');
+
+            // replace space with underscore
+            encodedUrl = Regex.Replace(encodedUrl, " ", "_");
+
             // replace & with and
             encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
 
@@ -218,10 +244,8 @@ namespace Geonorge.Symbol.Services
             encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
 
             // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "");
+            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9_]", "");
 
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim(' ');
 
             return encodedUrl;
         }

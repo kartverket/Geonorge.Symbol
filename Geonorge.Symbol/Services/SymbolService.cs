@@ -187,12 +187,29 @@ namespace Geonorge.Symbol.Services
             symbol.DateChanged = DateTime.Now;
             symbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
 
-            foreach(var uploadFile in uploadFiles)
-            { 
-                var filename = new ImageService().SaveImage(uploadFile, symbol, symbolFile);
-                var format = Path.GetExtension(filename).Replace(".","");
+            ImageService imageService = new ImageService();
+
+            foreach (var uploadFile in uploadFiles)
+            {
+                int width = imageService.GetWidth(uploadFile);
+                uploadFile.InputStream.Position = 0;
+                var format = Path.GetExtension(uploadFile.FileName).Replace(".", "");
+                symbolFile.Size = GetSize(width);
+                var filename = new ImageService().SaveImage(uploadFile, symbol, symbolFile, width, true);
                 AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, format);
             }
+        }
+
+        private string GetSize(int width)
+        {
+            string size = "liten";
+
+            if (width >= 250 && width < 1000)
+                size = "middels";
+            else if (width >= 1000)
+                size = "stor";
+
+            return size;
         }
 
         public void UpdateSymbolFile(Models.SymbolFile symbolFile)
@@ -225,21 +242,36 @@ namespace Geonorge.Symbol.Services
             symbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
             symbolFile.Symbol = symbol;
             symbolFile.SystemId = Guid.NewGuid();
-            var filename = imageService.SaveImage(uploadFile, symbol, symbolFile);
+            var filename = imageService.SaveImage(uploadFile, symbol, symbolFile, 0, false);
             symbolFile.FileName = filename;
             symbolFile.Format = "svg";
+            symbolFile.Size = "stor";
             _dbContext.SymbolFiles.Add(symbolFile);
             _dbContext.SaveChanges();
 
-            filename = imageService.ConvertImage(uploadFile, symbol, "png", symbolFile);
+            uploadFile.InputStream.Position = 0;
+            filename = imageService.ConvertImage(uploadFile, symbol, "png", symbolFile, 50, false);
+            symbolFile.Size = "liten";
             AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "png");
 
             uploadFile.InputStream.Position = 0;
-            filename = imageService.ConvertImage(uploadFile, symbol, "gif", symbolFile);
+            filename = imageService.ConvertImage(uploadFile, symbol, "gif", symbolFile, 50, false);
+            symbolFile.Size = "liten";
             AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "gif");
 
             uploadFile.InputStream.Position = 0;
-            filename = imageService.ConvertImage(uploadFile, symbol, "tif", symbolFile);
+            filename = imageService.ConvertImage(uploadFile, symbol, "png", symbolFile, 150);
+            symbolFile.Size = "liten";
+            AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "png");
+
+            uploadFile.InputStream.Position = 0;
+            filename = imageService.ConvertImage(uploadFile, symbol, "gif", symbolFile, 150);
+            symbolFile.Size = "liten";
+            AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "gif");
+
+            uploadFile.InputStream.Position = 0;
+            filename = imageService.ConvertImage(uploadFile, symbol, "tif", symbolFile, 1500, false);
+            symbolFile.Size = "stor";
             AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "tif");
 
         }
@@ -336,6 +368,13 @@ namespace Geonorge.Symbol.Services
         public static string CreateValidFileString(string input)
         {
             string encodedUrl = (input ?? "").ToLower();
+
+            // trim leading & trailing characters
+            encodedUrl = encodedUrl.Trim(' ');
+
+            // replace space with underscore
+            encodedUrl = Regex.Replace(encodedUrl, " ", "_");
+
             // replace & with and
             encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
 
@@ -346,10 +385,7 @@ namespace Geonorge.Symbol.Services
             encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
 
             // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "");
-
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim(' ');
+            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9_]", "");
 
             return encodedUrl;
         }
@@ -359,10 +395,10 @@ namespace Geonorge.Symbol.Services
             string variantName = symbol.Name;
 
             if (!string.IsNullOrEmpty(symbolFile.Type))
-                variantName = variantName + "_" + symbolFile.Type;
+                variantName = variantName + " " + symbolFile.Type;
 
             if (!string.IsNullOrEmpty(symbolFile.Color))
-                variantName = variantName + "_" + symbolFile.Color;
+                variantName = variantName + " " + symbolFile.Color;
 
             return variantName;
         }
