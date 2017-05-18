@@ -274,6 +274,11 @@ namespace Geonorge.Symbol.Services
             symbolFile.Size = "stor";
             AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "tif");
 
+            uploadFile.InputStream.Position = 0;
+            filename = imageService.ConvertImage(uploadFile, symbol, "ai", symbolFile, 0, false);
+            symbolFile.Size = "stor";
+            AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "ai");
+
         }
 
         private void AddFile(SymbolFile symbolFile, Models.Symbol symbol, SymbolFileVariant variant, string filename, string format)
