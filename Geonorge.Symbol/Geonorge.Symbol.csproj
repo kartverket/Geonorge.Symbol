@@ -208,6 +208,10 @@
     <Compile Include="Migrations\201704251214101_PackageFolder.Designer.cs">
       <DependentUpon>201704251214101_PackageFolder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705180805199_AddSymbolId.cs" />
+    <Compile Include="Migrations\201705180805199_AddSymbolId.Designer.cs">
+      <DependentUpon>201705180805199_AddSymbolId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\NotFoundModel.cs" />
     <Compile Include="Models\SymbolFileVariant.cs" />
     <Compile Include="Services\AuthorizationService.cs" />
@@ -472,6 +476,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704251214101_PackageFolder.resx">
       <DependentUpon>201704251214101_PackageFolder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705180805199_AddSymbolId.resx">
+      <DependentUpon>201705180805199_AddSymbolId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

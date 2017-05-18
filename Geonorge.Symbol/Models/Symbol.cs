@@ -16,6 +16,10 @@ namespace Geonorge.Symbol.Models
         [Display(Name = "Symbolnavn")]
         public string Name { get; set; }
 
+        /// <summary>Ekstern ID</summary>
+        [Display(Name = "Id")]
+        public string SymbolId { get; set; }
+
         /// <summary> Beskrivelse av hva bildet viser eller brukes til</summary>
         [Display(Name = "Beskrivelse")]
         public string Description { get; set; }

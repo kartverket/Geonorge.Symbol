@@ -122,6 +122,7 @@ namespace Geonorge.Symbol.Services
             {
                 originalSymbol.Name = symbol.Name;
                 originalSymbol.Description = symbol.Description;
+                originalSymbol.SymbolId = symbol.SymbolId;
 
                 string owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
                 if (_authorizationService.IsAdmin() && !string.IsNullOrEmpty(symbol.Owner))
