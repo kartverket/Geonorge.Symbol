@@ -250,34 +250,34 @@ namespace Geonorge.Symbol.Services
             _dbContext.SaveChanges();
 
             uploadFile.InputStream.Position = 0;
+            filename = imageService.ConvertImage(uploadFile, symbol, "tiff", symbolFile, 1500, false);
+            symbolFile.Size = "stor";
+            AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "tiff");
+
+            uploadFile.InputStream.Position = 0;
             filename = imageService.ConvertImage(uploadFile, symbol, "png", symbolFile, 50, false);
             symbolFile.Size = "liten";
             AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "png");
-
-            uploadFile.InputStream.Position = 0;
-            filename = imageService.ConvertImage(uploadFile, symbol, "gif", symbolFile, 50, false);
-            symbolFile.Size = "liten";
-            AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "gif");
 
             uploadFile.InputStream.Position = 0;
             filename = imageService.ConvertImage(uploadFile, symbol, "png", symbolFile, 150);
             symbolFile.Size = "liten";
             AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "png");
 
-            uploadFile.InputStream.Position = 0;
-            filename = imageService.ConvertImage(uploadFile, symbol, "gif", symbolFile, 150);
-            symbolFile.Size = "liten";
-            AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "gif");
+            //var gifInputFileName = filename;
 
-            uploadFile.InputStream.Position = 0;
-            filename = imageService.ConvertImage(uploadFile, symbol, "tif", symbolFile, 1500, false);
-            symbolFile.Size = "stor";
-            AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "tif");
+            //filename = imageService.ConvertToGif(gifInputFileName, symbol, "gif", symbolFile, 50, false);
+            //symbolFile.Size = "liten";
+            //AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "gif");
 
-            uploadFile.InputStream.Position = 0;
-            filename = imageService.ConvertImage(uploadFile, symbol, "ai", symbolFile, 0, false);
-            symbolFile.Size = "stor";
-            AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "ai");
+            //filename = imageService.ConvertToGif(gifInputFileName, symbol, "gif", symbolFile, 150);
+            //symbolFile.Size = "liten";
+            //AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "gif");
+
+            //uploadFile.InputStream.Position = 0;
+            //filename = imageService.ConvertImage(uploadFile, symbol, "ai", symbolFile, 0, false);
+            //symbolFile.Size = "stor";
+            //AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, "ai");
 
         }
 

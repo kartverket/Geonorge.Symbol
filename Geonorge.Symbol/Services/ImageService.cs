@@ -26,6 +26,8 @@ namespace Geonorge.Symbol.Services
             string fileName;
 
             MagickReadSettings readerSettings = new MagickReadSettings();
+            readerSettings.Height = 1500;
+            readerSettings.Width = 1500;
             readerSettings.BackgroundColor = MagickColors.Transparent;
             if (file.ContentType.Equals("image/svg+xml"))
             {
@@ -66,7 +68,7 @@ namespace Geonorge.Symbol.Services
                                 image.Format = MagickFormat.Svg;
                                 break;
                             }
-                        case "tif":
+                        case "tiff":
                             {
                                 image.Format = MagickFormat.Tif;
                                 break;
@@ -79,13 +81,48 @@ namespace Geonorge.Symbol.Services
                     }
 
                     if(maxWidth > 0)
-                        image.Resize(new MagickGeometry { IgnoreAspectRatio = false, Width = maxWidth });
+                        image.Resize(new MagickGeometry { IgnoreAspectRatio = false, Width = maxWidth, Height=0 });
 
                     fileName = CreateFileName(symbol, ext, targetFolder, symbolFile, image.Width.ToString(), useWidthInFilname);
                     string targetPath = Path.Combine(targetFolder, fileName);
                     image.Write(targetPath);
 
                 }
+            }
+
+            return fileName;
+        }
+
+        public string ConvertToGif(string inputFileName, Models.Symbol symbol, string format, Models.SymbolFile symbolFile, int maxWidth = 0, bool useWidthInFilname = true)
+        {
+            string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
+            if (!string.IsNullOrEmpty(symbol.SymbolPackages.FirstOrDefault()?.Folder))
+                targetFolder = targetFolder + "\\" + symbol.SymbolPackages.FirstOrDefault().Folder;
+
+            var ext = "." + format;
+
+            string fileName;
+
+            MagickReadSettings readerSettings = new MagickReadSettings();
+            readerSettings.Height = 1500;
+            readerSettings.Width = 1500;
+            readerSettings.BackgroundColor = MagickColors.Transparent;
+
+            using (MemoryStream memStream = new MemoryStream())
+            {
+                using (MagickImage image = new MagickImage(targetFolder + "\\" + inputFileName, readerSettings))
+                {     
+                    image.Format = MagickFormat.Gif;
+                    image.Settings.ColorType = ColorType.TrueColorAlpha;
+
+                    if (maxWidth > 0)
+                        image.Resize(new MagickGeometry { IgnoreAspectRatio = false, Width = maxWidth, Height = 0 });
+
+                    fileName = CreateFileName(symbol, ext, targetFolder, symbolFile, image.Width.ToString(), useWidthInFilname);
+                    string targetPath = Path.Combine(targetFolder, fileName);
+                    image.Write(targetPath);
+                }
+
             }
 
             return fileName;
