@@ -22,10 +22,10 @@
     </div>
 </section>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -51,8 +51,8 @@
             <div class="col-md-10">
                 @if (ViewBag.IsAdmin)
                 {
-                <select class="ownerOrganizationSelect form-control" id="Owner" name="Owner"> </select>
-                @Html.ValidationMessageFor(model => model.Owner, "", new { @class = "text-danger" })
+                    <select class="ownerOrganizationSelect form-control" id="Owner" name="Owner"> </select>
+                    @Html.ValidationMessageFor(model => model.Owner, "", new { @class = "text-danger" })
                 }
                 else
                 {
@@ -65,7 +65,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Theme, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Theme", ViewBag.Themes as SelectList, String.Empty, new { @class = "form-control" })
+                <div class="custom-select">
+                    @Html.DropDownList("Theme", ViewBag.Themes as SelectList, String.Empty, new { @class = "form-control" })
+                </div>
                 @Html.ValidationMessageFor(model => model.Theme, "", new { @class = "text-danger" })
             </div>
         </div>

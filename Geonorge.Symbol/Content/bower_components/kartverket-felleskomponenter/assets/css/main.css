@@ -4138,6 +4138,30 @@ header.main-header {
 .table-heading .sorted-desc:after {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg"); }
 
+span.select2-container {
+  width: 100%; }
+  span.select2-container .select2-selection--single {
+    border-radius: 0;
+    border: 1px solid #cfcfcf;
+    font-size: 12pt !important;
+    min-height: 34px;
+    padding: 0 15px; }
+    span.select2-container .select2-selection--single .select2-selection__rendered {
+      padding: 0;
+      line-height: 32px; }
+    span.select2-container .select2-selection--single .select2-selection__arrow {
+      background-color: #fff;
+      content: "";
+      background-repeat: no-repeat;
+      background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg");
+      background-size: 16px 16px;
+      background-position: right 8px center;
+      border-radius: 0;
+      width: 32px;
+      height: 32px; }
+      span.select2-container .select2-selection--single .select2-selection__arrow b {
+        display: none; }
+
 .container .shopping-cart {
   top: initial;
   bottom: 0; }
