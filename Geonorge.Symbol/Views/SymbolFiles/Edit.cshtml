@@ -25,42 +25,54 @@
 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "symbolvariantform" }))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+
+    <div class="">
 
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         <input type="hidden" name="SymbolFileVariant.SystemId" value="@Model[0].SymbolFileVariant.SystemId" />
         <input type="hidden" id="FileToRemove" name="FileToRemove" value="" />
-        <div class="form-group">
-            <label class="col-md-1">Variant:</label>
-            <div class="col-md-5">
-                <input type="text" class="form-control" name="SymbolFileVariant.Name" value="@Model[0].SymbolFileVariant.Name" />
+        <div class="row">
+            <div class="col-md-6">
+                <label>Variant:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" name="SymbolFileVariant.Name" value="@Model[0].SymbolFileVariant.Name" />
+                    <span class="input-group-btn">
+                        <input type="submit" value="Endre" class="btn" />
+                    </span>
+                </div>
             </div>
             <div class="col-md-6">
-                <input type="submit" value="Endre" style="margin-left: 15px;" class="btn btn-default pull-left" />
             </div>
         </div>
+        <div class="clearfix"></div>
 
-        <div class="form-group">
-            @Html.Label("Symbol", htmlAttributes: new { @class = "control-label col-md-1" })
-            <div class="col-md-2">
+        <div class="row">
+            <div class="col-md-3">
+                @Html.Label("Symbol", htmlAttributes: new { @class = "control-label" })
                 <input type="file" id="uploadFile" name="uploadFile" />
             </div>
-            @Html.Label("Symbolgrafikk", htmlAttributes: new { @class = "control-label col-md-1" })
-            <div class="col-md-2">
-                @Html.DropDownList("Type", ViewBag.SymbolGraphics as SelectList, String.Empty, new { @class = "form-control" })
+            <div class="col-md-3">
+                @Html.Label("Symbolgrafikk", htmlAttributes: new { @class = "control-label" })
+                <div class="custom-select">
+                    @Html.DropDownList("Type", ViewBag.SymbolGraphics as SelectList, String.Empty, new { @class = "form-control" })
+                </div>
             </div>
-            @Html.Label("Farge", htmlAttributes: new { @class = "control-label col-md-1" })
-            <div class="col-md-1">
+            <div class="col-md-3">
+                @Html.Label("Farge", htmlAttributes: new { @class = "control-label" })
                 <input type="text" name="Color" id="Color" />
             </div>
-                @Html.Label("Størrelse", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-1">
+
+            <div class="col-md-3">
+                @Html.Label("Størrelse", htmlAttributes: new { @class = "control-label" })
+                <div class="custom-select">
                     @Html.DropDownList("Size", ViewBag.Size as SelectList, String.Empty, new { @class = "form-control" })
                 </div>
-            <div class="col-md-1 hidden-print">
-                <input type="submit" value="Legg til fil" class="btn btn-default pull-left" />
             </div>
+
+        </div>
+        <div class="hidden-print">
+            <input type="submit" value="Legg til fil" class="btn pull-right" />
+            <div class="clearfix"></div>
         </div>
         <div class="row search-results-table-heading">
             <div class="col-sm-5"><p>Filnavn</p></div>
@@ -71,24 +83,27 @@
             <div class="col-sm-1"></div>
         </div>
         <div class="menu-separator search-results-table-heading"></div>
-        @foreach (var file in Model)
-        {
-            <div class="row dataset-list metadata">
-                <div class="col-sm-5">@file.FileName</div>
-                <div class="col-sm-2">@file.Type</div>
-                <div class="col-sm-2">@file.Color</div>
-                <div class="col-sm-1">@file.Size</div>
-                <div class="col-sm-1">
-                    <a class="hidden-print btn btn-default" data-loading-message="Henter innhold" href="~/symbolfiles/editfile?systemid=@file.SystemId">Rediger</a>
+        <div class="striped-list">
+            @foreach (var file in Model)
+            {
+                <div class="list-item">
+                    <div class="row dataset-list metadata">
+                        <div class="col-sm-5">@file.FileName</div>
+                        <div class="col-sm-2">@file.Type</div>
+                        <div class="col-sm-2">@file.Color</div>
+                        <div class="col-sm-1">@file.Size</div>
+                        <div class="col-sm-1">
+                            <a class="hidden-print btn" data-loading-message="Henter innhold" href="~/symbolfiles/editfile?systemid=@file.SystemId">Rediger</a>
+                        </div>
+                        <div class="col-sm-1">
+                            @if (Model.Count > 1)
+                    { <input type="submit" class="btn pull-right" value="Slett" onclick="SetFileToRemove('@file.SystemId');" />
+                            }
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-1">
-                @if (Model.Count > 1)
-                { <input type="submit" class="btn btn-default pull-right" value="Slett" onclick="SetFileToRemove('@file.SystemId');" />
-                }
-                </div>
-            </div>
-            <hr style="margin-top:2px; margin-bottom:6px;" />
-        }
+            }
+        </div>
     </div>
     <div class="col-md-12">
         <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="~/files/details?systemid=@Model[0].Symbol.SystemId">Tilbake</a>
@@ -96,8 +111,7 @@
 }
 
 <script>
-    function SetFileToRemove(fileID)
-    {
+    function SetFileToRemove(fileID) {
         console.log(fileID);
         $('#FileToRemove').val(fileID);
     }
