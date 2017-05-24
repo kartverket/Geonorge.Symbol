@@ -3639,6 +3639,20 @@ ul#thumbnailsCoverage {
         height: 34px !important;
         padding: 6px 12px; } }
 
+/* Striped list */
+.striped-list h2 {
+  font-size: 18pt;
+  line-height: 31pt;
+  margin-top: 0;
+  margin-bottom: 0; }
+
+.striped-list .list-item {
+  padding: 12px; }
+  .striped-list .list-item:nth-child(odd) {
+    background-color: #fbfcfc; }
+  .striped-list .list-item:nth-child(even) {
+    background-color: #f7f8f8; }
+
 .menu {
   margin-bottom: 20px; }
 
