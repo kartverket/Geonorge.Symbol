@@ -87,7 +87,9 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Theme, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.DropDownList("Theme", ViewBag.Themes as SelectList, String.Empty, new { @class = "form-control" })
+                        <div class="custom-select">
+                            @Html.DropDownList("Theme", ViewBag.Themes as SelectList, String.Empty, new { @class = "form-control" })
+                        </div>
                         @Html.ValidationMessageFor(model => model.Theme, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -123,11 +125,11 @@
                         <span>@Model.Thumbnail</span><input type="file" id="uploadFile" name="uploadFile" />
                     </div>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
-                    <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="~/files/index">Tilbake</a>
-                    <input type="submit" value="Lagre" style="margin-left: 15px;" class="btn btn-default pull-right" />
-                    <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/files/Delete/@Model.SystemId">Slett</a>
-                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print margin-top-10">
+                <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="~/files/index">Tilbake</a>
+                <input type="submit" value="Lagre" class="btn btn-default pull-right" />
+                <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/files/Delete/@Model.SystemId">Slett</a>
             </div>
         </div>
     </div>
