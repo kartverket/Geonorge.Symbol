@@ -26,35 +26,35 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
 
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         <input type="hidden" name="SystemId" value="@Model.SystemId" />
-        <div class="form-group">
-            @Html.Label("Filnavn", htmlAttributes: new { @class = "control-label col-md-1" })
-            <div class="col-md-2">
+        <div class="row">
+            <div class="col-md-4">
+                @Html.Label("Filnavn", htmlAttributes: new { @class = "control-label" })
                 <input type="text" id="FileName" name="FileName" value="@Model.FileName" />
             </div>
-            @Html.Label("Symbolgrafikk", htmlAttributes: new { @class = "control-label col-md-1" })
             <div class="col-md-2">
-                @Html.DropDownList("Type", ViewBag.SymbolGraphics as SelectList, String.Empty, new { @class = "form-control" })
+                @Html.Label("Symbolgrafikk", htmlAttributes: new { @class = "control-label" })
+                <div class="custom-select">
+                    @Html.DropDownList("Type", ViewBag.SymbolGraphics as SelectList, String.Empty, new { @class = "form-control" })
+                </div>
             </div>
-            @Html.Label("Farge", htmlAttributes: new { @class = "control-label col-md-1" })
-            <div class="col-md-1">
+            <div class="col-md-2">
+                @Html.Label("Farge", htmlAttributes: new { @class = "control-label" })
                 <input type="text" name="Color" id="Color" value="@Model.Color" />
             </div>
-            @Html.Label("Størrelse", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-1">
-                @Html.DropDownList("Size", ViewBag.Sizes as SelectList, String.Empty, new { @class = "form-control" })
+            <div class="col-md-3">
+                @Html.Label("Størrelse", htmlAttributes: new { @class = "control-label" })
+                <div class="custom-select">
+                    @Html.DropDownList("Size", ViewBag.Sizes as SelectList, String.Empty, new { @class = "form-control" })
+                </div>
             </div>
             <div class="col-md-1 hidden-print">
-                <input type="submit" value="Rediger fil" class="btn btn-default pull-left" />
+                <input type="submit" value="Rediger fil" class="btn pull-left no-label" />
             </div>
         </div>
-            <hr style="margin-top:2px; margin-bottom:6px;" />
-    </div>
-    <div class="col-md-12">
+        <hr style="margin-top:2px; margin-bottom:6px;" />
         <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="~/files/details?systemid=@Model.Symbol.SystemId">Tilbake</a>
-    </div>
 }
 
