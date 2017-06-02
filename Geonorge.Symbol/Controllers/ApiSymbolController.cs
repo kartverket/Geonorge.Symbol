@@ -25,6 +25,63 @@ namespace Geonorge.Symbol.Api
         }
 
         /// <summary>
+        /// List symbols, optional limit by text
+        /// </summary>
+        [System.Web.Http.Route("api/symbols")]
+        [System.Web.Http.HttpGet]
+        public List<Models.Api.Symbol> GetSymbols([FromUri] string text = null)
+        {
+            var symbolFiles = ConvertRegister(_symbolService.GetSymbols(text));
+
+            return symbolFiles;
+        }
+
+        /// <summary>
+        /// Get files for symbol
+        /// </summary>
+        [System.Web.Http.Route("api/symbol/{uuid}")]
+        [System.Web.Http.HttpGet]
+        public List<Models.Api.Symbol> GetSymbol(string uuid)
+        {
+            var symbol = _symbolService.GetSymbol(Guid.Parse(uuid));
+            List<Models.Symbol> symbolList = new List<Models.Symbol>();
+            symbolList.Add(symbol);
+            var symbolFiles = ConvertRegister(symbolList);
+
+            return symbolFiles;
+        }
+
+        private List<Models.Api.Symbol> ConvertRegister(List<Models.Symbol> symbolFiles)
+        {
+            var symbolList = new List<Models.Api.Symbol>();
+            foreach (var symbol in symbolFiles)
+            {
+                foreach(var symbolFile in symbol.SymbolFiles)
+                { 
+                    var file = new Models.Api.Symbol();
+                    file.SymbolUuid = symbol.SystemId.ToString();
+                    file.SymbolName = symbol.Name;
+                    file.Owner = symbol.Owner;
+                    file.Theme = symbol.Theme;
+                    file.PreviewImageUrl = symbol.ThumbnailUrl();
+                    file.PackageUuid = (symbol.SymbolPackages != null && symbol.SymbolPackages.Count > 0 ? symbol.SymbolPackages[0].SystemId.ToString() : "");
+                    file.PackageName = (symbol.SymbolPackages != null && symbol.SymbolPackages.Count > 0 ? symbol.SymbolPackages[0].Name.ToString() : "");
+                    file.FileName = symbolFile.FileName;
+                    file.FileUrl = symbolFile.FileUrl();
+                    file.SymbolType = symbolFile.Type;
+                    file.Format = symbolFile.Format;
+                    file.Variant = (symbolFile.SymbolFileVariant != null ? symbolFile.SymbolFileVariant.Name : "");
+                    file.Color = symbolFile.Color;
+                    file.Size = symbolFile.Size;
+
+                    symbolList.Add(file);
+                }
+            }
+
+            return symbolList;
+        }
+
+        /// <summary>
         ///     Creates new symbol package
         /// </summary>
         /// <param name="package">SymbolPackage model</param>
@@ -32,6 +89,7 @@ namespace Geonorge.Symbol.Api
         ///     SymbolPackage model
         /// </returns>
         /// <response code="500">Internal Server Error</response>
+        [ApiExplorerSettings(IgnoreApi = true)]
         [System.Web.Http.Route("api/addpackage")]
         [System.Web.Http.HttpPost]
         [System.Web.Http.Authorize]

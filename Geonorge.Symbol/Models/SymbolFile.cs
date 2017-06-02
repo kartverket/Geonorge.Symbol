@@ -35,7 +35,7 @@ namespace Geonorge.Symbol.Models
 
         public string FileUrl()
         {
-            var folder = Symbol.SymbolPackages.FirstOrDefault().Folder;
+            var folder = Symbol.SymbolPackages.FirstOrDefault()?.Folder;
             if (!string.IsNullOrEmpty(folder))
                 folder = folder + "/";
 
