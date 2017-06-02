@@ -278,7 +278,7 @@ namespace Geonorge.Symbol.Services
             encodedUrl = encodedUrl.Replace("'", "");
 
             // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
+            encodedUrl = encodedUrl.Replace("å", "aa").Replace("æ", "ae").Replace("ø", "oe");
 
             // remove invalid characters
             encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9_]", "");
