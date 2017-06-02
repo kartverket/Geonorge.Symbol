@@ -390,7 +390,7 @@ namespace Geonorge.Symbol.Services
             encodedUrl = encodedUrl.Replace("å", "aa").Replace("æ", "ae").Replace("ø", "oe");
 
             // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9_]", "");
+            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9_-]", "");
 
             return encodedUrl;
         }
