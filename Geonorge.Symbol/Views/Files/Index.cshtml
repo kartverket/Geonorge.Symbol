@@ -22,7 +22,17 @@
 <div class="row">
 
     <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
-        Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje
+        Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje.
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        @if (Request.IsAuthenticated)
+        {
+            if (ViewBag.IsAdmin)
+            {
+                <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/symbolpackages/">Pakker</a>
+            }
+            <a class="btn btn-default btn-space pull-right" href="~/files/Create">Registrer symbol</a>
+        }
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -122,14 +132,5 @@
     <div class="clearfix"></div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
         <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="/">Tilbake</a>
-        @if (Request.IsAuthenticated)
-        {
-            if (ViewBag.IsAdmin)
-            {
-                <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/symbolpackages/">Pakker</a>
-            }
-            <a class="btn btn-default btn-space pull-right" href="~/files/Create">Registrer symbol</a>
-        }
-
     </div>
 </div>
