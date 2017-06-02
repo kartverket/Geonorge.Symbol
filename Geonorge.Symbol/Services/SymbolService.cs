@@ -377,8 +377,8 @@ namespace Geonorge.Symbol.Services
             // trim leading & trailing characters
             encodedUrl = encodedUrl.Trim(' ');
 
-            // replace space with underscore
-            encodedUrl = Regex.Replace(encodedUrl, " ", "_");
+            // replace space with minus
+            encodedUrl = Regex.Replace(encodedUrl, " ", "-");
 
             // replace & with and
             encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
