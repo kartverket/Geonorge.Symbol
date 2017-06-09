@@ -45,6 +45,9 @@ namespace Geonorge.Symbol.Controllers
             {
                 return HttpNotFound();
             }
+
+            symbolPackage.Symbols = symbolPackage.Symbols.OrderBy(s => s.Name).ToList();
+
             return View(symbolPackage);
         }
 
