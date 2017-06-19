@@ -63,6 +63,7 @@ namespace Geonorge.Symbol.Controllers
             ViewBag.Theme = sortOrder == "theme" ? "theme_desc" : "theme";
             ViewBag.SortOrder = sortOrder;
             ViewBag.text = text;
+            ViewBag.SymbolsAll = symbols;
 
             int pageSize = 30;
             int pageNumber = (page ?? 1);

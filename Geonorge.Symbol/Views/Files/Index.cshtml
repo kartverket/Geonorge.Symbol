@@ -1,10 +1,12 @@
 ﻿@model PagedList.IPagedList<Geonorge.Symbol.Models.Symbol>
 @using PagedList.Mvc;
+@using Geonorge.Symbol.Models;
 @section breadcrumb {
     <li>Symbol</li>
 }
 @{
     ViewBag.Title = "Symboler";
+    var symbolsAll = (List<Symbol>)ViewBag.symbolsAll;
 }
 @Html.Partial("_SearchBarPartial")
 <section class="heading">
@@ -55,8 +57,18 @@
                 if (package != null)
                 {
                     <div class="col-md-3">
-                        @{ var symbols = Model.Where(p => p.SymbolPackages.Any(pp => pp.SystemId == package.SystemId)).ToList();
-                            int maxSymbols = 18, counter = 1, colIndex = 1, colsMax = 6; }
+                        @{ List<Symbol> symbols = null;
+                            if (!string.IsNullOrEmpty(ViewBag.text))
+                            {
+                                symbols = Model.Where(p => p.SymbolPackages.Any(pp => pp.SystemId == package.SystemId)).ToList();
+                            }
+                            else
+                            {
+                                symbols = symbolsAll.Where(p => p.SymbolPackages.Any(pp => pp.SystemId == package.SystemId)).ToList();
+                            }
+
+                            int maxSymbols = 18, counter = 1, colIndex = 1, colsMax = 6;
+                        }
                         @foreach (var symbol in symbols)
                     {
                             <img border="0" height="30" src="@symbol.ThumbnailUrl()" />
