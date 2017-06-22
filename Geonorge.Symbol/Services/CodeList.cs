@@ -11,6 +11,7 @@ namespace Geonorge.Symbol.Services
         public static Dictionary<string, string> Themes()
         {
             Dictionary<string, string> themes = GetCodeList("42CECF70-0359-49E6-B8FF-0D6D52EBC73F");
+            themes.Add("Sport", "Sport");
             themes.Add("Annen", "Annen");
 
             return themes;
