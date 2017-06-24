@@ -64,6 +64,7 @@ namespace Geonorge.Symbol.Controllers
             ViewBag.SortOrder = sortOrder;
             ViewBag.text = text;
             ViewBag.SymbolsAll = symbols;
+            ViewBag.Page = 0;
 
             int pageSize = 30;
             int pageNumber = (page ?? 1);
@@ -72,7 +73,7 @@ namespace Geonorge.Symbol.Controllers
             if (Request.IsAuthenticated)
                 ViewBag.IsAdmin = _authorizationService.IsAdmin();
 
-            return View(symbols.ToPagedList(pageNumber, pageSize));
+            return View(symbols);
         }
 
         // GET: Files/Details/5
@@ -305,6 +306,65 @@ namespace Geonorge.Symbol.Controllers
 
                 return File(output, "application/zip", ImageService.MakeSeoFriendlyString(symbolFiles[0].SymbolFileVariant.Name) + ".zip");
             }
+        }
+
+        public ActionResult SymbolList(int page, string sortOrder, string text)
+        {
+            var symbols = _symbolService.GetSymbols(text);
+            switch (sortOrder)
+            {
+                case "symbolname_desc":
+                    symbols = symbols.OrderByDescending(s => s.Name).ToList();
+                    break;
+                case "owner":
+                    symbols = symbols.OrderBy(s => s.Owner).ToList();
+                    break;
+                case "owner_desc":
+                    symbols = symbols.OrderByDescending(s => s.Owner).ToList();
+                    break;
+                case "theme_desc":
+                    symbols = symbols.OrderByDescending(s => s.Theme).ToList();
+                    break;
+                case "theme":
+                    symbols = symbols.OrderBy(s => s.Theme).ToList();
+                    break;
+                default:
+                    symbols = symbols.OrderBy(s => s.Name).ToList();
+                    break;
+            }
+            if (string.IsNullOrEmpty(sortOrder))
+                sortOrder = "symbolname";
+
+            ViewBag.SymbolnameSortParm = sortOrder == "symbolname" ? "symbolname_desc" : "symbolname";
+            ViewBag.Owner = sortOrder == "owner" ? "owner_desc" : "owner";
+            ViewBag.Theme = sortOrder == "theme" ? "theme_desc" : "theme";
+            ViewBag.SortOrder = sortOrder;
+            ViewBag.text = text;
+
+            int rangeStart = 0;
+            int rangeLength = 0;
+
+            int pageSize = 30;
+            int pageNumber = page;
+
+            if ((pageNumber * pageSize) > symbols.Count)
+                return new EmptyResult();
+
+            if (((pageNumber * pageSize) + pageSize) > symbols.Count)
+            {
+                rangeLength = symbols.Count % pageSize;
+                rangeStart = symbols.Count - rangeLength;
+            }
+            else
+            {
+                rangeStart = (pageNumber * pageSize);
+                rangeLength = pageSize;
+            }
+
+            symbols = symbols.GetRange(rangeStart, rangeLength);
+
+            ViewBag.Page = pageNumber + 1;
+            return PartialView("_SymbolList", symbols);
         }
 
         protected override void OnException(ExceptionContext filterContext)

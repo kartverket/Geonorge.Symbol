@@ -1,5 +1,4 @@
-﻿@model PagedList.IPagedList<Geonorge.Symbol.Models.Symbol>
-@using PagedList.Mvc;
+﻿@model List<Geonorge.Symbol.Models.Symbol>
 @using Geonorge.Symbol.Models;
 @section breadcrumb {
     <li>Symbol</li>
@@ -115,34 +114,23 @@
 
             <div class="menu-separator search-results-table-heading"></div>
             <div class="striped-list">
-                @foreach (var item in Model)
-            {
-                    <div class="list-item">
-                        <div class="row result-row metadata">
-
-                            <div class="col-sm-4">
-                                @Html.ActionLink(item.Name ?? "->", "Details", new { SystemId = item.SystemId })
-                            </div>
-                            <div class="col-sm-3">
-                                @Html.DisplayFor(modelItem => item.Owner)
-                            </div>
-                            <div class="col-sm-3">
-                                @Html.DisplayFor(modelItem => item.Theme)
-                            </div>
-                            <div class="col-sm-1">
-                                <a href="~/files/details/@item.SystemId"><img src="@item.ThumbnailUrl()" /></a>
-                            </div>
-                        </div>
-                    </div>
-                }
+                <div id="symbollist" class="scroll">
+                    <div class="next"><a href="~/Files/SymbolList?page=@(ViewBag.Page)&sortOrder=@(ViewBag.SortOrder)&text=@ViewBag.text">Laster...</a></div>
+                </div>
             </div>
         </div>
-        Viser @(Model.TotalItemCount == 0 ? 0 : Model.FirstItemOnPage) - @Model.LastItemOnPage av @Model.TotalItemCount treff
-
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, text = ViewBag.text }))
     </div>
     <div class="clearfix"></div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
         <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="/">Tilbake</a>
     </div>
 </div>
+<script src="~/Scripts/jquery.jscroll.js"></script>
+<script>
+      $(function () {
+        $('#symbollist').jscroll({
+            debug: true
+        });
+      });
+</script>
+
