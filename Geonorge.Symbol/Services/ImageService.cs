@@ -152,54 +152,78 @@ namespace Geonorge.Symbol.Services
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/thumbnail");
 
             var ext = Path.GetExtension(file.FileName);
+            string format = ext.Replace(".", "");
 
             string fileName = CreateFileName(symbol, ext, targetFolder);
 
-            using (MemoryStream memStream = new MemoryStream())
+            if(format == "svg")
             {
-                file.InputStream.CopyTo(memStream);
+                string targetPath = Path.Combine(targetFolder, fileName);
+                file.SaveAs(targetPath);
+            }
+            else
+            { 
+            MagickReadSettings readerSettings = new MagickReadSettings();
+            readerSettings.Height = 1500;
+            readerSettings.Width = 1500;
+            readerSettings.BackgroundColor = MagickColors.Transparent;
+            if (file.ContentType.Equals("image/svg+xml"))
+            {
+                readerSettings.Format = MagickFormat.Svg;
+            }
 
-                using (MagickImage image = new MagickImage(memStream))
+                using (MemoryStream memStream = new MemoryStream())
                 {
-                    image.Resize(new MagickGeometry { IgnoreAspectRatio = false, Width = 50 });
+                    file.InputStream.CopyTo(memStream);
 
-                    switch (ext)
+                    using (MagickImage image = new MagickImage(memStream, readerSettings))
                     {
-                        case ".png":
-                            {
-                                image.Format = MagickFormat.Png;
-                                break;
-                            }
-                        case ".jpg":
-                            {
-                                image.Format = MagickFormat.Jpg;
-                                break;
-                            }
-                        case ".gif":
-                            {
-                                image.Format = MagickFormat.Gif;
-                                break;
-                            }
-                        case ".ai":
-                            {
-                                image.Format = MagickFormat.Ai;
-                                break;
-                            }
-                        case ".svg":
-                            {
-                                image.Format = MagickFormat.Svg;
-                                break;
-                            }
-                        default:
-                            {
-                                image.Format = MagickFormat.Png;
-                                break;
-                            }
+                        switch (format)
+                        {
+                            case "png":
+                                {
+                                    image.Format = MagickFormat.Png32;
+                                    break;
+                                }
+                            case "jpg":
+                                {
+                                    image.Format = MagickFormat.Jpg;
+                                    break;
+                                }
+                            case "gif":
+                                {
+                                    image.Format = MagickFormat.Gif;
+                                    image.Settings.ColorType = ColorType.TrueColorAlpha;
+                                    break;
+                                }
+                            case "ai":
+                                {
+                                    image.Format = MagickFormat.Ai;
+                                    break;
+                                }
+                            case "svg":
+                                {
+                                    image.Format = MagickFormat.Svg;
+                                    break;
+                                }
+                            case "tiff":
+                                {
+                                    image.Format = MagickFormat.Tif;
+                                    break;
+                                }
+                            default:
+                                {
+                                    image.Format = MagickFormat.Png;
+                                    break;
+                                }
+                        }
+
+                        image.Resize(new MagickGeometry { IgnoreAspectRatio = false, Width = 50, Height = 0 });
+
+                        string targetPath = Path.Combine(targetFolder, fileName);
+                        image.Write(targetPath);
+
                     }
-
-                    string targetPath = Path.Combine(targetFolder, fileName);
-                    image.Write(targetPath);
-
                 }
             }
 
