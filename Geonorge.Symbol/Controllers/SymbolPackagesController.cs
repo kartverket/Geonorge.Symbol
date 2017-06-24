@@ -201,6 +201,8 @@ namespace Geonorge.Symbol.Controllers
 
         public FileResult Download(Guid? systemid)
         {
+            Response.Cookies.Add(new HttpCookie("downloadStarted", "1") { Expires = DateTime.Now.AddSeconds(20) });
+
             var package = _symbolService.GetPackage(systemid.Value);
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/");
 
