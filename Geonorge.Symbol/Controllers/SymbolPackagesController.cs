@@ -34,7 +34,7 @@ namespace Geonorge.Symbol.Controllers
         }
 
         // GET: SymbolPackages/Details/5
-        public ActionResult Details(Guid? systemid)
+        public ActionResult Details(Guid? systemid, string sortOrder)
         {
             if (systemid == null)
             {
@@ -46,7 +46,35 @@ namespace Geonorge.Symbol.Controllers
                 return HttpNotFound();
             }
 
-            symbolPackage.Symbols = symbolPackage.Symbols.OrderBy(s => s.Name).ToList();
+            switch (sortOrder)
+            {
+                case "symbolname_desc":
+                    symbolPackage.Symbols = symbolPackage.Symbols.OrderByDescending(s => s.Name).ToList();
+                    break;
+                case "owner":
+                    symbolPackage.Symbols = symbolPackage.Symbols.OrderBy(s => s.Owner).ToList();
+                    break;
+                case "owner_desc":
+                    symbolPackage.Symbols = symbolPackage.Symbols.OrderByDescending(s => s.Owner).ToList();
+                    break;
+                case "theme_desc":
+                    symbolPackage.Symbols = symbolPackage.Symbols.OrderByDescending(s => s.Theme).ToList();
+                    break;
+                case "theme":
+                    symbolPackage.Symbols = symbolPackage.Symbols.OrderBy(s => s.Theme).ToList();
+                    break;
+                default:
+                    symbolPackage.Symbols = symbolPackage.Symbols.OrderBy(s => s.Name).ToList();
+                    break;
+            }
+            if (string.IsNullOrEmpty(sortOrder))
+                sortOrder = "symbolname";
+
+            ViewBag.SymbolnameSortParm = sortOrder == "symbolname" ? "symbolname_desc" : "symbolname";
+            ViewBag.Owner = sortOrder == "owner" ? "owner_desc" : "owner";
+            ViewBag.Theme = sortOrder == "theme" ? "theme_desc" : "theme";
+            ViewBag.SortOrder = sortOrder;
+
 
             return View(symbolPackage);
         }

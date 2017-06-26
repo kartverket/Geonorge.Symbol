@@ -29,9 +29,47 @@
 </div>
 <div class="clearfix"></div>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print" style="margin-top:25px;">
-    <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="~/files/index">Tilbake</a>
     <a id="downloadLink" class="btn btn-default btn-space pull-right" data-loading-message="Henter pakke" href="~/symbolpackages/Download/@Model.SystemId">Last ned pakke</a>
 </div>
+<div class="clearfix"></div>
+<div id="tableView" class="search-results">
+    <div class="row search-results-table-heading">
+        <div class="col-sm-4"><p>@Html.ActionLink("Symbolnavn", "Details", new { sortOrder = ViewBag.SymbolnameSortParm, systemid = Model.SystemId }, new { @class = ViewBag.SortOrder.Contains("symbolname") ? (ViewBag.SymbolnameSortParm.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
+        <div class="col-sm-3"><p>@Html.ActionLink("Eier", "Details", new { sortOrder = ViewBag.Owner, systemid = Model.SystemId }, new { @class = ViewBag.SortOrder.Contains("owner") ? (ViewBag.Owner.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
+        <div class="col-sm-3"><p>@Html.ActionLink("Tema", "Details", new { sortOrder = ViewBag.Theme, systemid = Model.SystemId }, new { @class = ViewBag.SortOrder.Contains("theme") ? (ViewBag.Theme.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
+        <div class="col-sm-1"><p>Symbol</p></div>
+    </div>
+
+
+    <div class="menu-separator search-results-table-heading"></div>
+    <div class="striped-list">
+    @foreach (var item in Model.Symbols)
+    {
+        <div class="list-item">
+            <div class="row result-row metadata">
+
+                <div class="col-sm-4">
+                    <a href="~/files/details/@item.SystemId">@item.Name</a>
+                </div>
+                <div class="col-sm-3">
+                    @Html.DisplayFor(modelItem => item.Owner)
+                </div>
+                <div class="col-sm-3">
+                    @Html.DisplayFor(modelItem => item.Theme)
+                </div>
+                <div class="col-sm-1">
+                    <a href="~/files/details/@item.SystemId"><img src="@item.ThumbnailUrl()" /></a>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
+    <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="~/files/index">Tilbake</a>
+</div>
+
 <script>
     var setCookie = function (name, value, expiracy) {
         var exdate = new Date();
