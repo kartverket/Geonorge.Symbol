@@ -85,7 +85,11 @@
 
     </dl>
     <div class="striped-list">
-        @foreach (var variant in Model.SymbolFiles.Select(v => v.SymbolFileVariant).Distinct().ToList())
+        @{ 
+            List<String> preferencesOrder = new List<String> { "positiv", "utenramme", "negativ" };
+            var files = Model.SymbolFiles.OrderBy(item => preferencesOrder.IndexOf(item.Type)).ThenBy(o => o.Color).ToList();
+        }
+        @foreach (var variant in files.Select(v => v.SymbolFileVariant).Distinct().ToList())
         {
 
             <div class="list-item">
