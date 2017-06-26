@@ -15,7 +15,7 @@ namespace Geonorge.Symbol
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{SystemId}",
+                url: "register/symbol/{controller}/{action}/{SystemId}",
                 defaults: new { controller = "Files", action = "Index", SystemId = UrlParameter.Optional }
             );
         }
