@@ -10,6 +10,7 @@ using Geonorge.Symbol.Models;
 using Geonorge.Symbol.Services;
 using System.IO;
 using Ionic.Zip;
+using System.Threading;
 
 namespace Geonorge.Symbol.Controllers
 {
@@ -224,6 +225,19 @@ namespace Geonorge.Symbol.Controllers
             _symbolService.RemovePackage(systemid);
 
             return RedirectToAction("Index");
+        }
+
+        [Authorize]
+        public ActionResult TiffCompressWithZip()
+        {
+            string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files");
+
+            if (!_authorizationService.IsAdmin())
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+
+            new Thread(() => new BatchService(targetFolder).TiffCompressWithZip()).Start();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
 

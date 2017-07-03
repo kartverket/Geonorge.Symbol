@@ -242,6 +242,7 @@
     <Compile Include="Models\NotFoundModel.cs" />
     <Compile Include="Models\SymbolFileVariant.cs" />
     <Compile Include="Services\AuthorizationService.cs" />
+    <Compile Include="Services\BatchService.cs" />
     <Compile Include="Services\FileException.cs" />
     <Compile Include="Services\IAuthorizationService.cs" />
     <Compile Include="Services\ImageService.cs" />
