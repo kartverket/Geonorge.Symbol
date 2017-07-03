@@ -197,19 +197,9 @@ namespace Geonorge.Symbol.Services
                                     image.Settings.ColorType = ColorType.TrueColorAlpha;
                                     break;
                                 }
-                            case "ai":
-                                {
-                                    image.Format = MagickFormat.Ai;
-                                    break;
-                                }
                             case "svg":
                                 {
                                     image.Format = MagickFormat.Svg;
-                                    break;
-                                }
-                            case "tiff":
-                                {
-                                    image.Format = MagickFormat.Tif;
                                     break;
                                 }
                             default:
