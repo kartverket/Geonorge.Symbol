@@ -39,7 +39,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.Name, "Edit", new { systemid = item.SystemId })
+            <a href="@VirtualPathUtility.ToAbsolute("~/symbolpackages/edit/")@item.SystemId">@item.Name</a>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.OfficialStatus)

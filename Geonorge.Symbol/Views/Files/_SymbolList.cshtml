@@ -5,9 +5,9 @@
         <div class="row result-row metadata">
 
             <div class="col-sm-4">
-                @Html.ActionLink(item.Name ?? "->", "Details", new { SystemId = item.SystemId })
+                <a href="@VirtualPathUtility.ToAbsolute("~/files/details/")@item.SystemId">@item.Name</a>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 @Html.DisplayFor(modelItem => item.Owner)
             </div>
             <div class="col-sm-3">

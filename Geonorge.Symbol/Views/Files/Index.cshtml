@@ -105,9 +105,9 @@
         </div>
         <div id="tableView" class="search-results">
             <div class="row search-results-table-heading">
-                <div class="col-sm-4"><p>@Html.ActionLink("Symbolnavn", "Index", new { sortOrder = ViewBag.SymbolnameSortParm, text = ViewBag.text }, new { @class = ViewBag.SortOrder.Contains("symbolname") ? (ViewBag.SymbolnameSortParm.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
-                <div class="col-sm-3"><p>@Html.ActionLink("Eier", "Index", new { sortOrder = ViewBag.Owner, text = ViewBag.text }, new { @class = ViewBag.SortOrder.Contains("owner") ? (ViewBag.Owner.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
-                <div class="col-sm-3"><p>@Html.ActionLink("Tema", "Index", new { sortOrder = ViewBag.Theme, text = ViewBag.text }, new { @class = ViewBag.SortOrder.Contains("theme") ? (ViewBag.Theme.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
+                <div class="col-sm-4"><p><a href="@VirtualPathUtility.ToAbsolute("~/Files/Index?sortOrder=")@(ViewBag.SymbolnameSortParm)&text=@(ViewBag.text)" class="@(ViewBag.SortOrder.Contains("symbolname") ? (ViewBag.SymbolnameSortParm.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" )">Symbolnavn</a></p></div>
+                <div class="col-sm-4"><p><a href="@VirtualPathUtility.ToAbsolute("~/Files/Index?sortOrder=")@(ViewBag.Owner)&text=@(ViewBag.text)" class="@(ViewBag.SortOrder.Contains("owner") ? (ViewBag.Owner.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" )">Eier</a></p></div>
+                <div class="col-sm-3"><p><a href="@VirtualPathUtility.ToAbsolute("~/Files/Index?sortOrder=")@(ViewBag.Theme)&text=@(ViewBag.text)" class="@(ViewBag.SortOrder.Contains("theme") ? (ViewBag.Owner.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" )">Tema</a></p></div>
                 <div class="col-sm-1"><p>Symbol</p></div>
             </div>
 

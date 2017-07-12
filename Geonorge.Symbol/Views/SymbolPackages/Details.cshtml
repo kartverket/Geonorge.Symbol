@@ -34,9 +34,9 @@
 <div class="clearfix"></div>
 <div id="tableView" class="search-results">
     <div class="row search-results-table-heading">
-        <div class="col-sm-4"><p>@Html.ActionLink("Symbolnavn", "Details", new { sortOrder = ViewBag.SymbolnameSortParm, systemid = Model.SystemId }, new { @class = ViewBag.SortOrder.Contains("symbolname") ? (ViewBag.SymbolnameSortParm.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
-        <div class="col-sm-3"><p>@Html.ActionLink("Eier", "Details", new { sortOrder = ViewBag.Owner, systemid = Model.SystemId }, new { @class = ViewBag.SortOrder.Contains("owner") ? (ViewBag.Owner.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
-        <div class="col-sm-3"><p>@Html.ActionLink("Tema", "Details", new { sortOrder = ViewBag.Theme, systemid = Model.SystemId }, new { @class = ViewBag.SortOrder.Contains("theme") ? (ViewBag.Theme.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" })</p></div>
+        <div class="col-sm-4"><p><a href="@VirtualPathUtility.ToAbsolute("~/Symbolpackages/Details?sortOrder=")@(ViewBag.SymbolnameSortParm)&text=@(ViewBag.text)&systemid=@Model.SystemId" class="@(ViewBag.SortOrder.Contains("symbolname") ? (ViewBag.SymbolnameSortParm.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" )">Symbolnavn</a></p></div>
+        <div class="col-sm-4"><p><a href="@VirtualPathUtility.ToAbsolute("~/Symbolpackages/Details?sortOrder=")@(ViewBag.Owner)&text=@(ViewBag.text)&systemid=@Model.SystemId" class="@(ViewBag.SortOrder.Contains("owner") ? (ViewBag.Owner.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" )">Eier</a></p></div>
+        <div class="col-sm-3"><p><a href="@VirtualPathUtility.ToAbsolute("~/Symbolpackages/Details?sortOrder=")@(ViewBag.Theme)&text=@(ViewBag.text)&systemid=@Model.SystemId" class="@(ViewBag.SortOrder.Contains("theme") ? (ViewBag.Owner.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" )">Tema</a></p></div>
         <div class="col-sm-1"><p>Symbol</p></div>
     </div>
 
@@ -51,7 +51,7 @@
                 <div class="col-sm-4">
                     <a href="@VirtualPathUtility.ToAbsolute("~/files/details/")@item.SystemId">@item.Name</a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     @Html.DisplayFor(modelItem => item.Owner)
                 </div>
                 <div class="col-sm-3">
