@@ -19,7 +19,7 @@
             supportsLogin: true,
             isAuthenticated: @Request.IsAuthenticated.ToString().ToLower(),
             urlActionSignOut: '@Html.UrlActionSignOut()',
-            urlActionSignIn: '@Html.UrlActionSignIn()?ReturnUrl=@Server.UrlEncode(Request.Url.ToString())'
+            urlActionSignIn: '@Html.UrlActionSignIn()?ReturnUrl=@Server.UrlEncode(Request.Url.AbsoluteUri.ToString())'
             @if (Request.IsAuthenticated)
             {
                 foreach (var c in System.Security.Claims.ClaimsPrincipal.Current.Claims) {
@@ -32,8 +32,8 @@
     </script>
     @Scripts.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/scripts")
     @Html.Partial("_Analytics")
-    <link href="~/Content/select2.min.css" rel="stylesheet" />
-    <script src="~/Scripts/select2.min.js"></script>
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/select2.min.css")" rel="stylesheet" />
+    <script src="@VirtualPathUtility.ToAbsolute("~/Scripts/select2.min.js")"></script>
 </head>
 
 <body class="geonorge-container prototype  geonorge ng-scope" ng-app="geonorge">

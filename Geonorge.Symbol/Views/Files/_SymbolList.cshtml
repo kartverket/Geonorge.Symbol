@@ -19,5 +19,5 @@
         </div>
     </div>
 }
-<div class="last"><a href="~/Files/SymbolList?page=@(ViewBag.Page)&sortOrder=@(ViewBag.SortOrder)&text=@ViewBag.text">Laster...</a></div>
+<div class="last"><a href="@VirtualPathUtility.ToAbsolute("~/Files/SymbolList?page=")@(ViewBag.Page)&sortOrder=@(ViewBag.SortOrder)&text=@ViewBag.text">Laster...</a></div>
 
