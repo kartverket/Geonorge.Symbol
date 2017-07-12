@@ -30,9 +30,9 @@
         {
             if (ViewBag.IsAdmin)
             {
-                <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/symbolpackages/">Pakker</a>
+                <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="@VirtualPathUtility.ToAbsolute("~/symbolpackages/")">Pakker</a>
             }
-            <a class="btn btn-default btn-space pull-right" href="~/files/Create">Registrer symbol</a>
+            <a class="btn btn-default btn-space pull-right" href="@VirtualPathUtility.ToAbsolute("~/files/Create")">Registrer symbol</a>
         }
     </div>
 
@@ -97,7 +97,7 @@
                             Eier: @package.Owner<br />
                             Tema: @package.Theme<br />
                             Offisiell symbolpakke: @Html.DisplayFor(model => package.OfficialStatus)<br /><br />
-                            <a class="btn btn-default btn-space" href="~/symbolpackages/details/@package.SystemId">Detaljert informasjon</a>
+                            <a class="btn btn-default btn-space" href="@VirtualPathUtility.ToAbsolute("~/symbolpackages/details/")@package.SystemId">Detaljert informasjon</a>
                         </p>
                     </div>
                                 }
