@@ -1,8 +1,8 @@
 ﻿@model Geonorge.Symbol.Models.SymbolPackage
 
 @section breadcrumb {
-    <li><a href="~/files/index">Symbol</a></li>
-    <li><a href="~/symbolpackages/">Symbolpakker</a></li>
+    <li><a href="@VirtualPathUtility.ToAbsolute("~/files/index")">Symbol</a></li>
+    <li><a href="@VirtualPathUtility.ToAbsolute("~/symbolpackages/")">Symbolpakker</a></li>
     <li>Opprett</li>
 }
 @{

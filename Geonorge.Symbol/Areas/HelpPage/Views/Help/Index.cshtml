@@ -12,7 +12,7 @@
     ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
 }
 @section breadcrumb {
-    <li><a href="~/">Symbol</a></li>
+    <li><a href="@VirtualPathUtility.ToAbsolute("~/")">Symbol</a></li>
     <li class="active">API hjelp</li>
 }
 <link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />

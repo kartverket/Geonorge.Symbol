@@ -1,7 +1,7 @@
 ﻿@model Geonorge.Symbol.Models.Symbol
 
 @section breadcrumb {
-    <li><a href="~/files/index">Symbol</a></li>
+    <li><a href="@VirtualPathUtility.ToAbsolute("~/files/index")">Symbol</a></li>
     <li>@Model.Name</li>
 }
 @{
@@ -78,7 +78,7 @@
             {
                 foreach (var symbolpackage in Model.SymbolPackages)
                 {
-                    <a href="~/symbolpackages/details/@symbolpackage.SystemId">@symbolpackage.Name</a><br />
+                    <a href="@VirtualPathUtility.ToAbsolute("~/symbolpackages/details/")@symbolpackage.SystemId">@symbolpackage.Name</a><br />
                 }
             }
         </dd>
@@ -143,10 +143,10 @@
                 <div class="pull-right">
                     @if (ViewBag.HasAccess)
                     {
-                        <a class="btn btn-default btn-space" style="margin-left: 15px;" href="~/symbolfiles/delete/@variant.SystemId">Slett</a>
-                        <a class="btn btn-default btn-space" style="margin-left: 15px;" href="~/symbolfiles/edit/@variant.SystemId">Rediger</a>
+                        <a class="btn btn-default btn-space" style="margin-left: 15px;" href="@VirtualPathUtility.ToAbsolute("~/symbolfiles/delete/")@variant.SystemId">Slett</a>
+                        <a class="btn btn-default btn-space" style="margin-left: 15px;" href="@VirtualPathUtility.ToAbsolute("~/symbolfiles/edit/")@variant.SystemId">Rediger</a>
                     }
-                    <a class="btn btn-default btn-space" style="margin-left: 15px;" href="~/files/DownloadVariant/@variant.SystemId">Last ned</a>
+                    <a class="btn btn-default btn-space" style="margin-left: 15px;" href="@VirtualPathUtility.ToAbsolute("~/files/DownloadVariant/")@variant.SystemId">Last ned</a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -154,13 +154,13 @@
     </div>
     <hr />
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
-        <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="~/files/index">Tilbake</a>
+        <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="@VirtualPathUtility.ToAbsolute("~/files/index")">Tilbake</a>
         @if (ViewBag.HasAccess)
         {
-            <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/files/Edit/@Model.SystemId">Rediger</a>
-            <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/symbolfiles/Create/@Model.SystemId">Legg til</a>
-            <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/files/Download/@Model.SystemId">Last ned alle</a>
-            <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/files/Delete/@Model.SystemId">Slett</a>
+            <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="@VirtualPathUtility.ToAbsolute("~/files/Edit/")@Model.SystemId">Rediger</a>
+            <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="@VirtualPathUtility.ToAbsolute("~/symbolfiles/Create/")@Model.SystemId">Legg til</a>
+            <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="@VirtualPathUtility.ToAbsolute("~/files/Download/")@Model.SystemId">Last ned alle</a>
+            <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="@VirtualPathUtility.ToAbsolute("~/files/Delete/")@Model.SystemId">Slett</a>
         }
     </div>
 

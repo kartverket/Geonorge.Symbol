@@ -1,8 +1,8 @@
 ﻿@model Geonorge.Symbol.Models.SymbolPackage
 
 @section breadcrumb {
-    <li><a href="~/files/index">Symbol</a></li>
-    <li><a href="~/symbolpackages/">Symbolpakker</a></li>
+    <li><a href="@VirtualPathUtility.ToAbsolute("~/files/index")">Symbol</a></li>
+    <li><a href="@VirtualPathUtility.ToAbsolute("~/symbolpackages/")">Symbolpakker</a></li>
     <li>Rediger</li>
 }
 @{
@@ -75,9 +75,9 @@
         <div class="clearfix"></div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
-            <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="~/symbol/symbolpackages/">Tilbake</a>
+            <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="@VirtualPathUtility.ToAbsolute("~/symbol/symbolpackages/")">Tilbake</a>
             <input type="submit" value="Lagre" style="margin-left: 15px;" class="btn btn-default pull-right" />
-            <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="~/symbolpackages/Delete/@Model.SystemId">Slett</a>
+            <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="@VirtualPathUtility.ToAbsolute("~/symbolpackages/Delete/")@Model.SystemId">Slett</a>
         </div>
     </div>
 }
