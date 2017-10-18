@@ -71,8 +71,8 @@ namespace Geonorge.Symbol.Models
 
         string CurrentDomain()
         {
-            return HttpContext.Current.Request.Url.Scheme + System.Uri.SchemeDelimiter
-                 + HttpContext.Current.Request.Url.Host +
+            return (HttpContext.Current.Request.Url.Host.Contains("localhost") ? "http" : "https")
+                 + System.Uri.SchemeDelimiter + HttpContext.Current.Request.Url.Host +
                  (HttpContext.Current.Request.Url.IsDefaultPort ? "" : ":" + HttpContext.Current.Request.Url.Port)
                  + (!HttpContext.Current.Request.Url.Host.Contains("localhost") ? "/symbol" : "");
         }
