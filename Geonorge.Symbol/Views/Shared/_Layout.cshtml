@@ -19,7 +19,7 @@
             supportsLogin: true,
             isAuthenticated: @Request.IsAuthenticated.ToString().ToLower(),
             urlActionSignOut: '@Html.UrlActionSignOut()',
-            urlActionSignIn: '@Html.UrlActionSignIn()?ReturnUrl=@Server.UrlEncode(Request.Url.ToString())'
+            urlActionSignIn: '@Html.UrlActionSignIn()?ReturnUrl=@Server.UrlEncode(Request.Url.AbsoluteUri.ToString())'
             @if (Request.IsAuthenticated)
             {
                 foreach (var c in System.Security.Claims.ClaimsPrincipal.Current.Claims) {

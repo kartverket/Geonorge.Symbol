@@ -115,7 +115,7 @@
             <div class="menu-separator search-results-table-heading"></div>
             <div class="striped-list">
                 <div id="symbollist" class="scroll">
-                    <div class="next"><a href="~/Files/SymbolList?page=@(ViewBag.Page)&sortOrder=@(ViewBag.SortOrder)&text=@ViewBag.text">Laster...</a></div>
+                    <div class="next"><a href="@VirtualPathUtility.ToAbsolute("~/Files/SymbolList?page=")@(ViewBag.Page)&sortOrder=@(ViewBag.SortOrder)&text=@ViewBag.text">Laster...</a></div>
                 </div>
             </div>
         </div>
