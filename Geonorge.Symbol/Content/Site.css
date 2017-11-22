@@ -5,3 +5,9 @@
 a.sorted-desc:after {
     content: ' \25B2';
 }
+
+.list-item-symbol,
+    .list-item-symbol img {
+        width: 50px;
+        height: 50px;
+    }
