@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -226,6 +227,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SymbolFilesController.cs" />
     <Compile Include="Controllers\SymbolPackagesController.cs" />
+    <Compile Include="Helpers\CultureHelper.cs" />
     <Compile Include="Migrations\201704180908046_Initial.cs" />
     <Compile Include="Migrations\201704180908046_Initial.Designer.cs">
       <DependentUpon>201704180908046_Initial.cs</DependentUpon>
@@ -241,6 +243,12 @@
     <Compile Include="Models\Api\Symbol.cs" />
     <Compile Include="Models\NotFoundModel.cs" />
     <Compile Include="Models\SymbolFileVariant.cs" />
+    <Compile Include="Models\Translations\Culture.cs" />
+    <Compile Include="Resources\UI.en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UI.en.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\AuthorizationService.cs" />
     <Compile Include="Services\BatchService.cs" />
     <Compile Include="Services\FileException.cs" />
@@ -562,6 +570,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705180805199_AddSymbolId.resx">
       <DependentUpon>201705180805199_AddSymbolId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\UI.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UI.en.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

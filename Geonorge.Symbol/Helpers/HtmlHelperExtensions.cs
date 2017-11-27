@@ -25,5 +25,10 @@ namespace Geonorge.Symbol.Helpers
             string versionNumber = WebConfigurationManager.AppSettings["BuildVersionNumber"];
             return versionNumber;
         }
+
+        public static bool SupportsMultiCulture(this HtmlHelper helper)
+        {
+            return Boolean.Parse(WebConfigurationManager.AppSettings["SupportsMultiCulture"]); ;
+        }
     }
 }

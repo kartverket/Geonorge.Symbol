@@ -501,6 +501,23 @@
             </returns>
             <response code="500">Internal Server Error</response>
         </member>
+        <member name="M:Geonorge.Symbol.Helpers.CultureHelper.IsRighToLeft">
+            <summary>
+            Returns true if the language is a right-to-left language. Otherwise, false.
+            </summary>
+        </member>
+        <member name="M:Geonorge.Symbol.Helpers.CultureHelper.IsNorwegian">
+            <summary>
+            Returns true if current language is norwegian. Otherwise, false.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Geonorge.Symbol.Helpers.CultureHelper.GetImplementedCulture(System.String)" -->
+        <member name="M:Geonorge.Symbol.Helpers.CultureHelper.GetDefaultCulture">
+            <summary>
+            Returns default culture name which is the first name decalared (e.g. en-US)
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Geonorge.Symbol.Models.Symbol.SymbolId">
             <summary>Ekstern ID</summary>
         </member>
@@ -581,6 +598,47 @@
         <member name="P:Geonorge.Symbol.Resources.UI.AppPageTitle">
             <summary>
               Looks up a localized string similar to Geonorge symbol.
+            </summary>
+        </member>
+        <member name="P:Geonorge.Symbol.Resources.UI.ContactUs">
+            <summary>
+              Looks up a localized string similar to Kontakt oss.
+            </summary>
+        </member>
+        <member name="P:Geonorge.Symbol.Resources.UI.Error">
+            <summary>
+              Looks up a localized string similar to Feil.
+            </summary>
+        </member>
+        <member name="P:Geonorge.Symbol.Resources.UI.ErrorInfo">
+            <summary>
+              Looks up a localized string similar to Det har desverre skjedd en feil med din forespørsel. Prøv igjen om litt..
+            </summary>
+        </member>
+        <member name="P:Geonorge.Symbol.Resources.UI.ErrorReport">
+             <summary>
+               Looks up a localized string similar to &lt;p&gt;Feilen er logget og vil sjekkes av systemansvarlig.&lt;/p&gt;
+            &lt;p&gt;Du kan også rapportere feilen til &lt;a mailto:&quot;post@norgedigitalt.no&quot;&gt;post@norgedigitalt.no&lt;/a&gt;.&lt;/p&gt;.
+             </summary>
+        </member>
+        <member name="P:Geonorge.Symbol.Resources.UI.Home">
+            <summary>
+              Looks up a localized string similar to Forside.
+            </summary>
+        </member>
+        <member name="P:Geonorge.Symbol.Resources.UI.NotFoundText">
+            <summary>
+              Looks up a localized string similar to Vi finner ikke siden du leter etter, men Geonorge skal hjelpe deg videre..
+            </summary>
+        </member>
+        <member name="P:Geonorge.Symbol.Resources.UI.Register">
+            <summary>
+              Looks up a localized string similar to Registrene.
+            </summary>
+        </member>
+        <member name="P:Geonorge.Symbol.Resources.UI.SearchFor">
+            <summary>
+              Looks up a localized string similar to Søk etter.
             </summary>
         </member>
     </members>
