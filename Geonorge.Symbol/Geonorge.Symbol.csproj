@@ -298,7 +298,6 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\vendorfonts.css" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\vendorfonts.min.css" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\statusicon.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\arrow-select-blue.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\arrow-select-orange.svg" />
@@ -431,21 +430,32 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\vendor.min.js" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.min.html" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_autoCompleteRow.html" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_autoCompleteRow.min.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.min.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer_eng.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer_eng.min.html" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.html" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.min.html" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\select2.css" />
     <Content Include="Content\select2.min.css" />
+    <Content Include="dist\images\geonorge_logo_350px.svg" />
+    <Content Include="dist\images\geonorge_logo_350px_dev.svg" />
+    <Content Include="dist\images\geonorge_logo_350px_test.svg" />
+    <Content Include="dist\images\search_icon-01.svg" />
+    <Content Include="dist\main.css" />
+    <Content Include="dist\main.js" />
+    <Content Include="dist\partials\Footer.html" />
+    <Content Include="dist\partials\Header.html" />
+    <Content Include="dist\partials\_autoCompleteRow.html" />
+    <Content Include="dist\vendor.css" />
+    <Content Include="dist\vendor.js" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="gulpfile.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include=".bowerrc" />
@@ -477,10 +487,6 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\FontAwesome.otf" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\I4k9un7TZVWzRVT-T8y3USBnSvpkopQaUR-2r7iU.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\JXh38I15wypJXxuGMBp0EAVxt0G0biEntp43Qt6E.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\KeOuBrn4kERxqtaUH3aCWcynf_cDxXwCLxiixG1c.ttf" />
@@ -499,12 +505,16 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.min.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer_eng.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer_eng.min.cshtml" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.cshtml" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.min.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\bower.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\package-lock.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\README.md" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\yarn.lock" />
+    <Content Include="package.json" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="dist\maps\main.css.map" />
+    <Content Include="dist\maps\main.js.map" />
+    <Content Include="dist\maps\vendor.css.map" />
+    <Content Include="dist\maps\vendor.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -563,9 +573,6 @@
     <Folder Include="bin\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using Geonorge.Symbol.Models.Translations;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -10,7 +11,12 @@ namespace Geonorge.Symbol.Helpers
 
         public static string GeonorgeUrl(this HtmlHelper helper)
         {
-            return WebConfigurationManager.AppSettings["GeonorgeUrl"];
+            var url = WebConfigurationManager.AppSettings["GeonorgeUrl"];
+            var culture = CultureHelper.GetCurrentCulture();
+            if (culture != Culture.NorwegianCode)
+                url = url + Culture.EnglishCode;
+
+            return url;
         }
 
         public static string RegistryUrl(this HtmlHelper helper)
