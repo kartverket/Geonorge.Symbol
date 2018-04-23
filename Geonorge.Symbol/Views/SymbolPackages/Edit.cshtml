@@ -1,5 +1,4 @@
 ﻿@model Geonorge.Symbol.Models.SymbolPackage
-
 @section breadcrumb {
     <li><a href="@VirtualPathUtility.ToAbsolute("~/files/index")">Symbol</a></li>
     <li><a href="@VirtualPathUtility.ToAbsolute("~/symbolpackages/")">Symbolpakker</a></li>
@@ -8,7 +7,6 @@
 @{
     ViewBag.Title = "Symbolpakke rediger";
 }
-
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
@@ -24,11 +22,10 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.SystemId)
-
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -36,7 +33,6 @@
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.OfficialStatus, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -46,7 +42,6 @@
                 </div>
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Owner, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -64,7 +59,6 @@
                 }
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Theme, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -73,7 +67,6 @@
             </div>
         </div>
         <div class="clearfix"></div>
-
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
             <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="@VirtualPathUtility.ToAbsolute("~/symbol/symbolpackages/")">Tilbake</a>
             <input type="submit" value="Lagre" style="margin-left: 15px;" class="btn btn-default pull-right" />
@@ -81,4 +74,5 @@
         </div>
     </div>
 }
+<script src="@VirtualPathUtility.ToAbsolute("~/Scripts/select2.min.js")"></script>
 <script type="text/javascript" src="~/Scripts/custom.js"></script>
