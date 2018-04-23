@@ -6,7 +6,6 @@
 @{
     ViewBag.Title = "Symboler";
 }
-
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
@@ -19,7 +18,6 @@
         </div>
     </div>
 </section>
-
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "symbolform" }))
 {
@@ -64,7 +62,6 @@
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -72,7 +69,6 @@
                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.SymbolId, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -80,7 +76,6 @@
                         @Html.ValidationMessageFor(model => model.SymbolId, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.Theme, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -90,22 +85,21 @@
                         @Html.ValidationMessageFor(model => model.Theme, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.SymbolPackages, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-8">
-                        @Html.DropDownList("packages", (MultiSelectList)ViewBag.SymbolPackages,string.Empty, new { @class = "form-control packagesSelect" })
+                        @Html.DropDownList("packages", (MultiSelectList)ViewBag.SymbolPackages, string.Empty, new { @class = "form-control packagesSelect" })
                         @Html.ValidationMessageFor(model => model.SymbolPackages, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-2">
-                        @if (ViewBag.IsAdmin) {
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#packageModal">
-                            Legg til pakke
-                        </button>
+                        @if (ViewBag.IsAdmin)
+                        {
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#packageModal">
+                                Legg til pakke
+                            </button>
                         }
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.Source, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -113,7 +107,6 @@
                         @Html.ValidationMessageFor(model => model.Source, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.SourceUrl, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -131,27 +124,24 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print margin-top-10">
                 <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="@VirtualPathUtility.ToAbsolute("~/files/index")">Tilbake</a>
                 <input type="submit" value="Lagre" class="btn btn-default pull-right" />
-
             </div>
         </div>
-     </div>
+    </div>
 }
-
 <!-- Modal -->
-
-@using (Html.BeginForm("addpackage","api"))
+@using (Html.BeginForm("addpackage", "api"))
 {
     @Html.AntiForgeryToken()
-<div class="modal fade" id="packageModal" role="dialog" aria-labelledby="packageModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="packageModalLabel">Legg til pakke</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Lukk">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
+    <div class="modal fade" id="packageModal" role="dialog" aria-labelledby="packageModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="packageModalLabel">Legg til pakke</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Lukk">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
                     <div class="form-horizontal">
                         <div class="form-group">
                             @Html.Label("Navn", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -159,7 +149,6 @@
                                 <input type="text" id="NamePackage" name="Name" class="form-control" />
                             </div>
                         </div>
-
                         <div class="form-group">
                             @Html.Label("Offisiell", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
@@ -168,22 +157,20 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-group">
                             @Html.Label("Organisasjon", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @if (ViewBag.IsAdmin)
                                 {
-                                   <select class="ownerOrganizationPackageSelect" id="OwnerPackage" name="Owner"> </select>
+                                    <select class="ownerOrganizationPackageSelect" id="OwnerPackage" name="Owner"> </select>
                                 }
                                 else
                                 {
-                                <span>@ViewBag.Owner</span>
-                                <input type="hidden" id="OwnerPackage" name="Owner" value="@ViewBag.Owner" />
+                                    <span>@ViewBag.Owner</span>
+                                    <input type="hidden" id="OwnerPackage" name="Owner" value="@ViewBag.Owner" />
                                 }
                             </div>
                         </div>
-
                         <div class="form-group">
                             @Html.Label("Tema", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
@@ -192,14 +179,14 @@
                         </div>
                         <span id="errormsg" class="alert-danger"></span>
                     </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Lukk</button>
-                <button type="button" id="AddPackage" class="btn btn-primary">Legg til</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Lukk</button>
+                    <button type="button" id="AddPackage" class="btn btn-primary">Legg til</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 }
 <script>
     $(document).ready(function () {
@@ -236,6 +223,7 @@
         });
     });
 </script>
+<script src="@VirtualPathUtility.ToAbsolute("~/Scripts/select2.min.js")"></script>
 <script type="text/javascript" src="~/Scripts/custom.js"></script>
 <script>
     var organizationsPackage = [];
