@@ -13,6 +13,8 @@
         var kartkatalogenUrl = '@Html.KartkatalogenUrl()';
         var registryUrl = '@Html.RegistryUrl()';
 
+        var applicationVersionNumber = '@Html.ApplicationVersionNumber()';
+        var applicationEnvironment = '@Html.EnvironmentName()';
 
         var cultureData = {
             friendlyUrlEN: '@Html.Raw(@VirtualPathUtility.ToAbsolute("~/Home/SetCulture?culture="))@Geonorge.Symbol.Models.Translations.Culture.EnglishCode&ReturnUrl=@Request.Url',
