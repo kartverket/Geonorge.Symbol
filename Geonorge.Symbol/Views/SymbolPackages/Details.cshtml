@@ -1,5 +1,4 @@
 ﻿@model Geonorge.Symbol.Models.SymbolPackage
-
 @section breadcrumb {
     <li><a href="@VirtualPathUtility.ToAbsolute("~/files/index")">Symbol</a></li>
     <li>@Model.Name</li>
@@ -7,7 +6,6 @@
 @{
     ViewBag.Title = "Symbolpakke - " + Model.Name;
 }
-
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
@@ -20,7 +18,6 @@
         </div>
     </div>
 </section>
-
 <div>
     @foreach (var symbol in Model.Symbols)
     {
@@ -40,68 +37,67 @@
         <div class="col-sm-1"><p>Symbol</p></div>
     </div>
 
-
     <div class="menu-separator search-results-table-heading"></div>
     <div class="striped-list">
-    @foreach (var item in Model.Symbols)
-    {
-        <div class="list-item">
-            <div class="row result-row metadata">
-
-                <div class="col-sm-4">
-                    <a href="@VirtualPathUtility.ToAbsolute("~/files/details/")@item.SystemId">@item.Name</a>
-                </div>
-                <div class="col-sm-4">
-                    @Html.DisplayFor(modelItem => item.Owner)
-                </div>
-                <div class="col-sm-3">
-                    @Html.DisplayFor(modelItem => item.Theme)
-                </div>
-                <div class="col-sm-1">
-                    <a class="list-item-symbol" href="@VirtualPathUtility.ToAbsolute("~/files/details/")@item.SystemId"><img src="@item.ThumbnailUrl()" /></a>
+        @foreach (var item in Model.Symbols)
+        {
+            <div class="list-item">
+                <div class="row result-row metadata">
+                    <div class="col-sm-4">
+                        <a href="@VirtualPathUtility.ToAbsolute("~/files/details/")@item.SystemId">@item.Name</a>
+                    </div>
+                    <div class="col-sm-4">
+                        @Html.DisplayFor(modelItem => item.Owner)
+                    </div>
+                    <div class="col-sm-3">
+                        @Html.DisplayFor(modelItem => item.Theme)
+                    </div>
+                    <div class="col-sm-1">
+                        <a class="list-item-symbol" href="@VirtualPathUtility.ToAbsolute("~/files/details/")@item.SystemId"><img src="@item.ThumbnailUrl()" /></a>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
     </div>
 </div>
 <div class="clearfix"></div>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
     <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="@VirtualPathUtility.ToAbsolute("~/files/index")">Tilbake</a>
 </div>
+@section scripts{
+    <script>
+        var setCookie = function (name, value, expiracy) {
+            var exdate = new Date();
+            exdate.setTime(exdate.getTime() + expiracy * 1000);
+            var c_value = escape(value) + ((expiracy == null) ? "" : "; expires=" + exdate.toUTCString());
+            document.cookie = name + "=" + c_value + '; path=/';
+        };
 
-<script>
-    var setCookie = function (name, value, expiracy) {
-        var exdate = new Date();
-        exdate.setTime(exdate.getTime() + expiracy * 1000);
-        var c_value = escape(value) + ((expiracy == null) ? "" : "; expires=" + exdate.toUTCString());
-        document.cookie = name + "=" + c_value + '; path=/';
-    };
-
-    var getCookie = function (name) {
-        var i, x, y, ARRcookies = document.cookie.split(";");
-        for (i = 0; i < ARRcookies.length; i++) {
-            x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="));
-            y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1);
-            x = x.replace(/^\s+|\s+$/g, "");
-            if (x == name) {
-                return y ? decodeURI(unescape(y.replace(/\+/g, ' '))) : y; //;//unescape(decodeURI(y));
+        var getCookie = function (name) {
+            var i, x, y, ARRcookies = document.cookie.split(";");
+            for (i = 0; i < ARRcookies.length; i++) {
+                x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="));
+                y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1);
+                x = x.replace(/^\s+|\s+$/g, "");
+                if (x == name) {
+                    return y ? decodeURI(unescape(y.replace(/\+/g, ' '))) : y; //;//unescape(decodeURI(y));
+                }
             }
-        }
-    };
+        };
 
-    $('#downloadLink').click(function () {
-        $('#downloadLink').addClass('show-loading-animation');
-        setCookie('downloadStarted', 0, 100); //Expiration could be anything... As long as we reset the value
-        setTimeout(checkDownloadCookie, 1000); //Initiate the loop to check the cookie.
-    });
-    var downloadTimeout;
-    var checkDownloadCookie = function () {
-        if (getCookie("downloadStarted") == 1) {
-            setCookie("downloadStarted", "false", 100); //Expiration could be anything... As long as we reset the value
-            hideLoadingAnimation();
-        } else {
-            downloadTimeout = setTimeout(checkDownloadCookie, 1000); //Re-run this function in 1 second.
-        }
-    };
-</script>
+        $('#downloadLink').click(function () {
+            $('#downloadLink').addClass('show-loading-animation');
+            setCookie('downloadStarted', 0, 100); //Expiration could be anything... As long as we reset the value
+            setTimeout(checkDownloadCookie, 1000); //Initiate the loop to check the cookie.
+        });
+        var downloadTimeout;
+        var checkDownloadCookie = function () {
+            if (getCookie("downloadStarted") == 1) {
+                setCookie("downloadStarted", "false", 100); //Expiration could be anything... As long as we reset the value
+                hideLoadingAnimation();
+            } else {
+                downloadTimeout = setTimeout(checkDownloadCookie, 1000); //Re-run this function in 1 second.
+            }
+        };
+    </script>
+}
