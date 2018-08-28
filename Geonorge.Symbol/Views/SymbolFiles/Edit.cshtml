@@ -1,5 +1,4 @@
 ﻿@model List<Geonorge.Symbol.Models.SymbolFile>
-
 @section breadcrumb {
     <li><a href="@VirtualPathUtility.ToAbsolute("~/files/index")">Symbol</a></li>
     <li><a href="@VirtualPathUtility.ToAbsolute("~/files/details/")@Model[0].Symbol.SystemId">@Model[0].Symbol.Name</a></li>
@@ -8,7 +7,6 @@
 @{
     ViewBag.Title = "Rediger symbol-variant";
 }
-
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
@@ -21,13 +19,11 @@
         </div>
     </div>
 </section>
-
 @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "symbolvariantform" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="">
-
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         <input type="hidden" name="SymbolFileVariant.SystemId" value="@Model[0].SymbolFileVariant.SystemId" />
         <input type="hidden" id="FileToRemove" name="FileToRemove" value="" />
@@ -45,7 +41,6 @@
             </div>
         </div>
         <div class="clearfix"></div>
-
         <div class="row">
             <div class="col-md-3">
                 @Html.Label("Symbol", htmlAttributes: new { @class = "control-label" })
@@ -61,14 +56,12 @@
                 @Html.Label("Farge", htmlAttributes: new { @class = "control-label" })
                 <input type="text" name="Color" id="Color" />
             </div>
-
             <div class="col-md-3">
                 @Html.Label("Størrelse", htmlAttributes: new { @class = "control-label" })
                 <div class="custom-select">
                     @Html.DropDownList("Size", ViewBag.Size as SelectList, String.Empty, new { @class = "form-control" })
                 </div>
             </div>
-
         </div>
         <div class="hidden-print">
             <input type="submit" value="Legg til fil" class="btn pull-right" />
@@ -97,7 +90,7 @@
                         </div>
                         <div class="col-sm-1">
                             @if (Model.Count > 1)
-                    { <input type="submit" class="btn pull-right" value="Slett" onclick="SetFileToRemove('@file.SystemId');" />
+                            {<input type="submit" class="btn pull-right" value="Slett" onclick="SetFileToRemove('@file.SystemId');" />
                             }
                         </div>
                     </div>
@@ -109,12 +102,12 @@
         <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="@VirtualPathUtility.ToAbsolute("~/files/details?systemid=")@Model[0].Symbol.SystemId">Tilbake</a>
     </div>
 }
+@section scripts{
+    <script>
+        function SetFileToRemove(fileID) {
+            console.log(fileID);
+            $('#FileToRemove').val(fileID);
+        }
 
-<script>
-    function SetFileToRemove(fileID) {
-        console.log(fileID);
-        $('#FileToRemove').val(fileID);
-    }
-
-</script>
-
+    </script>
+}

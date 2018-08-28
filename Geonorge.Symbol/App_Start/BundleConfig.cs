@@ -15,9 +15,20 @@ namespace Geonorge.Symbol
                 "~/Content/Site.css"
             ));
 
+            bundles.Add(new StyleBundle("~/shared-partials-styles").Include(
+               "~/dist/vendor.css",
+               "~/dist/main.css"
+               ));
+
             bundles.Add(new ScriptBundle("~/Content/bower_components/kartverket-felleskomponenter/assets/js/scripts").Include(
                "~/Content/bower_components/kartverket-felleskomponenter/assets/js/vendor.min.js",
                "~/Content/bower_components/kartverket-felleskomponenter/assets/js/main.js"
+           ));
+
+            bundles.Add(new ScriptBundle("~/shared-partials-scripts").Include(
+               "~/dist/vendor.js",
+               "~/dist/main.js"
+
            ));
         }
     }

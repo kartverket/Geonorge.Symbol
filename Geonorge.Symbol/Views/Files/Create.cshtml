@@ -188,7 +188,8 @@
         </div>
     </div>
 }
-<script>
+@section scripts{
+    <script>
     $(document).ready(function () {
 
         $("#packageModal").on("hide.bs.modal", function () {
@@ -222,43 +223,44 @@
             });
         });
     });
-</script>
-<script src="@VirtualPathUtility.ToAbsolute("~/Scripts/select2.min.js")"></script>
-<script type="text/javascript" src="~/Scripts/custom.js"></script>
-<script>
-    var organizationsPackage = [];
+    </script>
+    <script src="@VirtualPathUtility.ToAbsolute("~/Scripts/select2.min.js")"></script>
+    <script type="text/javascript" src="~/Scripts/custom.js"></script>
+    <script>
+        var organizationsPackage = [];
 
-    $('.ownerOrganizationPackageSelect').select2({
-        placeholder: "Søk etter organisasjon",
-        language: "nb",
-        ajax: {
-            url: registryUrl + "api/search",
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                return {
-                    text: params.term,// search term
-                    limit: 10,
-                    'facets[0]name': "type",
-                    'facets[0]value': "organisasjoner"
-                };
+        $('.ownerOrganizationPackageSelect').select2({
+            placeholder: "Søk etter organisasjon",
+            language: "nb",
+            ajax: {
+                url: registryUrl + "api/search",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        text: params.term,// search term
+                        limit: 10,
+                        'facets[0]name': "type",
+                        'facets[0]value': "organisasjoner"
+                    };
+                },
+                processResults: function (data, params) {
+                    organizationsPackage = [];
+                    $.each(data.Results, function (i, item) {
+                        option = {}
+                        option["id"] = item.Name;
+                        option["text"] = item.Name;
+
+                        organizationsPackage.push(option);
+                    })
+
+                    return {
+                        results: organizationsPackage
+                    };
+                },
+                cache: true
             },
-            processResults: function (data, params) {
-                organizationsPackage = [];
-                $.each(data.Results, function (i, item) {
-                    option = {}
-                    option["id"] = item.Name;
-                    option["text"] = item.Name;
-
-                    organizationsPackage.push(option);
-                })
-
-                return {
-                    results: organizationsPackage
-                };
-            },
-            cache: true
-        },
-        minimumInputLength: 3
-    });
-</script>
+            minimumInputLength: 3
+        });
+    </script>
+}
