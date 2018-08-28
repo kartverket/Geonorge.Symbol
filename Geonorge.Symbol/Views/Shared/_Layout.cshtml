@@ -6,7 +6,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@UI.AppPageTitle</title>
+    <script>
+        var kartkatalogenUrl = '@Html.KartkatalogenUrl()';
+        var registryUrl = '@Html.RegistryUrl()';
 
+        var applicationVersionNumber = '@Html.ApplicationVersionNumber()';
+        var applicationEnvironment = '@Html.EnvironmentName()';
+
+        var cultureData = {
+            friendlyUrlEN: '@Html.Raw(@VirtualPathUtility.ToAbsolute("~/Home/SetCulture?culture="))@Geonorge.Symbol.Models.Translations.Culture.EnglishCode&ReturnUrl=@Request.Url',
+            friendlyUrlNO: '@Html.Raw(@VirtualPathUtility.ToAbsolute("~/Home/SetCulture?culture="))@Geonorge.Symbol.Models.Translations.Culture.NorwegianCode&ReturnUrl=@Request.Url',
+            currentCulture: '@CultureHelper.GetCurrentCulture()'
+        };
+    </script>
 </head>
 
 <body class="geonorge-container prototype  geonorge">
@@ -14,6 +26,7 @@
     <div id="loading-animation" class="loading-animation" style="display: none;"></div>
 
     @Html.Raw(File.ReadAllText(Server.MapPath("~/dist/partials/Header.html")))
+    @Styles.Render("~/shared-partials-styles")
     @Styles.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/css/styles")
 
     <div class="body-content">
@@ -54,20 +67,7 @@
     {
         @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Footer_eng.min.cshtml");
     }
-    @Scripts.Render("~/shared-partials")
-    <script>
-        var kartkatalogenUrl = '@Html.KartkatalogenUrl()';
-        var registryUrl = '@Html.RegistryUrl()';
-
-        var applicationVersionNumber = '@Html.ApplicationVersionNumber()';
-        var applicationEnvironment = '@Html.EnvironmentName()';
-
-        var cultureData = {
-            friendlyUrlEN: '@Html.Raw(@VirtualPathUtility.ToAbsolute("~/Home/SetCulture?culture="))@Geonorge.Symbol.Models.Translations.Culture.EnglishCode&ReturnUrl=@Request.Url',
-            friendlyUrlNO: '@Html.Raw(@VirtualPathUtility.ToAbsolute("~/Home/SetCulture?culture="))@Geonorge.Symbol.Models.Translations.Culture.NorwegianCode&ReturnUrl=@Request.Url',
-            currentCulture: '@CultureHelper.GetCurrentCulture()'
-        };
-    </script>
+    @Scripts.Render("~/shared-partials-scripts")
     <script>
         searchOption.supportsLogin = true;
         searchOption.loginUrl = '@Html.Raw(@Html.UrlActionSignIn())?ReturnUrl=@Server.UrlEncode(Request.Url.AbsoluteUri.ToString())';
