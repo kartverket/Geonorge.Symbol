@@ -238,7 +238,7 @@ namespace Geonorge.Symbol.Services
                 if (!string.IsNullOrEmpty(symbolFile.Color))
                     filename = filename + "_" + MakeSeoFriendlyString(symbolFile.Color);
 
-                if (useWidthInFilname && !string.IsNullOrEmpty(width) && width != "0" && ext != "pdf" && ext != "ai")
+                if (useWidthInFilname && !string.IsNullOrEmpty(width) && width != "0" && ext != ".pdf" && ext != ".ai")
                     filename = filename + "_" + MakeSeoFriendlyString(width);
 
             }
