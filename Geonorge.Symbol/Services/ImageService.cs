@@ -238,7 +238,7 @@ namespace Geonorge.Symbol.Services
                 if (!string.IsNullOrEmpty(symbolFile.Color))
                     filename = filename + "_" + MakeSeoFriendlyString(symbolFile.Color);
 
-                if (useWidthInFilname && !string.IsNullOrEmpty(width))
+                if (useWidthInFilname && !string.IsNullOrEmpty(width) && width != "0" && ext != ".pdf" && ext != ".ai")
                     filename = filename + "_" + MakeSeoFriendlyString(width);
 
             }
@@ -263,15 +263,18 @@ namespace Geonorge.Symbol.Services
         public int GetWidth(HttpPostedFileBase uploadFile)
         {
             int width = 0;
-            using (MemoryStream memStream = new MemoryStream())
-            {
-                uploadFile.InputStream.CopyTo(memStream);
-
-                using (MagickImage image = new MagickImage(memStream))
+            try {
+                using (MemoryStream memStream = new MemoryStream())
                 {
-                    width = image.Width;
+                    uploadFile.InputStream.CopyTo(memStream);
+
+                    using (MagickImage image = new MagickImage(memStream))
+                    {
+                        width = image.Width;
+                    }
                 }
             }
+            catch (Exception ex) { }
 
             return width;
         }

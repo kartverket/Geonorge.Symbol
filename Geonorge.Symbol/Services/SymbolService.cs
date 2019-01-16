@@ -194,7 +194,8 @@ namespace Geonorge.Symbol.Services
                 int width = imageService.GetWidth(uploadFile);
                 uploadFile.InputStream.Position = 0;
                 var format = Path.GetExtension(uploadFile.FileName).Replace(".", "");
-                symbolFile.Size = GetSize(width);
+                if(width > 0 && format != "ai" && format!= "pdf")
+                    symbolFile.Size = GetSize(width);
                 var filename = new ImageService().SaveImage(uploadFile, symbol, symbolFile, width, true);
                 AddFile(symbolFile, symbol, symbolFile.SymbolFileVariant, filename, format);
             }
