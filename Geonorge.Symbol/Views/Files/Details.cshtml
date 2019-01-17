@@ -103,8 +103,10 @@
 
                         @if (variant != null)
                 {
-                    var image = Model.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == variant.SystemId).ToList().OrderBy(o => o.Size).ThenBy(o => o.FileName).First();
+                    var image = Model.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == variant.SystemId && v.Format != "ai" && v.Format != "pdf" && v.Format != "eps" && v.Format != "tiff" && v.Size == "liten").FirstOrDefault();
+                            if(image != null) { 
                             <img src="@image.FileUrl()" alt="@image.FileName" />
+                            }
                         }
 
                     </div>
