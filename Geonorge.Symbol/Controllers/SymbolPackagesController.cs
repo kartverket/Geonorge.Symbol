@@ -248,6 +248,10 @@ namespace Geonorge.Symbol.Controllers
             var package = _symbolService.GetPackage(systemid.Value);
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/");
 
+            //Todo return saved file, trigger new zip file if something has changed
+            //if(System.IO.File.Exists(targetFolder + ImageService.MakeSeoFriendlyString(package.Name) + ".zip"))
+            //    return File(targetFolder + ImageService.MakeSeoFriendlyString(package.Name) + ".zip", "application/zip", ImageService.MakeSeoFriendlyString(package.Name) + ".zip");
+
             using (ZipFile zip = new ZipFile())
             {
                 foreach (var symbol in package.Symbols)
@@ -262,11 +266,9 @@ namespace Geonorge.Symbol.Controllers
                     }
                 }
 
-                MemoryStream output = new MemoryStream();
-                zip.Save(output);
-                output.Position = 0;
+                zip.Save(targetFolder + ImageService.MakeSeoFriendlyString(package.Name) + ".zip");
 
-            return File(output, "application/zip", ImageService.MakeSeoFriendlyString(package.Name) + ".zip");
+            return File(targetFolder + ImageService.MakeSeoFriendlyString(package.Name) + ".zip", "application/zip", ImageService.MakeSeoFriendlyString(package.Name) + ".zip");
             }
 
         }
