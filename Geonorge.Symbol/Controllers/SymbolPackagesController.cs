@@ -241,16 +241,11 @@ namespace Geonorge.Symbol.Controllers
         }
 
 
-        public FileResult Download(Guid? systemid)
+        public void Download(Guid? systemid)
         {
-            Response.Cookies.Add(new HttpCookie("downloadStarted", "1") { Expires = DateTime.Now.AddSeconds(59) });
 
             var package = _symbolService.GetPackage(systemid.Value);
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/");
-
-            //Todo return saved file, trigger new zip file if something has changed
-            //if(System.IO.File.Exists(targetFolder + ImageService.MakeSeoFriendlyString(package.Name) + ".zip"))
-            //    return File(targetFolder + ImageService.MakeSeoFriendlyString(package.Name) + ".zip", "application/zip", ImageService.MakeSeoFriendlyString(package.Name) + ".zip");
 
             using (ZipFile zip = new ZipFile())
             {
@@ -266,9 +261,14 @@ namespace Geonorge.Symbol.Controllers
                     }
                 }
 
-                zip.Save(targetFolder + ImageService.MakeSeoFriendlyString(package.Name) + ".zip");
+                Response.ClearContent();
+                Response.ClearHeaders();
+                Response.ContentType = "application/zip";
+                Response.Cookies.Add(new HttpCookie("downloadStarted", "1") { Expires = DateTime.Now.AddSeconds(59) });
+                Response.AppendHeader("content-disposition", "attachment; filename=" + ImageService.MakeSeoFriendlyString(package.Name) + ".zip");
 
-            return File(targetFolder + ImageService.MakeSeoFriendlyString(package.Name) + ".zip", "application/zip", ImageService.MakeSeoFriendlyString(package.Name) + ".zip");
+                zip.Save(Response.OutputStream);
+                Response.Flush();
             }
 
         }
