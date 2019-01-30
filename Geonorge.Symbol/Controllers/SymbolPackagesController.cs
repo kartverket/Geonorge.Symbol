@@ -241,9 +241,8 @@ namespace Geonorge.Symbol.Controllers
         }
 
 
-        public FileResult Download(Guid? systemid)
+        public void Download(Guid? systemid)
         {
-            Response.Cookies.Add(new HttpCookie("downloadStarted", "1") { Expires = DateTime.Now.AddSeconds(59) });
 
             var package = _symbolService.GetPackage(systemid.Value);
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/");
@@ -262,11 +261,14 @@ namespace Geonorge.Symbol.Controllers
                     }
                 }
 
-                MemoryStream output = new MemoryStream();
-                zip.Save(output);
-                output.Position = 0;
+                Response.ClearContent();
+                Response.ClearHeaders();
+                Response.ContentType = "application/zip";
+                Response.Cookies.Add(new HttpCookie("downloadStarted", "1") { Expires = DateTime.Now.AddSeconds(59) });
+                Response.AppendHeader("content-disposition", "attachment; filename=" + ImageService.MakeSeoFriendlyString(package.Name) + ".zip");
 
-            return File(output, "application/zip", ImageService.MakeSeoFriendlyString(package.Name) + ".zip");
+                zip.Save(Response.OutputStream);
+                Response.Flush();
             }
 
         }

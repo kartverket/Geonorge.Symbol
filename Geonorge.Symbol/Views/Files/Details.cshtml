@@ -1,5 +1,5 @@
 ﻿@model Geonorge.Symbol.Models.Symbol
-
+@using Geonorge.Symbol.Models
 @section breadcrumb {
     <li><a href="@VirtualPathUtility.ToAbsolute("~/files/index")">Symbol</a></li>
     <li>@Model.Name</li>
@@ -7,7 +7,6 @@
 @{
     ViewBag.Title = "Symbol";
 }
-
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
@@ -22,57 +21,59 @@
 </section>
 <div>
     <dl class="dl-horizontal">
-        @if (!string.IsNullOrEmpty(Model.Description)) { 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+        @if (!string.IsNullOrEmpty(Model.Description))
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
         }
-        @if (!string.IsNullOrEmpty(Model.SymbolId)){
-        <dt>
-            @Html.DisplayNameFor(model => model.SymbolId)
-        </dt>
+        @if (!string.IsNullOrEmpty(Model.SymbolId))
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.SymbolId)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.SymbolId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.SymbolId)
+            </dd>
         }
-        @if (!string.IsNullOrEmpty(Model.Theme)){
-        <dt>
-            @Html.DisplayNameFor(model => model.Theme)
-        </dt>
+        @if (!string.IsNullOrEmpty(Model.Theme))
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Theme)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Theme)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Theme)
+            </dd>
         }
         @if (!string.IsNullOrEmpty(Model.Source))
         {
-        <dt>
-            @Html.DisplayNameFor(model => model.Source)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Source)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Source)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Source)
+            </dd>
         }
         @if (!string.IsNullOrEmpty(Model.SourceUrl))
         {
-        <dt>
-            @Html.DisplayNameFor(model => model.SourceUrl)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.SourceUrl)
+            </dt>
 
-        <dd>
-            <a href="@Model.SourceUrl" target="_blank">@Html.DisplayFor(model => model.SourceUrl)</a>
-        </dd>
+            <dd>
+                <a href="@Model.SourceUrl" target="_blank">@Html.DisplayFor(model => model.SourceUrl)</a>
+            </dd>
         }
         <dt>
             @Html.DisplayNameFor(model => model.SymbolPackages)
         </dt>
-
         <dd>
             @if (Model.SymbolPackages != null)
             {
@@ -82,10 +83,9 @@
                 }
             }
         </dd>
-
     </dl>
     <div class="striped-list">
-        @{ 
+        @{
             List<String> preferencesOrder = new List<String> { "positiv", "utenramme", "negativ" };
             var files = Model.SymbolFiles.OrderBy(item => preferencesOrder.IndexOf(item.Type)).ThenBy(o => o.Color).ToList();
         }
@@ -100,17 +100,26 @@
                 }
                 <div class="row">
                     <div class="col-sm-2 col-md-1">
-
                         @if (variant != null)
-                {
-                    var image = Model.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == variant.SystemId).ToList().OrderBy(o => o.Size).ThenBy(o => o.FileName).First();
-                            <img src="@image.FileUrl()" alt="@image.FileName" />
+                        {
+                            var images = Model.SymbolFiles.Where(v => v.SymbolFileVariant.SystemId == variant.SystemId && v.Format != "ai" && v.Format != "pdf" && v.Format != "eps" && v.Format != "tiff" && v.Size == "liten").ToList();
+                            SymbolFile image = null;
+                            if (images != null)
+                            {
+                                image = images.Where(va => va.Format == "svg").FirstOrDefault();
+                                if(image == null)
+                                {
+                                    image = images.FirstOrDefault();
+                                }
+                                if (image != null)
+                                {
+                                    <img src="@image.FileUrl()" alt="@image.FileName" style="width: 100%;max-width: 75px;" />
+                                }
+                            }
                         }
-
                     </div>
                     <div class="col-sm-3">
                         <p><b>Format:</b><br /> @String.Join(", ", Model.SymbolFiles.Where(va => va.SymbolFileVariant.SystemId == variant.SystemId).Select(f => f.Format).Distinct())</p>
-
                         @{
                             var types = Model.SymbolFiles.Where(va => va.SymbolFileVariant.SystemId == variant.SystemId && !string.IsNullOrEmpty(va.Type)).Select(t => t.Type).Distinct();
                             if (types.Any())
@@ -150,7 +159,7 @@
                 </div>
                 <div class="clearfix"></div>
             </div>
-                            }
+        }
     </div>
     <hr />
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
@@ -163,5 +172,4 @@
             <a class="btn btn-default btn-space pull-right" style="margin-left: 15px;" href="@VirtualPathUtility.ToAbsolute("~/files/Delete/")@Model.SystemId">Slett</a>
         }
     </div>
-
 </div>
