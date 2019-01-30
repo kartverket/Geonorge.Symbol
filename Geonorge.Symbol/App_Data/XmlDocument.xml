@@ -576,6 +576,9 @@
         <member name="P:Geonorge.Symbol.Models.SymbolPackage.Theme">
             <summary>Hovedtema (hentes fra liste) + verdi «Annen».</summary>
         </member>
+        <member name="P:Geonorge.Symbol.Models.SymbolPackage.SortOrder">
+            <summary>Sort order</summary>
+        </member>
         <member name="P:Geonorge.Symbol.Models.SymbolPackage.Folder">
             <summary>Folder for symbols in package</summary>
         </member>
