@@ -89,6 +89,11 @@ namespace Geonorge.Symbol.Services
 
         public void UpdatePackage(SymbolPackage originalSymbolPackage, SymbolPackage symbolPackage)
         {
+
+            var sortOrderUsed = _dbContext.SymbolPackages.Where(p => p.SystemId != originalSymbolPackage.SystemId && p.SortOrder == symbolPackage.SortOrder).FirstOrDefault();
+            if (sortOrderUsed != null)
+                throw new Exception("SortOrder allerede i bruk " + sortOrderUsed.Name);
+
             if (originalSymbolPackage.Name != symbolPackage.Name)
                 originalSymbolPackage.Folder = RenamePackageFolder(originalSymbolPackage.Name, symbolPackage.Name);
 
