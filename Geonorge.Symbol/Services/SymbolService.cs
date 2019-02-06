@@ -57,11 +57,11 @@ namespace Geonorge.Symbol.Services
         public List<SymbolPackage> GetPackagesWithAccessControl()
         {
             if (_authorizationService.IsAdmin())
-                return _dbContext.SymbolPackages.OrderBy(o => o.Name).ToList();
+                return _dbContext.SymbolPackages.OrderBy(o => o.SortOrder).ToList();
             else
             {
                 string owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
-                return _dbContext.SymbolPackages.Where(o => o.Owner == owner).OrderBy(o => o.Name).ToList();
+                return _dbContext.SymbolPackages.Where(o => o.Owner == owner).OrderBy(o => o.SortOrder).ToList();
             }
         }
 
@@ -89,6 +89,11 @@ namespace Geonorge.Symbol.Services
 
         public void UpdatePackage(SymbolPackage originalSymbolPackage, SymbolPackage symbolPackage)
         {
+
+            var sortOrderUsed = _dbContext.SymbolPackages.Where(p => p.SystemId != originalSymbolPackage.SystemId && p.SortOrder == symbolPackage.SortOrder).FirstOrDefault();
+            if (sortOrderUsed != null)
+                throw new Exception("SortOrder allerede i bruk " + sortOrderUsed.Name);
+
             if (originalSymbolPackage.Name != symbolPackage.Name)
                 originalSymbolPackage.Folder = RenamePackageFolder(originalSymbolPackage.Name, symbolPackage.Name);
 
@@ -96,6 +101,7 @@ namespace Geonorge.Symbol.Services
             originalSymbolPackage.OfficialStatus = symbolPackage.OfficialStatus;
             originalSymbolPackage.Owner = symbolPackage.Owner;
             originalSymbolPackage.Theme = symbolPackage.Theme;
+            originalSymbolPackage.SortOrder = symbolPackage.SortOrder;
 
 
             _dbContext.Entry(originalSymbolPackage).State = EntityState.Modified;

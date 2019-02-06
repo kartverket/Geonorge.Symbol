@@ -239,6 +239,10 @@
     <Compile Include="Migrations\201705180805199_AddSymbolId.Designer.cs">
       <DependentUpon>201705180805199_AddSymbolId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901301322109_PackageSortOrder.cs" />
+    <Compile Include="Migrations\201901301322109_PackageSortOrder.Designer.cs">
+      <DependentUpon>201901301322109_PackageSortOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Api\Symbol.cs" />
     <Compile Include="Models\NotFoundModel.cs" />
     <Compile Include="Models\SymbolFileVariant.cs" />
@@ -584,6 +588,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705180805199_AddSymbolId.resx">
       <DependentUpon>201705180805199_AddSymbolId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901301322109_PackageSortOrder.resx">
+      <DependentUpon>201901301322109_PackageSortOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
