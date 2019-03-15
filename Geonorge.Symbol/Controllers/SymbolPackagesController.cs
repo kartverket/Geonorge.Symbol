@@ -247,6 +247,20 @@ namespace Geonorge.Symbol.Controllers
             var package = _symbolService.GetPackage(systemid.Value);
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/");
 
+            //zip exists?
+            var packageFolder = package.Symbols[0].SymbolPackages.FirstOrDefault()?.Folder;
+            if (!string.IsNullOrEmpty(packageFolder))
+            { 
+                packageFolder = ImageService.MakeSeoFriendlyString(packageFolder);
+                var zipFile = targetFolder + packageFolder + "\\" + packageFolder + ".zip";
+                if (System.IO.File.Exists(zipFile))
+                {
+                    Response.Redirect("~/files/" + packageFolder + "/" + packageFolder + ".zip");        
+                }
+
+            }
+
+
             using (ZipFile zip = new ZipFile())
             {
                 foreach (var symbol in package.Symbols)
