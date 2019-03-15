@@ -241,7 +241,7 @@ namespace Geonorge.Symbol.Controllers
         }
 
 
-        public void Download(Guid? systemid)
+        public object Download(Guid? systemid)
         {
 
             var package = _symbolService.GetPackage(systemid.Value);
@@ -258,13 +258,13 @@ namespace Geonorge.Symbol.Controllers
                 {
                     zipExists = true;
                     Response.Cookies.Add(new HttpCookie("downloadStarted", "1") { Expires = DateTime.Now.AddSeconds(10) });
-                    Response.Redirect("~/files/" + packageFolder + "/" + packageFolder + ".zip");        
+                    return File("~/files/" + packageFolder + "/" + packageFolder + ".zip", "application/zip", packageFolder + ".zip");      
                 }
 
             }
 
             if (!zipExists)
-            { 
+            {
                 using (ZipFile zip = new ZipFile())
                 {
                     foreach (var symbol in package.Symbols)
@@ -289,6 +289,8 @@ namespace Geonorge.Symbol.Controllers
                     Response.Flush();
                 }
             }
+
+            return null;
 
         }
 
