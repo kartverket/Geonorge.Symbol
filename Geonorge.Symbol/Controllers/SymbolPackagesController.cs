@@ -257,6 +257,8 @@ namespace Geonorge.Symbol.Controllers
                 if (System.IO.File.Exists(zipFile))
                 {
                     zipExists = true;
+                    Response.ClearContent();
+                    Response.ClearHeaders();
                     Response.Cookies.Add(new HttpCookie("downloadStarted", "1") { Expires = DateTime.Now.AddSeconds(10) });
                     return File("~/files/" + packageFolder + "/" + packageFolder + ".zip", "application/zip", packageFolder + ".zip");      
                 }
