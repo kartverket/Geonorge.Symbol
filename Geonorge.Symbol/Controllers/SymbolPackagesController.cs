@@ -248,6 +248,7 @@ namespace Geonorge.Symbol.Controllers
             string targetFolder = System.Web.HttpContext.Current.Server.MapPath("~/files/");
 
             //zip exists?
+            bool zipExists = false;
             var packageFolder = package.Symbols[0].SymbolPackages.FirstOrDefault()?.Folder;
             if (!string.IsNullOrEmpty(packageFolder))
             { 
@@ -255,34 +256,38 @@ namespace Geonorge.Symbol.Controllers
                 var zipFile = targetFolder + packageFolder + "\\" + packageFolder + ".zip";
                 if (System.IO.File.Exists(zipFile))
                 {
+                    zipExists = true;
+                    Response.Cookies.Add(new HttpCookie("downloadStarted", "1") { Expires = DateTime.Now.AddSeconds(10) });
                     Response.Redirect("~/files/" + packageFolder + "/" + packageFolder + ".zip");        
                 }
 
             }
 
-
-            using (ZipFile zip = new ZipFile())
-            {
-                foreach (var symbol in package.Symbols)
+            if (!zipExists)
+            { 
+                using (ZipFile zip = new ZipFile())
                 {
-                    string folder = targetFolder;
-                    if (!string.IsNullOrEmpty(symbol.SymbolPackages.FirstOrDefault()?.Folder))
-                        folder = folder + symbol.SymbolPackages.FirstOrDefault()?.Folder + "\\";
-
-                    foreach (var file in symbol.SymbolFiles)
+                    foreach (var symbol in package.Symbols)
                     {
-                        zip.AddFile(folder + file.FileName, symbol.Name + @"\" + file.SymbolFileVariant.Name);
+                        string folder = targetFolder;
+                        if (!string.IsNullOrEmpty(symbol.SymbolPackages.FirstOrDefault()?.Folder))
+                            folder = folder + symbol.SymbolPackages.FirstOrDefault()?.Folder + "\\";
+
+                        foreach (var file in symbol.SymbolFiles)
+                        {
+                            zip.AddFile(folder + file.FileName, symbol.Name + @"\" + file.SymbolFileVariant.Name);
+                        }
                     }
+
+                    Response.ClearContent();
+                    Response.ClearHeaders();
+                    Response.ContentType = "application/zip";
+                    Response.Cookies.Add(new HttpCookie("downloadStarted", "1") { Expires = DateTime.Now.AddSeconds(59) });
+                    Response.AppendHeader("content-disposition", "attachment; filename=" + ImageService.MakeSeoFriendlyString(package.Name) + ".zip");
+
+                    zip.Save(Response.OutputStream);
+                    Response.Flush();
                 }
-
-                Response.ClearContent();
-                Response.ClearHeaders();
-                Response.ContentType = "application/zip";
-                Response.Cookies.Add(new HttpCookie("downloadStarted", "1") { Expires = DateTime.Now.AddSeconds(59) });
-                Response.AppendHeader("content-disposition", "attachment; filename=" + ImageService.MakeSeoFriendlyString(package.Name) + ".zip");
-
-                zip.Save(Response.OutputStream);
-                Response.Flush();
             }
 
         }
