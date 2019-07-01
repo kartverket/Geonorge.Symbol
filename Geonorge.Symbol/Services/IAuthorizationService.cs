@@ -10,6 +10,5 @@ namespace Geonorge.Symbol.Services
         bool IsAdmin();
         bool IsOwner(string owner, string user);
         bool HasAccess(string owner, string user);
-        List<string> GetSecurityClaim(string type);
     }
 }

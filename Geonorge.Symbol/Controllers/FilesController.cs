@@ -11,6 +11,12 @@ using Geonorge.Symbol.Models;
 using PagedList;
 using Ionic.Zip;
 using System.IO;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.OpenIdConnect;
+using System.Web.Configuration;
+using Microsoft.Owin.Security.Cookies;
+using System.Security.Claims;
+using Geonorge.AuthLib.Common;
 
 namespace Geonorge.Symbol.Controllers
 {
@@ -97,7 +103,7 @@ namespace Geonorge.Symbol.Controllers
             if (Request.IsAuthenticated)
             {
                 ViewBag.HasAccess = _authorizationService.HasAccess(symbol.Owner,
-                    _authorizationService.GetSecurityClaim("organization").FirstOrDefault());
+                   ClaimsPrincipal.Current.GetOrganizationName());
                 ViewBag.IsAdmin = _authorizationService.IsAdmin();
             }
 
@@ -110,7 +116,7 @@ namespace Geonorge.Symbol.Controllers
             ViewBag.Themes = new SelectList(CodeList.Themes(), "Key", "Value", "Annen");
             ViewBag.SymbolPackages = new MultiSelectList(_symbolService.GetPackagesWithAccessControl(), "SystemId", "Name");
             ViewBag.IsAdmin = false;
-            ViewBag.Owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
+            ViewBag.Owner = ClaimsPrincipal.Current.GetOrganizationName();
             if (Request.IsAuthenticated)
             {
                 ViewBag.IsAdmin = _authorizationService.IsAdmin();
@@ -210,7 +216,7 @@ namespace Geonorge.Symbol.Controllers
             }
 
             if (!_authorizationService.HasAccess(originalSymbol.Owner,
-                    _authorizationService.GetSecurityClaim("organization").FirstOrDefault()))
+                    ClaimsPrincipal.Current.GetOrganizationName()))
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
 
 
@@ -256,7 +262,7 @@ namespace Geonorge.Symbol.Controllers
             Models.Symbol symbol = _symbolService.GetSymbol(systemid);
 
             bool hasAccess = _authorizationService.HasAccess(symbol.Owner,
-                _authorizationService.GetSecurityClaim("organization").FirstOrDefault());
+                ClaimsPrincipal.Current.GetOrganizationName());
 
             if (!hasAccess)
             {
@@ -365,6 +371,31 @@ namespace Geonorge.Symbol.Controllers
 
             ViewBag.Page = pageNumber + 1;
             return PartialView("_SymbolList", symbols);
+        }
+
+        public void SignIn()
+        {
+            var redirectUrl = Url.Action(nameof(FilesController.Index), "Files");
+            HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = redirectUrl },
+                OpenIdConnectAuthenticationDefaults.AuthenticationType);
+        }
+
+        public void SignOut()
+        {
+            var redirectUri = WebConfigurationManager.AppSettings["GeoID:PostLogoutRedirectUri"];
+            HttpContext.GetOwinContext().Authentication.SignOut(
+                new AuthenticationProperties { RedirectUri = redirectUri },
+                OpenIdConnectAuthenticationDefaults.AuthenticationType,
+                CookieAuthenticationDefaults.AuthenticationType);
+        }
+
+        /// <summary>
+        /// This is the action responding to /signout-callback-oidc route after logout at the identity provider
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SignOutCallback()
+        {
+            return RedirectToAction(nameof(FilesController.Index), "Files");
         }
 
         protected override void OnException(ExceptionContext filterContext)

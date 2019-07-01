@@ -6,6 +6,8 @@ using Geonorge.Symbol.Models;
 using System.Data.Entity;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Security.Claims;
+using Geonorge.AuthLib.Common;
 
 namespace Geonorge.Symbol.Services
 {
@@ -35,13 +37,13 @@ namespace Geonorge.Symbol.Services
 
         public Models.Symbol AddSymbol(Models.Symbol symbol)
         {
-            string owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
+            string owner = ClaimsPrincipal.Current.GetOrganizationName();
             if (_authorizationService.IsAdmin() && !string.IsNullOrEmpty(symbol.Owner))
                 owner = symbol.Owner;
 
             symbol.SystemId = Guid.NewGuid();
             symbol.Owner = owner;
-            symbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
+            symbol.LastEditedBy = ClaimsPrincipal.Current.GetUsername();
 
             _dbContext.Symbols.Add(symbol);
             _dbContext.SaveChanges();
@@ -60,7 +62,7 @@ namespace Geonorge.Symbol.Services
                 return _dbContext.SymbolPackages.OrderBy(o => o.SortOrder).ToList();
             else
             {
-                string owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
+                string owner = ClaimsPrincipal.Current.GetOrganizationName();
                 return _dbContext.SymbolPackages.Where(o => o.Owner == owner).OrderBy(o => o.SortOrder).ToList();
             }
         }
@@ -74,7 +76,7 @@ namespace Geonorge.Symbol.Services
         {
             symbolPackage.SystemId = Guid.NewGuid();
 
-            string owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
+            string owner = ClaimsPrincipal.Current.GetOrganizationName();
             if (_authorizationService.IsAdmin() && !string.IsNullOrEmpty(symbolPackage.Owner))
                 owner = symbolPackage.Owner;
             symbolPackage.Owner = owner;
@@ -130,7 +132,7 @@ namespace Geonorge.Symbol.Services
                 originalSymbol.Description = symbol.Description;
                 originalSymbol.SymbolId = symbol.SymbolId;
 
-                string owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
+                string owner = ClaimsPrincipal.Current.GetOrganizationName();
                 if (_authorizationService.IsAdmin() && !string.IsNullOrEmpty(symbol.Owner))
                     owner = symbol.Owner;
 
@@ -143,8 +145,8 @@ namespace Geonorge.Symbol.Services
                 if(symbol.Thumbnail != null)
                     originalSymbol.Thumbnail = symbol.Thumbnail;
 
-            originalSymbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
-            _dbContext.Entry(originalSymbol).State = EntityState.Modified;
+            originalSymbol.LastEditedBy = ClaimsPrincipal.Current.GetUsername();
+                _dbContext.Entry(originalSymbol).State = EntityState.Modified;
             _dbContext.SaveChanges();
 
             }
@@ -191,7 +193,7 @@ namespace Geonorge.Symbol.Services
             }
 
             symbol.DateChanged = DateTime.Now;
-            symbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
+            symbol.LastEditedBy = ClaimsPrincipal.Current.GetUsername();
 
             ImageService imageService = new ImageService();
 
@@ -246,7 +248,7 @@ namespace Geonorge.Symbol.Services
             ImageService imageService = new ImageService();
 
             symbol.DateChanged = DateTime.Now;
-            symbol.LastEditedBy = _authorizationService.GetSecurityClaim("username").FirstOrDefault();
+            symbol.LastEditedBy = ClaimsPrincipal.Current.GetUsername();
             symbolFile.Symbol = symbol;
             symbolFile.SystemId = Guid.NewGuid();
             var filename = imageService.SaveImage(uploadFile, symbol, symbolFile, 0, false);
