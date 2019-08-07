@@ -625,6 +625,7 @@
     <Content Include="dist\maps\main.js.map" />
     <Content Include="dist\maps\vendor.css.map" />
     <Content Include="dist\maps\vendor.js.map" />
+    <Content Include="PostDeploy.ps1" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
