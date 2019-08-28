@@ -11,6 +11,8 @@ using Geonorge.Symbol.Services;
 using System.IO;
 using Ionic.Zip;
 using System.Threading;
+using System.Security.Claims;
+using Geonorge.AuthLib.Common;
 
 namespace Geonorge.Symbol.Controllers
 {
@@ -84,7 +86,7 @@ namespace Geonorge.Symbol.Controllers
         public ActionResult Create()
         {
             SymbolPackage symbolPackage = new SymbolPackage();
-            symbolPackage.Owner = _authorizationService.GetSecurityClaim("organization").FirstOrDefault();
+            symbolPackage.Owner = ClaimsPrincipal.Current.GetOrganizationName();
             ViewBag.IsAdmin = false;
             if (Request.IsAuthenticated)
             {

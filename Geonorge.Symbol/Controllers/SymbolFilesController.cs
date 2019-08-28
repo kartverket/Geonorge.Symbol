@@ -4,8 +4,10 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using Geonorge.AuthLib.Common;
 using Geonorge.Symbol.Models;
 using Geonorge.Symbol.Services;
 
@@ -113,7 +115,7 @@ namespace Geonorge.Symbol.Controllers
             var variants = _symbolService.GetSymbolVariant(symbolFile.SymbolFileVariant.SystemId);
 
             if (!_authorizationService.HasAccess(variants[0].Symbol.Owner,
-                    _authorizationService.GetSecurityClaim("organization").FirstOrDefault()))
+                    ClaimsPrincipal.Current.GetOrganizationName()))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
@@ -160,7 +162,7 @@ namespace Geonorge.Symbol.Controllers
             ViewBag.SymbolGraphics = new SelectList(CodeList.SymbolGraphics, "Key", "Value", originalSymbolFile.Type);
 
             if (!_authorizationService.HasAccess(originalSymbolFile.Symbol.Owner,
-                    _authorizationService.GetSecurityClaim("organization").FirstOrDefault()))
+                    ClaimsPrincipal.Current.GetOrganizationName()))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
@@ -220,7 +222,7 @@ namespace Geonorge.Symbol.Controllers
             var symbolFiles = _symbolService.GetSymbolVariant(systemid.Value).ToList();
             var symbolId = symbolFiles[0].Symbol.SystemId;
             if (_authorizationService.HasAccess(symbolFiles[0].Symbol.Owner,
-                    _authorizationService.GetSecurityClaim("organization").FirstOrDefault()))
+                    ClaimsPrincipal.Current.GetOrganizationName()))
             {
                 foreach (var file in symbolFiles)
                 {
