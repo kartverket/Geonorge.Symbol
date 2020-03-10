@@ -560,8 +560,6 @@
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include=".bowerrc" />
-    <Content Include="bower.json" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Index.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\.bower.json" />
