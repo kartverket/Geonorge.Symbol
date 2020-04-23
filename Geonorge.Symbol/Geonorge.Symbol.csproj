@@ -167,15 +167,6 @@
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sustainsys.Saml2, Version=0.23.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sustainsys.Saml2.0.23.0\lib\net45\Sustainsys.Saml2.dll</HintPath>
-    </Reference>
-    <Reference Include="Sustainsys.Saml2.HttpModule, Version=0.23.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sustainsys.Saml2.HttpModule.0.23.0\lib\net45\Sustainsys.Saml2.HttpModule.dll</HintPath>
-    </Reference>
-    <Reference Include="Sustainsys.Saml2.Mvc, Version=0.23.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sustainsys.Saml2.Mvc.0.23.0\lib\net45\Sustainsys.Saml2.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
