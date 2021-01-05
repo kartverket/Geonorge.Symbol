@@ -59,50 +59,52 @@
                 if (package != null)
                 {
                     <div class="col-md-3">
-                        @{
-                            List<Symbol> symbols = null;
-                            if (!string.IsNullOrEmpty(ViewBag.text))
-                            {
-                                symbols = Model.Where(p => p.SymbolPackages.Any(pp => pp.SystemId == package.SystemId)).ToList();
-                            }
-                            else
-                            {
-                                symbols = symbolsAll.Where(p => p.SymbolPackages.Any(pp => pp.SystemId == package.SystemId)).ToList();
-                            }
+                        <div class="package-wrapper">
+                            @{
+                                List<Symbol> symbols = null;
+                                if (!string.IsNullOrEmpty(ViewBag.text))
+                                {
+                                    symbols = Model.Where(p => p.SymbolPackages.Any(pp => pp.SystemId == package.SystemId)).ToList();
+                                }
+                                else
+                                {
+                                    symbols = symbolsAll.Where(p => p.SymbolPackages.Any(pp => pp.SystemId == package.SystemId)).ToList();
+                                }
 
-                            if (symbols.Any())
-                            {
-                                const int MAX_SYMBOLS = 18;
+                                if (symbols.Any())
+                                {
+                                    const int MAX_SYMBOLS = 18;
 
-                                <div class="thumbnail-wrapper">
-                                    @for (int i = 0; i < symbols.Count; i++)
-                                    {
-                                        if (i == MAX_SYMBOLS)
+                                    <div class="thumbnail-wrapper">
+                                        @for (int i = 0; i < symbols.Count; i++)
                                         {
-                                            break;
+                                            if (i == MAX_SYMBOLS)
+                                            {
+                                                break;
+                                            }
+
+                                            <img src="@symbols[i].ThumbnailUrl()" />
                                         }
+                                    </div>
+                                }
+                            }
 
-                                        <img src="@symbols[i].ThumbnailUrl()" alt="@symbols[i].Description" />
-                                    }
-                                </div>
-                            }
-                        }
-
-                        <h4 style="font-weight:bold">@package.Name</h4>
-                        <p>
-                            @if (!string.IsNullOrEmpty(ViewBag.text))
-                            {
-                                <span>Antall symboler i pakke: @symbols.Count/@package.Total</span><br />
-                            }
-                            else
-                            {
-                                <span>Antall symboler i pakke: @package.Total</span><br />
-                            }
-                            Eier: @package.Owner<br />
-                            Tema: @package.Theme<br />
-                            Offisiell symbolpakke: @Html.DisplayFor(model => package.OfficialStatus)<br /><br />
-                            <a class="btn btn-default btn-space" href="@VirtualPathUtility.ToAbsolute("~/symbolpackages/details/")@package.SystemId">Detaljert informasjon</a>
-                        </p>
+                            <h4 style="font-weight:bold">@package.Name</h4>
+                            <p>
+                                @if (!string.IsNullOrEmpty(ViewBag.text))
+                                {
+                                    <span>Antall symboler i pakke: @symbols.Count/@package.Total</span><br />
+                                }
+                                else
+                                {
+                                    <span>Antall symboler i pakke: @package.Total</span><br />
+                                }
+                                Eier: @package.Owner<br />
+                                Tema: @package.Theme<br />
+                                Offisiell symbolpakke: @Html.DisplayFor(model => package.OfficialStatus)<br /><br />
+                                <a class="btn btn-default btn-space" href="@VirtualPathUtility.ToAbsolute("~/symbolpackages/details/")@package.SystemId">Detaljert informasjon</a>
+                            </p>
+                        </div>
                     </div>
                 }
             }
