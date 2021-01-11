@@ -7,7 +7,26 @@ a.sorted-desc:after {
 }
 
 .list-item-symbol,
-    .list-item-symbol img {
-        width: 50px;
-        height: 50px;
+.list-item-symbol img {
+    width: 50px;
+    height: 50px;
+}
+
+.package-wrapper {
+    margin-bottom: 30px;
+}
+
+.thumbnail-wrapper {
+    display: grid;
+    grid-template-columns: 30px 30px 30px 30px 30px 30px;
+    grid-gap: 6px;
+    height: 102px;
+    align-content: baseline;
+    margin-bottom: 15px;
+}
+
+    .thumbnail-wrapper img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
     }

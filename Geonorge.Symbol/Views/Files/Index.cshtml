@@ -8,6 +8,7 @@
     var symbolsAll = (List<Symbol>)ViewBag.symbolsAll;
 }
 @Html.Partial("_SearchBarPartial")
+
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
@@ -37,8 +38,11 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div id="packageView" class="search-results row">
             <br /><br />
-            @{var packageList = Model.Select(p => p.SymbolPackages.FirstOrDefault()).ToList().OrderBy(o => o.SortOrder);
-                var packages = packageList.Where(pac => pac != null)
+            @{
+                var packageList = Model.Select(p => p.SymbolPackages.FirstOrDefault()).ToList().OrderBy(o => o.SortOrder);
+                
+                var packages = packageList
+                    .Where(pac => pac != null)
                     .Select(pp => new
                     {
                         SystemId = pp.SystemId,
@@ -47,56 +51,60 @@
                         Theme = pp.Theme,
                         OfficialStatus = pp.OfficialStatus,
                         Total = pp.Symbols.Count
-                    }).Distinct();
+                    })
+                    .Distinct();
             }
             @foreach (var package in packages)
             {
                 if (package != null)
                 {
                     <div class="col-md-3">
-                        @{ List<Symbol> symbols = null;
-                            if (!string.IsNullOrEmpty(ViewBag.text))
-                            {
-                                symbols = Model.Where(p => p.SymbolPackages.Any(pp => pp.SystemId == package.SystemId)).ToList();
-                            }
-                            else
-                            {
-                                symbols = symbolsAll.Where(p => p.SymbolPackages.Any(pp => pp.SystemId == package.SystemId)).ToList();
+                        <div class="package-wrapper">
+                            @{
+                                List<Symbol> symbols = null;
+                                if (!string.IsNullOrEmpty(ViewBag.text))
+                                {
+                                    symbols = Model.Where(p => p.SymbolPackages.Any(pp => pp.SystemId == package.SystemId)).ToList();
+                                }
+                                else
+                                {
+                                    symbols = symbolsAll.Where(p => p.SymbolPackages.Any(pp => pp.SystemId == package.SystemId)).ToList();
+                                }
+
+                                if (symbols.Any())
+                                {
+                                    const int MAX_SYMBOLS = 18;
+
+                                    <div class="thumbnail-wrapper">
+                                        @for (int i = 0; i < symbols.Count; i++)
+                                        {
+                                            if (i == MAX_SYMBOLS)
+                                            {
+                                                break;
+                                            }
+
+                                            <img src="@symbols[i].ThumbnailUrl()" />
+                                        }
+                                    </div>
+                                }
                             }
 
-                            int maxSymbols = 18, counter = 1, colIndex = 1, colsMax = 6;
-                        }
-                        @foreach (var symbol in symbols)
-                        {
-                            <img border="0" style="margin: 1px;" height="30" src="@symbol.ThumbnailUrl()" />
-
-                            if (colIndex == colsMax)
-                            {
-                                <br />
-                                colIndex = 0;
-                            }
-                            if (counter == maxSymbols)
-                            {
-                                break;
-                            }
-                            colIndex++;
-                            counter++;
-                        }
-                        <h4 style="font-weight:bold">@package.Name</h4>
-                        <p>
-                            @if (!string.IsNullOrEmpty(ViewBag.text))
-                            {
-                                <span>Antall symboler i pakke: @symbols.Count/@package.Total</span><br />
-                            }
-                            else
-                            {
-                                <span>Antall symboler i pakke: @package.Total</span><br />
-                            }
-                            Eier: @package.Owner<br />
-                            Tema: @package.Theme<br />
-                            Offisiell symbolpakke: @Html.DisplayFor(model => package.OfficialStatus)<br /><br />
-                            <a class="btn btn-default btn-space" href="@VirtualPathUtility.ToAbsolute("~/symbolpackages/details/")@package.SystemId">Detaljert informasjon</a>
-                        </p>
+                            <h4 style="font-weight:bold">@package.Name</h4>
+                            <p>
+                                @if (!string.IsNullOrEmpty(ViewBag.text))
+                                {
+                                    <span>Antall symboler i pakke: @symbols.Count/@package.Total</span><br />
+                                }
+                                else
+                                {
+                                    <span>Antall symboler i pakke: @package.Total</span><br />
+                                }
+                                Eier: @package.Owner<br />
+                                Tema: @package.Theme<br />
+                                Offisiell symbolpakke: @Html.DisplayFor(model => package.OfficialStatus)<br /><br />
+                                <a class="btn btn-default btn-space" href="@VirtualPathUtility.ToAbsolute("~/symbolpackages/details/")@package.SystemId">Detaljert informasjon</a>
+                            </p>
+                        </div>
                     </div>
                 }
             }
@@ -122,6 +130,7 @@
         <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="/">Tilbake</a>
     </div>
 </div>
+
 @section scripts{
     <script src="@VirtualPathUtility.ToAbsolute("~/Scripts/jquery.jscroll.js")"></script>
     <script>
