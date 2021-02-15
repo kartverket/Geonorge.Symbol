@@ -25,7 +25,13 @@
 
     <div id="loading-animation" class="loading-animation" style="display: none;"></div>
 
-    @Html.Raw(File.ReadAllText(Server.MapPath("~/dist/partials/Header.html")))
+    <main-navigation environment="@Html.EnvironmentName()"
+                     signinurl="@Html.Raw(@Html.UrlActionSignIn())?ReturnUrl=@Server.UrlEncode(Request.Url.AbsoluteUri.ToString())"
+                     signouturl="@Html.Raw(@Html.UrlActionSignOut())"
+                     isLoggedIn="@Request.IsAuthenticated.ToString().ToLower()"
+                     norwegianurl="@Html.Raw(@VirtualPathUtility.ToAbsolute("~/Home/SetCulture?culture="))@Geonorge.Symbol.Models.Translations.Culture.NorwegianCode&ReturnUrl=@Request.Url"
+                     englishurl="@Html.Raw(@VirtualPathUtility.ToAbsolute("~/Home/SetCulture?culture="))@Geonorge.Symbol.Models.Translations.Culture.EnglishCode&ReturnUrl=@Request.Url"
+                     language="@CultureHelper.GetCurrentCulture()"></main-navigation>
     @Styles.Render("~/shared-partials-styles")
     @Styles.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/css/styles")
 
@@ -85,6 +91,6 @@
     @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Analytics.min.cshtml")
     <link href="@VirtualPathUtility.ToAbsolute("~/Content/select2.min.css")" rel="stylesheet" />
     @RenderSection("scripts", required: false)
-
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@0.1.33/MainNavigation.js")"></script>
 </body>
 </html>
