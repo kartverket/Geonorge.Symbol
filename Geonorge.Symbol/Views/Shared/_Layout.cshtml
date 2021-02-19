@@ -21,7 +21,7 @@
     </script>
 </head>
 
-<body class="geonorge-container prototype  geonorge">
+<body class="geonorge-container prototype geonorge fixed-menu-margin">
 
     <div id="loading-animation" class="loading-animation" style="display: none;"></div>
 
@@ -91,6 +91,6 @@
     @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Analytics.min.cshtml")
     <link href="@VirtualPathUtility.ToAbsolute("~/Content/select2.min.css")" rel="stylesheet" />
     @RenderSection("scripts", required: false)
-    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@0.1.33/MainNavigation.js")"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@("@kartverket/geonorge-web-components@0.1.41/MainNavigation.js")"></script>
 </body>
 </html>
