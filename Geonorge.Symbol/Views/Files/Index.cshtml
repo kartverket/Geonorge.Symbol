@@ -39,7 +39,7 @@
         <div id="packageView" class="search-results row">
             <br /><br />
             @{
-                var packageList = Model.Select(p => p.SymbolPackages.FirstOrDefault()).ToList().OrderBy(o => o.SortOrder);
+                var packageList = Model.Where(s => s.SymbolPackages.Any()).Select(p => p.SymbolPackages.FirstOrDefault()).ToList().OrderBy(o => o.SortOrder);
                 
                 var packages = packageList
                     .Where(pac => pac != null)
