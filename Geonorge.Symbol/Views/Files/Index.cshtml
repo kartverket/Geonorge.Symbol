@@ -38,9 +38,10 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div id="packageView" class="search-results row">
             <br /><br />
-            @{
+            @{ int counter = 1;
+                bool startDivWritten = false;
                 var packageList = Model.Where(s => s.SymbolPackages.Any()).Select(p => p.SymbolPackages.FirstOrDefault()).ToList().OrderBy(o => o.SortOrder);
-                
+
                 var packages = packageList
                     .Where(pac => pac != null)
                     .Select(pp => new
@@ -58,6 +59,11 @@
             {
                 if (package != null)
                 {
+                    if (counter == 1)
+                    {
+                        ViewContext.Writer.Write("<div class=\"row\">");
+                        startDivWritten = true;
+                    }
                     <div class="col-md-3">
                         <div class="package-wrapper">
                             @{
@@ -106,25 +112,37 @@
                             </p>
                         </div>
                     </div>
-                }
-            }
-        </div>
-        <div id="tableView" class="search-results">
-            <div class="row search-results-table-heading">
-                <div class="col-sm-4"><p><a href="@VirtualPathUtility.ToAbsolute("~/Files/Index?sortOrder=")@(ViewBag.SymbolnameSortParm)&text=@(ViewBag.text)" class="@(ViewBag.SortOrder.Contains("symbolname") ? (ViewBag.SymbolnameSortParm.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" )">Symbolnavn</a></p></div>
-                <div class="col-sm-4"><p><a href="@VirtualPathUtility.ToAbsolute("~/Files/Index?sortOrder=")@(ViewBag.Owner)&text=@(ViewBag.text)" class="@(ViewBag.SortOrder.Contains("owner") ? (ViewBag.Owner.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" )">Eier</a></p></div>
-                <div class="col-sm-3"><p><a href="@VirtualPathUtility.ToAbsolute("~/Files/Index?sortOrder=")@(ViewBag.Theme)&text=@(ViewBag.text)" class="@(ViewBag.SortOrder.Contains("theme") ? (ViewBag.Owner.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" )">Tema</a></p></div>
-                <div class="col-sm-1"><p>Symbol</p></div>
-            </div>
+                            if (counter == 4)
+                            {
+                                ViewContext.Writer.Write("</div>");
+                                counter = 1;
+                                startDivWritten = false;
+                            }
+                            else { counter++; }
+                        }
+                    }
 
-            <div class="menu-separator search-results-table-heading"></div>
-            <div class="striped-list">
-                <div id="symbollist" class="scroll">
-                    <div class="next"><a href="@VirtualPathUtility.ToAbsolute("~/Files/SymbolList?page=")@(ViewBag.Page)&sortOrder=@(ViewBag.SortOrder)&text=@ViewBag.text">Laster...</a></div>
+                   @if (startDivWritten)
+                   {
+                       ViewContext.Writer.Write("</div>");
+                   }
+
+            <div id="tableView" class="search-results">
+                <div class="row search-results-table-heading">
+                    <div class="col-sm-4"><p><a href="@VirtualPathUtility.ToAbsolute("~/Files/Index?sortOrder=")@(ViewBag.SymbolnameSortParm)&text=@(ViewBag.text)" class="@(ViewBag.SortOrder.Contains("symbolname") ? (ViewBag.SymbolnameSortParm.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" )">Symbolnavn</a></p></div>
+                    <div class="col-sm-4"><p><a href="@VirtualPathUtility.ToAbsolute("~/Files/Index?sortOrder=")@(ViewBag.Owner)&text=@(ViewBag.text)" class="@(ViewBag.SortOrder.Contains("owner") ? (ViewBag.Owner.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" )">Eier</a></p></div>
+                    <div class="col-sm-3"><p><a href="@VirtualPathUtility.ToAbsolute("~/Files/Index?sortOrder=")@(ViewBag.Theme)&text=@(ViewBag.text)" class="@(ViewBag.SortOrder.Contains("theme") ? (ViewBag.Owner.Contains("desc") ? "sorted-desc" : "sorted-asc") : "" )">Tema</a></p></div>
+                    <div class="col-sm-1"><p>Symbol</p></div>
+                </div>
+
+                <div class="menu-separator search-results-table-heading"></div>
+                <div class="striped-list">
+                    <div id="symbollist" class="scroll">
+                        <div class="next"><a href="@VirtualPathUtility.ToAbsolute("~/Files/SymbolList?page=")@(ViewBag.Page)&sortOrder=@(ViewBag.SortOrder)&text=@ViewBag.text">Laster...</a></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     <div class="clearfix"></div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
         <a class="hidden-print show-loading-animation pull-left" data-loading-message="Henter innhold" href="/">Tilbake</a>
