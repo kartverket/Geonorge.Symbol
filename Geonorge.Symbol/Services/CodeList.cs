@@ -36,7 +36,12 @@ namespace Geonorge.Symbol.Services
         {
             Dictionary<string, string> CodeValues = new Dictionary<string, string>();
 
-            string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "api/kodelister/" + systemid;
+            string environmentName = System.Web.Configuration.WebConfigurationManager.AppSettings["EnvironmentName"];
+            string registryUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"];
+            if (!string.IsNullOrEmpty(environmentName))
+                registryUrl = registryUrl.Replace("https://", "http://");
+
+            string url = registryUrl + "api/kodelister/" + systemid;
             System.Net.WebClient c = new System.Net.WebClient();
             c.Encoding = System.Text.Encoding.UTF8;
             var data = c.DownloadString(url);
