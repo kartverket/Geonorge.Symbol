@@ -1,23 +1,31 @@
-﻿@model IEnumerable<Geonorge.Symbol.Models.Symbol>
-@foreach (var item in Model)
-{
-    <div class="list-item">
-        <div class="row result-row metadata">
+﻿@using Geonorge.Symbol.Helpers
+@using Geonorge.Symbol.Resources
+@model IEnumerable<Geonorge.Symbol.Models.Symbol>
+<html lang="@CultureHelper.GetCurrentCulture()">
+<head>
+    <title>@UI.AppPageTitle</title>
+</head>
+<body>
+    @foreach (var item in Model)
+    {
+        <div class="list-item">
+            <div class="row result-row metadata">
 
-            <div class="col-sm-4">
-                <a href="@VirtualPathUtility.ToAbsolute("~/files/details/")@item.SystemId">@item.Name</a>
-            </div>
-            <div class="col-sm-4">
-                @Html.DisplayFor(modelItem => item.Owner)
-            </div>
-            <div class="col-sm-3">
-                @Html.DisplayFor(modelItem => item.Theme)
-            </div>
-            <div class="col-sm-1">
-                <a class="list-item-symbol" href="@VirtualPathUtility.ToAbsolute("~/files/details/")@item.SystemId"><img src="@item.ThumbnailUrl()" alt="@item.Name" /></a>
+                <div class="col-sm-4">
+                    <a href="@VirtualPathUtility.ToAbsolute("~/files/details/")@item.SystemId">@item.Name</a>
+                </div>
+                <div class="col-sm-4">
+                    @Html.DisplayFor(modelItem => item.Owner)
+                </div>
+                <div class="col-sm-3">
+                    @Html.DisplayFor(modelItem => item.Theme)
+                </div>
+                <div class="col-sm-1">
+                    <a class="list-item-symbol" href="@VirtualPathUtility.ToAbsolute("~/files/details/")@item.SystemId"><img src="@item.ThumbnailUrl()" alt="@item.Name" /></a>
+                </div>
             </div>
         </div>
-    </div>
-}
-<div class="last"><a href="@VirtualPathUtility.ToAbsolute("~/Files/SymbolList?page=")@(ViewBag.Page)&sortOrder=@(ViewBag.SortOrder)&text=@ViewBag.text">Laster...</a></div>
-
+    }
+    <div class="last"><a href="@VirtualPathUtility.ToAbsolute("~/Files/SymbolList?page=")@(ViewBag.Page)&sortOrder=@(ViewBag.SortOrder)&text=@ViewBag.text">Laster...</a></div>
+</body>
+</html>
