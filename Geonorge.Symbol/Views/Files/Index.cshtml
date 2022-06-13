@@ -89,7 +89,7 @@
                                                 break;
                                             }
 
-                                            <img src="@symbols[i].ThumbnailUrl()" />
+                                            <img src="@symbols[i].ThumbnailUrl()" alt="@symbols[i].Name" />
                                         }
                                     </div>
                                 }
@@ -107,7 +107,7 @@
                                 }
                                 Eier: @package.Owner<br />
                                 Tema: @package.Theme<br />
-                                Offisiell symbolpakke: @Html.DisplayFor(model => package.OfficialStatus)<br /><br />
+                                <label style="font-weight: normal;">Offisiell symbolpakke: @Html.DisplayFor(model => package.OfficialStatus) </label><br /><br />
                                 <a class="btn btn-default btn-space" href="@VirtualPathUtility.ToAbsolute("~/symbolpackages/details/")@package.SystemId">Detaljert informasjon</a>
                             </p>
                         </div>
