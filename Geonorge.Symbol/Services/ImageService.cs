@@ -1,4 +1,4 @@
-﻿using ImageMagick;
+using ImageMagick;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,6 +38,8 @@ namespace Geonorge.Symbol.Services
             {
                 file.InputStream.CopyTo(memStream);
 
+                memStream.Position = 0;
+
                 using (MagickImage image = new MagickImage(memStream, readerSettings))
                 {
                     switch (format)
@@ -71,7 +73,7 @@ namespace Geonorge.Symbol.Services
                         case "tiff":
                             {
                                 image.Format = MagickFormat.Tif;
-                                image.CompressionMethod = CompressionMethod.Zip;
+                                image.Settings.Compression = CompressionMethod.Zip;
                                 break;
                             }
                         default:
