@@ -73,7 +73,7 @@ namespace Geonorge.Symbol.Services
                         case "tiff":
                             {
                                 image.Format = MagickFormat.Tif;
-                                //image.CompressionMethod = CompressionMethod.Zip;
+                                image.Settings.Compression = CompressionMethod.Zip;
                                 break;
                             }
                         default:

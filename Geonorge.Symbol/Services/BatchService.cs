@@ -44,7 +44,7 @@ namespace Geonorge.Symbol.Services
                         using (MagickImage image = new MagickImage(targetPath, readerSettings))
                         {                           
                             image.Format = MagickFormat.Tif;
-                            //image.CompressionMethod = CompressionMethod.Zip;
+                            image.Settings.Compression = CompressionMethod.Zip;
                             image.Write(targetPath);
                         }
                     }
