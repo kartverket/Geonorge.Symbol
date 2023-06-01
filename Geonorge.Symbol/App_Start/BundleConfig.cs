@@ -21,7 +21,7 @@ namespace Geonorge.Symbol
                ));
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
-                "~/Scripts/jquery-3.4.1.js"
+                "~/Scripts/jquery-3.7.0.js"
                  ));
 
             bundles.Add(new ScriptBundle("~/node-modules/scripts").Include(
