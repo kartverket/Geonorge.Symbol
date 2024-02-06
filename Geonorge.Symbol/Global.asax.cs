@@ -15,6 +15,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Geonorge.Symbol.Models.Translations;
+using System.Collections.Specialized;
 
 namespace Geonorge.Symbol
 {
@@ -47,6 +48,8 @@ namespace Geonorge.Symbol
 
         protected void Application_BeginRequest()
         {
+            ValidateReturnUrl(Context.Request.QueryString);
+
             var cookie = Context.Request.Cookies["_culture"];
             if (cookie == null)
             {
@@ -59,6 +62,26 @@ namespace Geonorge.Symbol
                 var culture = new CultureInfo(cookie.Value);
                 Thread.CurrentThread.CurrentCulture = culture;
                 Thread.CurrentThread.CurrentUICulture = culture;
+            }
+        }
+
+        void ValidateReturnUrl(NameValueCollection queryString)
+        {
+            if (queryString != null)
+            {
+                var returnUrl = queryString.Get("returnUrl");
+                if (!string.IsNullOrEmpty(returnUrl))
+                {
+                    returnUrl = returnUrl.Replace("http://", "");
+                    returnUrl = returnUrl.Replace("https://", "");
+
+                    var host = Request.Url.Host;
+                    if (returnUrl.StartsWith("localhost:44354"))
+                        host = "localhost";
+
+                    if (!returnUrl.StartsWith(host))
+                        HttpContext.Current.Response.StatusCode = 400;
+                }
             }
         }
     }
