@@ -376,6 +376,12 @@ namespace Geonorge.Symbol.Controllers
         public void SignIn()
         {
             var redirectUrl = Url.Action(nameof(FilesController.Index), "Files");
+
+            if (Request.QueryString["ReturnUrl"] != null)
+            {
+                redirectUrl = Request.QueryString["ReturnUrl"];
+            }
+
             HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = redirectUrl },
                 OpenIdConnectAuthenticationDefaults.AuthenticationType);
         }
@@ -395,7 +401,8 @@ namespace Geonorge.Symbol.Controllers
         /// <returns></returns>
         public ActionResult SignOutCallback()
         {
-            return RedirectToAction(nameof(FilesController.Index), "Files");
+            var redirect = VirtualPathUtility.ToAbsolute("~/Files/Index") + "?logout=true";
+            return Redirect(redirect);
         }
 
         protected override void OnException(ExceptionContext filterContext)
