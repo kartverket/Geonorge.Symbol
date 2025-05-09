@@ -65,6 +65,28 @@ namespace Geonorge.Symbol
             }
         }
 
+        protected void Application_EndRequest()
+        {
+            try
+            {
+                var redirectUri = HttpContext.Current.Request.Url.AbsoluteUri;
+
+                var loggedInCookie = Context.Request.Cookies["_loggedIn"];
+                if (string.IsNullOrEmpty(Request.QueryString["autologin"]) && loggedInCookie != null && loggedInCookie.Value == "true" && !Request.IsAuthenticated)
+                {
+                    if (!Request.Path.Contains("/SignOut") && !Request.Path.Contains("/signout-callback-oidc") && Request.QueryString["logout"] != "true" && !Request.Path.Contains("shared-partials-scripts") && !Request.Path.Contains("shared-partials-styles") && !Request.Path.Contains("kartverket-felleskomponenter") && !Request.Path.Contains("local-styles") && !Request.Path.Contains("local-scripts") && !Request.Path.Contains("CartographyList") && !Request.Path.ToLower().Contains("scripts") && !Request.Path.Contains("Content") && !Request.Path.Contains("bundles"))
+                    {
+                        var returnUrl = VirtualPathUtility.ToAbsolute("~/Files/SignIn") + "?autologin=true&ReturnUrl=" + redirectUri;
+                        Response.Redirect(returnUrl);
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+            }
+        }
+
         void ValidateReturnUrl(NameValueCollection queryString)
         {
             if (queryString != null)
