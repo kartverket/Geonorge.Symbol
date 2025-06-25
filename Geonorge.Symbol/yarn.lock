@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@kartverket/geonorge-web-components@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@kartverket/geonorge-web-components/-/geonorge-web-components-3.0.1.tgz#85d2aba1d30b06b9d96f603acef7d3ecef84a6d5"
-  integrity sha512-QA2guiAFDEtjmfNk3AVKJg7osRZF/MDdj81rKGUqJrjjnja3ooJhoiJJfI5CrCUQzPvgTyGrC6vXgwJlez1sug==
+"@kartverket/geonorge-web-components@^4.0.7":
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/@kartverket/geonorge-web-components/-/geonorge-web-components-4.0.7.tgz#3393ff54f9897118bc31e4a7e68be4e01613df8d"
+  integrity sha512-MY+gNWCVuG4obIf/OlWcTdtsujkiDr+NLJdKuXLbggFLX59EOyWRJ10BUr0CbTb8hoO79ek9QpAGrD0YZqnmJA==
