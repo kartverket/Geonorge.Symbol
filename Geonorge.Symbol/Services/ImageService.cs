@@ -84,7 +84,7 @@ namespace Geonorge.Symbol.Services
                     }
 
                     if(maxWidth > 0)
-                        image.Resize(new MagickGeometry { IgnoreAspectRatio = false, Width = maxWidth, Height=0 });
+                        image.Resize(new MagickGeometry { IgnoreAspectRatio = false, Width = (uint)maxWidth, Height=0 });
 
                     fileName = CreateFileName(symbol, ext, targetFolder, symbolFile, image.Width.ToString(), useWidthInFilname);
                     string targetPath = Path.Combine(targetFolder, fileName);
@@ -119,7 +119,7 @@ namespace Geonorge.Symbol.Services
                     image.Settings.ColorType = ColorType.TrueColorAlpha;
 
                     if (maxWidth > 0)
-                        image.Resize(new MagickGeometry { IgnoreAspectRatio = false, Width = maxWidth, Height = 0 });
+                        image.Resize(new MagickGeometry { IgnoreAspectRatio = false, Width = (uint)maxWidth, Height = 0 });
 
                     fileName = CreateFileName(symbol, ext, targetFolder, symbolFile, image.Width.ToString(), useWidthInFilname);
                     string targetPath = Path.Combine(targetFolder, fileName);
@@ -272,7 +272,7 @@ namespace Geonorge.Symbol.Services
 
                     using (MagickImage image = new MagickImage(memStream))
                     {
-                        width = image.Width;
+                        width = (int)image.Width;
                     }
                 }
             }
