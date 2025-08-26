@@ -1,6 +1,7 @@
 {
   "version": "1.0.0",
   "name": "asp.net",
+  "packageManager": "yarn@1.22.22",
   "private": true,
   "dependencies": {
     "@kartverket/geonorge-web-components": "^4.0.7"
