@@ -1,22 +1,23 @@
-﻿using System;
+﻿using Geonorge.AuthLib.Common;
+using Geonorge.Symbol.Models;
+using Geonorge.Symbol.Services;
+using Ionic.Zip;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OpenIdConnect;
+using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using Geonorge.Symbol.Services;
-using Geonorge.Symbol.Models;
-using PagedList;
-using Ionic.Zip;
-using System.IO;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.OpenIdConnect;
-using System.Web.Configuration;
-using Microsoft.Owin.Security.Cookies;
 using System.Security.Claims;
-using Geonorge.AuthLib.Common;
+using System.Text;
+using System.Web;
+using System.Web.Configuration;
+using System.Web.Mvc;
 
 namespace Geonorge.Symbol.Controllers
 {
@@ -281,6 +282,10 @@ namespace Geonorge.Symbol.Controllers
                 targetFolder = targetFolder + symbol.SymbolPackages.FirstOrDefault()?.Folder + "\\";
             using (ZipFile zip = new ZipFile())
             {
+                // Ensure UTF-8 is used for file names
+                zip.AlternateEncodingUsage = ZipOption.Always;
+                zip.AlternateEncoding = Encoding.UTF8;
+
                 foreach (var file in symbol.SymbolFiles)
                 {
                         zip.AddFile(targetFolder + file.FileName, file.SymbolFileVariant.Name);
@@ -302,6 +307,10 @@ namespace Geonorge.Symbol.Controllers
 
             using (ZipFile zip = new ZipFile())
             {
+                // Ensure UTF-8 is used for file names
+                zip.AlternateEncodingUsage = ZipOption.Always;
+                zip.AlternateEncoding = Encoding.UTF8;
+
                 foreach (var file in symbolFiles)
                 {
                     zip.AddFile(targetFolder + file.FileName, "");
