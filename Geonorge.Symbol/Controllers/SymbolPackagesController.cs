@@ -1,18 +1,19 @@
-﻿using System;
+﻿using Geonorge.AuthLib.Common;
+using Geonorge.Symbol.Models;
+using Geonorge.Symbol.Services;
+using Ionic.Zip;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
+using System.Text;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
-using Geonorge.Symbol.Models;
-using Geonorge.Symbol.Services;
-using System.IO;
-using Ionic.Zip;
-using System.Threading;
-using System.Security.Claims;
-using Geonorge.AuthLib.Common;
 
 namespace Geonorge.Symbol.Controllers
 {
@@ -271,6 +272,9 @@ namespace Geonorge.Symbol.Controllers
             {
                 using (ZipFile zip = new ZipFile())
                 {
+                    // Ensure UTF-8 is used for file names
+                    zip.AlternateEncodingUsage = ZipOption.Always;
+                    zip.AlternateEncoding = Encoding.UTF8;
                     foreach (var symbol in package.Symbols)
                     {
                         string folder = targetFolder;
